@@ -1,0 +1,15 @@
+/* src/Components/PatientNavbar/PatientNavbar.css */
+
+.patient-navbar {
+    background-color: #495057;
+  }
+  
+  .patient-navbar .navbar-brand,
+  .patient-navbar .nav-link {
+    color: #ffffff;
+  }
+  
+  .patient-navbar .nav-link:hover {
+    color: #ffc107;
+  }
+  

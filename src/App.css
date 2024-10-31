@@ -1,0 +1,44 @@
+/* src/App.css */
+
+/* Global Font and Colors */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* Container Padding */
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* Button Styles */
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-danger {
+  border-radius: 5px;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover,
+.btn-danger:hover {
+  opacity: 0.8;
+}
+
+/* Table Styles */
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+/* Modal Styles */
+.modal-title {
+  font-weight: bold;
+}
+
+.alert {
+  margin-top: 10px;
+}

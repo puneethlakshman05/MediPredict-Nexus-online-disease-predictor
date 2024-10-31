@@ -1,0 +1,88 @@
+.navbar {
+  background-color: rgba(51, 18, 196, 0.87);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between brand and links */
+  box-shadow: 0 2px 5px whitesmoke; /* Add shadow for depth */
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  color: aliceblue;
+  font-size: 1.8rem; /* Slightly larger for prominence */
+  text-decoration: none;
+  font-weight: bold; /* Bold for emphasis */
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Pushes links to the right */
+}
+
+.navbar-button {
+  background-color: transparent; /* Make background transparent */
+  border: none; /* Remove border */
+  color:whitesmoke; /* Text color */
+  margin-left: 20px; /* Increased spacing */
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 10px; /* Padding for better click area */
+  transition: color 0.3s; /* Smooth color transition */
+}
+
+.navbar-button:hover {
+  color:yellow; /* Change color on hover */
+  text-decoration: none; /* Underline on hover */
+
+
+}
+
+
+.navbar-link {
+  color:whitesmoke;
+  margin-left: 20px; /* Increased spacing */
+  text-decoration: none;
+  font-size: 1.1rem; /* Slightly larger font size */
+  padding: 10px; /* Padding for better click area */
+  transition: color 0.3s; /* Smooth transition */
+}
+
+.navbar-link:hover {
+  color: #007bff; /* Change color on hover */
+  text-decoration: underline;
+}
+
+.logout-button {
+  color:whitesmoke;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-left: 20px; /* Increased spacing */
+  background-color: transparent; /* Transparent background */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.logout-button:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue hover effect */
+  color: #007bff; /* Change color on hover */
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack elements on smaller screens */
+    align-items: flex-start; /* Align items to start */
+  }
+  .navbar-links {
+    margin-left: 0; /* Reset margin for links */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  }
+}

@@ -1,0 +1,13 @@
+.carousel-item {
+  height: 400px; /* Set the height for the carousel */
+}
+
+.carousel-item img {
+  width: 10%; /* Set width to 100% to fill the container */
+  height: 100%; /* Set height to 100% to fill the container */
+  object-fit: cover; /* Cover ensures the image fills the area */
+}
+.caption
+{
+  text-align: center;
+}
