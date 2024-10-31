@@ -116,6 +116,9 @@ function PatientSymptoms() {
         </div>
       )}
 
+
+
+
       {availableDoctors.length > 0 && (
         <div className="mt-3">
           <h5>Available Doctors:</h5>
