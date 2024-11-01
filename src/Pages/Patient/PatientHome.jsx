@@ -7,7 +7,6 @@ function PatientSymptoms() {
   const [symptomsOptions, setSymptomsOptions] = useState([]);
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [disease, setDisease] = useState(null);
-  const [medications, setMedications] = useState([]);
   const [availableDoctors, setAvailableDoctors] = useState([]);
   const [error, setError] = useState('');
 
@@ -44,7 +43,7 @@ function PatientSymptoms() {
       // Fetch disease prediction based on symptoms
       const response = await axios.get('http://127.0.0.1:5000/disease', {params:{ symptoms: JSON.stringify(symptomsArray)} });
       setDisease(response.data);
-      setMedications([]); // Reset medications when a new disease is predicted
+      //setMedications([]); // Reset medications when a new disease is predicted
       setAvailableDoctors([]); // Reset doctors when a new disease is predicted
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -52,16 +51,7 @@ function PatientSymptoms() {
     }
   };
 
-  // Fetch medications for the predicted disease
-  const fetchMedications = async () => {
-    try {
-      const medResponse = await axios.get(`http://127.0.0.1:5000/medications?disease=${disease}`);
-      setMedications(medResponse.data.medications);
-    } catch (error) {
-      console.error("Error fetching medications:", error);
-      setError('Failed to load medications. Please try again later.');
-    }
-  };
+
 
   // Fetch doctors for the predicted disease specialization
   const fetchDoctors = async () => {
@@ -96,25 +86,14 @@ function PatientSymptoms() {
       {disease && (
         <Alert variant="info" className="mt-3">
           <h4>Predicted Disease: {disease}</h4>
-          <Button onClick={fetchMedications} variant="primary" className="mt-3 me-3">
-            Medication
-          </Button>
+         
           <Button onClick={fetchDoctors} variant="primary" className="mt-3">
             Available Doctors
           </Button>
         </Alert>
       )}
 
-      {medications.length > 0 && (
-        <div className="mt-3">
-          <h5>Recommended Medications:</h5>
-          <ListGroup>
-            {medications.map((med, idx) => (
-              <ListGroup.Item key={idx}>{med}</ListGroup.Item>
-            ))}
-          </ListGroup>
-        </div>
-      )}
+      
 
 
 
