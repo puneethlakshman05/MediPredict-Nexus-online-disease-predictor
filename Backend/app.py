@@ -42,18 +42,160 @@ symptoms_list = ['back_pain','constipation','abdominal_pain','diarrhoea','mild_f
 ,'acidity','ulcers_on_tongue','muscle_wasting','vomiting','burning_micturition','spotting_urination','fatigue','weight_gain',
 'anxiety','cold_hands_and_feets','mood_swings','weight_loss','restlessness','lethargy','patches_in_throat','irregular_sugar_level',
 'cough','high_fever','sunken_eyes','breathlessness','sweating','dehydration','indigestion','headache','yellowish_skin','dark_urine',
-'nausea','loss_of_appetite','pain_behind_the_eyes']
+'nausea','loss_of_appetite','pain_behind_the_eyes','low_blood_pressure','high_blood_pressure']
 
-Disease={'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic cholestasis':3,'Drug Reaction':4,
-'Peptic ulcer diseae':5,'AIDS':6,'Diabetes ':7,'Gastroenteritis':8,'Bronchial Asthma':9,'Hypertension ':10,
-'Migraine':11,'Cervical spondylosis':12,
-'Paralysis (brain hemorrhage)':13,'Jaundice':14,'Malaria':15,'Chicken pox':16,'Dengue':17,'Typhoid':18,'hepatitis A':19,
-'Hepatitis B':20,'Hepatitis C':21,'Hepatitis D':22,'Hepatitis E':23,'Alcoholic hepatitis':24,'Tuberculosis':25,
-'Common Cold':26,'Pneumonia':27,'Dimorphic hemmorhoids(piles)':28,'Heart attack':29,'Varicose veins':30,'Hypothyroidism':31,
-'Hyperthyroidism':32,'Hypoglycemia':33,'Osteoarthristis':34,'Arthritis':35,
-'(vertigo) Paroymsal  Positional Vertigo':36,'Acne':37,'Urinary tract infection':38,'Psoriasis':39,
-'Impetigo':40}
-
+Disease={'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic ayipoyindhicholestasis':3,'Drug Reaction':4,
+ 'Peptic ulcer diseae':5,'AIDS':6,'Diabetes ':7,'Gastroenteritis':8,'Bronchial Asthma':9,'Hypertension ':10,
+ 'Migraine':11,'Cervical spondylosis':12,
+ 'Paralysis (brain hemorrhage)':13,'Jaundice':14,'Malaria':15,'Chicken pox':16,'Dengue':17,'Typhoid':18,'hepatitis A':19,
+ 'Hepatitis B':20,'Hepatitis C':21,'Hepatitis D':22,'Hepatitis E':23,'Alcoholic hepatitis':24,'Tuberculosis':25,
+ 'Common Cold':26,'Pneumonia':27,'Dimorphic hemmorhoids(piles)':28,'Heart attack':29,'Varicose veins':30,'Hypothyroidism':31,
+ 'Hyperthyroidism':32,'Hypoglycemia':33,'Osteoarthristis':34,'Arthritis':35,
+ '(vertigo) Paroymsal  Positional Vertigo':36,'Acne':37,'Urinary tract infection':38,'Psoriasis':39,
+ 'Impetigo':40}
+ 
+medications_tips = {
+    'Fungal infection': {
+        'medications': ['Topical antifungals (Clotrimazole)', 'Oral antifungals (Fluconazole)'],
+        'tips': ['Keep affected areas clean and dry', 'Avoid tight clothing', 'Use antifungal powder to reduce moisture']
+    },
+    'Allergy': {
+        'medications': ['Antihistamines (Loratadine, Cetirizine)', 'Nasal corticosteroids'],
+        'tips': ['Avoid known allergens', 'Use a humidifier at home', 'Stay hydrated']
+    },
+    'GERD': {
+        'medications': ['Proton pump inhibitors (Omeprazole)', 'Antacids'],
+        'tips': ['Avoid trigger foods (spicy, acidic foods)', 'Eat smaller meals', 'Don’t lie down immediately after eating']
+    },
+    'Chronic cholestasis': {
+        'medications': ['Ursodeoxycholic acid', 'Cholestyramine'],
+        'tips': ['Reduce fat intake', 'Take vitamin supplements as advised', 'Avoid alcohol']
+    },
+    'Drug Reaction': {
+        'medications': ['Antihistamines', 'Corticosteroids'],
+        'tips': ['Avoid the drug causing the reaction', 'Report all drug allergies to your healthcare provider', 'Monitor for worsening symptoms']
+    },
+    'Peptic ulcer disease': {
+        'medications': ['Proton pump inhibitors', 'H2 blockers', 'Antibiotics if H. pylori infection is present'],
+        'tips': ['Avoid NSAIDs', 'Limit caffeine and alcohol', 'Eat smaller meals more frequently']
+    },
+    'AIDS': {
+        'medications': ['Antiretroviral therapy (ART)', 'Protease inhibitors'],
+        'tips': ['Avoid infections through hygiene', 'Take medications consistently', 'Practice safe sexual behaviors']
+    },
+    'Diabetes': {
+        'medications': ['Insulin', 'Metformin', 'Sulfonylureas'],
+        'tips': ['Monitor blood glucose levels', 'Eat balanced meals', 'Exercise regularly']
+    },
+    'Gastroenteritis': {
+        'medications': ['Oral rehydration salts (ORS)', 'Antidiarrheals (Loperamide)'],
+        'tips': ['Stay hydrated', 'Avoid solid foods until symptoms improve', 'Practice good hygiene']
+    },
+    'Bronchial Asthma': {
+        'medications': ['Inhaled corticosteroids', 'Short-acting beta agonists (Albuterol)'],
+        'tips': ['Avoid allergens and irritants', 'Use inhalers as directed', 'Practice breathing exercises']
+    },
+    'Hypertension': {
+        'medications': ['ACE inhibitors', 'Beta-blockers', 'Calcium channel blockers'],
+        'tips': ['Limit salt intake', 'Exercise regularly', 'Avoid excessive alcohol intake']
+    },
+    'Migraine': {
+        'medications': ['Triptans', 'NSAIDs', 'Anti-nausea medications'],
+        'tips': ['Maintain a headache diary to track triggers', 'Practice relaxation techniques', 'Get adequate sleep']
+    },
+    'Cervical spondylosis': {
+        'medications': ['NSAIDs', 'Muscle relaxants'],
+        'tips': ['Practice neck exercises', 'Maintain good posture', 'Apply warm compresses to relieve pain']
+    },
+    'Paralysis (brain hemorrhage)': {
+        'medications': ['Anticoagulants', 'Anti-hypertensive drugs'],
+        'tips': ['Follow physical therapy regimens', 'Limit salt and cholesterol intake', 'Monitor blood pressure']
+    },
+    'Jaundice': {
+        'medications': ['Vitamin supplements', 'Medications as per underlying cause'],
+        'tips': ['Limit alcohol intake', 'Eat a balanced diet', 'Get adequate rest']
+    },
+    'Malaria': {
+        'medications': ['Chloroquine', 'Artemisinin-based combination therapies (ACTs)'],
+        'tips': ['Use mosquito nets', 'Take preventive medications in high-risk areas', 'Seek early treatment if symptoms arise']
+    },
+    'Chicken pox': {
+        'medications': ['Antihistamines for itching', 'Antivirals if necessary'],
+        'tips': ['Avoid scratching blisters', 'Stay hydrated', 'Rest and avoid contact with others']
+    },
+    'Dengue': {
+        'medications': ['Analgesics (Paracetamol)'],
+        'tips': ['Stay hydrated', 'Rest and monitor symptoms', 'Avoid mosquito bites']
+    },
+    'Typhoid': {
+        'medications': ['Antibiotics (Ciprofloxacin)', 'Azithromycin'],
+        'tips': ['Drink boiled water', 'Eat only cooked foods', 'Practice good hygiene']
+    },
+    'Hepatitis A': {
+        'medications': ['Supportive treatment', 'Analgesics'],
+        'tips': ['Avoid alcohol', 'Practice good hygiene', 'Rest and maintain a healthy diet']
+    },
+    'Hepatitis B': {
+        'medications': ['Antiviral medications', 'Interferon injections'],
+        'tips': ['Avoid alcohol', 'Get vaccinated if not already', 'Follow a balanced diet']
+    },
+    'Hepatitis C': {
+        'medications': ['Direct-acting antivirals (DAAs)', 'Interferon'],
+        'tips': ['Avoid alcohol', 'Practice safe hygiene', 'Eat liver-friendly foods']
+    },
+    'Alcoholic hepatitis': {
+        'medications': ['Corticosteroids', 'Pentoxifylline'],
+        'tips': ['Avoid alcohol completely', 'Maintain a balanced diet', 'Monitor liver health']
+    },
+    'Tuberculosis': {
+        'medications': ['Isoniazid', 'Rifampin', 'Ethambutol'],
+        'tips': ['Take medication as prescribed', 'Avoid contact with others during contagious periods', 'Eat a nutrient-rich diet']
+    },
+    'Common Cold': {
+        'medications': ['Decongestants', 'Antihistamines'],
+        'tips': ['Stay hydrated', 'Rest', 'Avoid close contact with others']
+    },
+    'Pneumonia': {
+        'medications': ['Antibiotics for bacterial pneumonia', 'Antipyretics'],
+        'tips': ['Rest', 'Stay hydrated', 'Follow doctor’s advice on breathing exercises']
+    },
+    'Heart attack': {
+        'medications': ['Aspirin', 'ACE inhibitors', 'Beta-blockers'],
+        'tips': ['Follow a heart-healthy diet', 'Exercise as advised', 'Avoid smoking']
+    },
+    'Varicose veins': {
+        'medications': ['Compression stockings', 'Pain relievers'],
+        'tips': ['Avoid standing for long periods', 'Elevate legs when resting', 'Exercise regularly']
+    },
+    'Hypothyroidism': {
+        'medications': ['Levothyroxine'],
+        'tips': ['Take medication as prescribed', 'Maintain a balanced diet', 'Get regular thyroid check-ups']
+    },
+    'Hyperthyroidism': {
+        'medications': ['Methimazole', 'Beta-blockers'],
+        'tips': ['Avoid iodine-rich foods', 'Reduce stress', 'Get regular thyroid check-ups']
+    },
+    'Hypoglycemia': {
+        'medications': ['Glucose tablets', 'Hormone injections if needed'],
+        'tips': ['Eat small, frequent meals', 'Carry a glucose source', 'Monitor blood sugar levels']
+    },
+    'Osteoarthritis': {
+        'medications': ['NSAIDs', 'Pain relievers'],
+        'tips': ['Stay active with low-impact exercises', 'Use hot and cold compresses', 'Maintain a healthy weight']
+    },
+    'Urinary tract infection': {
+        'medications': ['Antibiotics (Ciprofloxacin, Nitrofurantoin)'],
+        'tips': ['Stay hydrated', 'Practice good hygiene', 'Avoid holding urine for long periods']
+    },
+    'Psoriasis': {
+        'medications': ['Topical corticosteroids', 'Vitamin D analogues'],
+        'tips': ['Keep skin moisturized', 'Avoid skin irritants', 'Manage stress']
+    },
+    'Impetigo': {
+        'medications': ['Antibiotics (Mupirocin ointment)', 'Oral antibiotics if severe'],
+        'tips': ['Keep affected areas clean', 'Avoid touching affected areas', 'Practice good hygiene']
+    }
+}
 
 
 DATA_PATH = "Training.csv"
@@ -232,34 +374,61 @@ def predictDisease(symptoms):
 
 
 
+
+
+
 # Routes
 @app.route("/")
 def main():
     return "connected   "
 
-@app.route('/disease', methods=["GET"])
-def disease():
-    # if not request.json or 'symptoms' not in request.json:
-    #     return jsonify({"error": "Invalid request format, JSON body expected."}), 400
-    
-    symptoms = json.loads(request.args.get('symptoms'))
-    valid_symptoms = [symptom for symptom in symptoms if symptom in symptoms_list]
-    print(valid_symptoms)   
-    if len(valid_symptoms) < 3:
-        return jsonify({"error": "Please enter at least 3 valid symptoms."}), 400
-    
-    predictions = predictDisease(valid_symptoms)
-    return jsonify(predictions)
-
 @app.route('/symptoms', methods=["GET"])
 def symptoms():
-    return jsonify(symptoms_list)  # Send only the first 10 symptoms as a test
+    return jsonify(symptoms_list)
+
+@app.route('/disease', methods=["GET"])
+def disease():
+    try:
+        # Load symptoms from the query parameters
+        symptoms = json.loads(request.args.get('symptoms'))
+        
+        # Filter valid symptoms
+        valid_symptoms = [symptom for symptom in symptoms if symptom in symptoms_list]
+        print(valid_symptoms)  # For debugging; consider using logging in production
+        
+        # Ensure at least 3 valid symptoms
+        if len(valid_symptoms) < 3:
+            return jsonify({"error": "Please enter at least 3 valid symptoms."}), 400
+        
+        # Predict disease based on valid symptoms
+        predictions = predictDisease(valid_symptoms)
+        
+        # Get disease name from predictions
+        disease_name = predictions  # Adjust this based on your prediction function
+        medications_data = medications_tips.get(disease_name, {})
+        
+        return jsonify({
+            "predicted_disease": disease_name, 
+            "medications": medications_data.get("medications", []), 
+            "tips": medications_data.get("tips", [])
+        })
+    
+    except json.JSONDecodeError as e:
+        return jsonify({"error": f"Invalid JSON format: {str(e)}"}), 400
+    except Exception as e:
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+
 
 @app.route('/medications', methods=["GET"])
 def medications():
     disease = request.args.get("disease")
-    # Replace with actual medication data logic
-    return jsonify({"medications": ["Medication A", "Medication B"]})
+
+    # Check if the disease exists in the medications_tips dictionary
+    if disease in medications_tips:
+        return jsonify(medications_tips[disease])
+    else:
+        return jsonify({"error": "Disease not found."}), 404
+
 
 @app.route('/doctors', methods=["GET"])
 def doctors():
