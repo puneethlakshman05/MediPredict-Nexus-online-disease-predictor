@@ -54,148 +54,173 @@ Disease={'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic ayipoyindhicholestas
  '(vertigo) Paroymsal  Positional Vertigo':36,'Acne':37,'Urinary tract infection':38,'Psoriasis':39,
  'Impetigo':40}
  
-medications_tips = {
+medications_tips =  {
     'Fungal infection': {
-        'medications': ['Topical antifungals (Clotrimazole)', 'Oral antifungals (Fluconazole)'],
-        'tips': ['Keep affected areas clean and dry', 'Avoid tight clothing', 'Use antifungal powder to reduce moisture']
+        'medications': ['Topical antifungals (Clotrimazole)', 'Oral antifungals (Fluconazole)', 'Antifungal shampoos for scalp infections'],
+        'tips': ['Keep affected areas clean and dry', 'Avoid tight clothing', 'Use antifungal powder to reduce moisture', 'Avoid sharing personal items like towels']
     },
     'Allergy': {
-        'medications': ['Antihistamines (Loratadine, Cetirizine)', 'Nasal corticosteroids'],
-        'tips': ['Avoid known allergens', 'Use a humidifier at home', 'Stay hydrated']
+        'medications': ['Antihistamines (Cetirizine)', 'Nasal corticosteroids (Fluticasone)', 'Epinephrine (for severe allergic reactions)'],
+        'tips': ['Identify and avoid allergens', 'Use air purifiers to reduce airborne allergens', 'Wear a medical alert bracelet if severe allergies are present']
     },
     'GERD': {
-        'medications': ['Proton pump inhibitors (Omeprazole)', 'Antacids'],
-        'tips': ['Avoid trigger foods (spicy, acidic foods)', 'Eat smaller meals', 'Don’t lie down immediately after eating']
+        'medications': ['Proton pump inhibitors (Omeprazole)', 'H2 receptor antagonists (Ranitidine)', 'Antacids (Calcium carbonate)'],
+        'tips': ['Avoid large meals and lying down after eating', 'Elevate the head of the bed while sleeping', 'Limit intake of spicy and fatty foods']
     },
-    'Chronic cholestasis': {
-        'medications': ['Ursodeoxycholic acid', 'Cholestyramine'],
-        'tips': ['Reduce fat intake', 'Take vitamin supplements as advised', 'Avoid alcohol']
+    'Chronic Cholecystitis': {
+        'medications': ['Ursodeoxycholic acid', 'Pain relievers (Ibuprofen)', 'Antibiotics if infection is suspected'],
+        'tips': ['Maintain a low-fat diet', 'Regular check-ups with a healthcare provider', 'Avoid rapid weight loss']
     },
     'Drug Reaction': {
-        'medications': ['Antihistamines', 'Corticosteroids'],
-        'tips': ['Avoid the drug causing the reaction', 'Report all drug allergies to your healthcare provider', 'Monitor for worsening symptoms']
+        'medications': ['Antihistamines for mild reactions', 'Corticosteroids for severe reactions', 'Epinephrine for anaphylaxis'],
+        'tips': ['Inform healthcare providers of drug allergies', 'Keep a list of all medications taken', 'Wear a medical alert bracelet for severe drug allergies']
     },
     'Peptic ulcer disease': {
-        'medications': ['Proton pump inhibitors', 'H2 blockers', 'Antibiotics if H. pylori infection is present'],
-        'tips': ['Avoid NSAIDs', 'Limit caffeine and alcohol', 'Eat smaller meals more frequently']
+        'medications': ['Proton pump inhibitors (Lansoprazole)', 'Antibiotics if caused by H. pylori', 'Antacids for symptom relief'],
+        'tips': ['Avoid NSAIDs and alcohol', 'Eat smaller, more frequent meals', 'Manage stress through relaxation techniques']
     },
     'AIDS': {
-        'medications': ['Antiretroviral therapy (ART)', 'Protease inhibitors'],
-        'tips': ['Avoid infections through hygiene', 'Take medications consistently', 'Practice safe sexual behaviors']
+        'medications': ['Antiretroviral therapy (ART)', 'Protease inhibitors (Ritonavir)'],
+        'tips': ['Regular check-ups and adherence to medication', 'Safe sex practices to prevent transmission', 'Maintain a healthy lifestyle with proper nutrition']
     },
     'Diabetes': {
-        'medications': ['Insulin', 'Metformin', 'Sulfonylureas'],
-        'tips': ['Monitor blood glucose levels', 'Eat balanced meals', 'Exercise regularly']
+        'medications': ['Metformin', 'Insulin as needed', 'SGLT2 inhibitors (Empagliflozin)'],
+        'tips': ['Monitor blood sugar levels regularly', 'Follow a balanced diet and exercise plan', 'Stay hydrated and avoid sugary drinks']
     },
     'Gastroenteritis': {
-        'medications': ['Oral rehydration salts (ORS)', 'Antidiarrheals (Loperamide)'],
-        'tips': ['Stay hydrated', 'Avoid solid foods until symptoms improve', 'Practice good hygiene']
+        'medications': ['Antidiarrheals (Loperamide)', 'Rehydration solutions', 'Probiotics to restore gut flora'],
+        'tips': ['Stay hydrated with clear fluids', 'Avoid dairy and fatty foods until recovery', 'Wash hands regularly to prevent spread']
     },
     'Bronchial Asthma': {
-        'medications': ['Inhaled corticosteroids', 'Short-acting beta agonists (Albuterol)'],
-        'tips': ['Avoid allergens and irritants', 'Use inhalers as directed', 'Practice breathing exercises']
+        'medications': ['Inhaled corticosteroids (Budesonide)', 'Bronchodilators (Albuterol)', 'Leukotriene modifiers (Montelukast)'],
+        'tips': ['Avoid known triggers', 'Use a peak flow meter to monitor breathing', 'Maintain a regular medication routine']
     },
     'Hypertension': {
-        'medications': ['ACE inhibitors', 'Beta-blockers', 'Calcium channel blockers'],
-        'tips': ['Limit salt intake', 'Exercise regularly', 'Avoid excessive alcohol intake']
+        'medications': ['ACE inhibitors (Lisinopril)', 'Beta-blockers (Atenolol)', 'Calcium channel blockers (Amlodipine)'],
+        'tips': ['Maintain a low-sodium diet', 'Regular exercise and weight management', 'Limit alcohol intake and manage stress']
     },
     'Migraine': {
-        'medications': ['Triptans', 'NSAIDs', 'Anti-nausea medications'],
-        'tips': ['Maintain a headache diary to track triggers', 'Practice relaxation techniques', 'Get adequate sleep']
+        'medications': ['Triptans (Sumatriptan)', 'NSAIDs (Ibuprofen)', 'Ergotamine preparations'],
+        'tips': ['Identify and avoid migraine triggers', 'Maintain a regular sleep schedule', 'Stay hydrated and avoid skipping meals']
     },
     'Cervical spondylosis': {
-        'medications': ['NSAIDs', 'Muscle relaxants'],
-        'tips': ['Practice neck exercises', 'Maintain good posture', 'Apply warm compresses to relieve pain']
+        'medications': ['Pain relievers (Acetaminophen)', 'Muscle relaxants', 'Physical therapy exercises'],
+        'tips': ['Physical therapy to improve neck strength', 'Use ergonomic furniture', 'Apply heat/cold therapy as needed']
     },
     'Paralysis (brain hemorrhage)': {
-        'medications': ['Anticoagulants', 'Anti-hypertensive drugs'],
-        'tips': ['Follow physical therapy regimens', 'Limit salt and cholesterol intake', 'Monitor blood pressure']
+        'medications': ['Anticoagulants for certain conditions', 'Pain management medications', 'Physical rehabilitation support'],
+        'tips': ['Immediate medical attention is crucial', 'Rehabilitation therapies post-recovery', 'Supportive care to maintain quality of life']
     },
     'Jaundice': {
-        'medications': ['Vitamin supplements', 'Medications as per underlying cause'],
-        'tips': ['Limit alcohol intake', 'Eat a balanced diet', 'Get adequate rest']
+        'medications': ['Treat underlying causes (e.g., antivirals for hepatitis)', 'Cholestyramine for itching'],
+        'tips': ['Stay hydrated', 'Avoid alcohol and liver-damaging substances', 'Rest and follow a balanced diet']
     },
     'Malaria': {
-        'medications': ['Chloroquine', 'Artemisinin-based combination therapies (ACTs)'],
-        'tips': ['Use mosquito nets', 'Take preventive medications in high-risk areas', 'Seek early treatment if symptoms arise']
+        'medications': ['Antimalarial drugs (Artemisinin-based combination therapies)', 'Chloroquine for certain strains'],
+        'tips': ['Use mosquito nets and repellents', 'Seek immediate medical attention if symptoms arise', 'Take preventive medication when traveling to endemic areas']
     },
     'Chicken pox': {
-        'medications': ['Antihistamines for itching', 'Antivirals if necessary'],
-        'tips': ['Avoid scratching blisters', 'Stay hydrated', 'Rest and avoid contact with others']
+        'medications': ['Antihistamines for itching', 'Acetaminophen for fever', 'Antiviral medication (Acyclovir) for severe cases'],
+        'tips': ['Keep nails trimmed to prevent scratching', 'Isolate to prevent spreading', 'Keep skin moisturized to prevent scarring']
     },
     'Dengue': {
-        'medications': ['Analgesics (Paracetamol)'],
-        'tips': ['Stay hydrated', 'Rest and monitor symptoms', 'Avoid mosquito bites']
+        'medications': ['Pain relievers (Acetaminophen)', 'Hydration solutions', 'Platelet transfusion in severe cases'],
+        'tips': ['Use mosquito repellent and nets', 'Monitor for severe symptoms', 'Avoid aspirin or NSAIDs due to bleeding risk']
     },
     'Typhoid': {
-        'medications': ['Antibiotics (Ciprofloxacin)', 'Azithromycin'],
-        'tips': ['Drink boiled water', 'Eat only cooked foods', 'Practice good hygiene']
+        'medications': ['Antibiotics (Ciprofloxacin)', 'Azithromycin for drug-resistant cases'],
+        'tips': ['Ensure safe drinking water', 'Practice good hygiene', 'Rest and proper nutrition']
     },
     'Hepatitis A': {
-        'medications': ['Supportive treatment', 'Analgesics'],
-        'tips': ['Avoid alcohol', 'Practice good hygiene', 'Rest and maintain a healthy diet']
+        'medications': ['Vaccination for prevention', 'Supportive care for symptoms'],
+        'tips': ['Practice good hygiene and sanitation', 'Avoid contaminated food and water', 'Rest and stay hydrated']
     },
     'Hepatitis B': {
-        'medications': ['Antiviral medications', 'Interferon injections'],
-        'tips': ['Avoid alcohol', 'Get vaccinated if not already', 'Follow a balanced diet']
+        'medications': ['Antiviral medications (Tenofovir)', 'Interferon injections'],
+        'tips': ['Vaccination for prevention', 'Avoid sharing needles', 'Routine liver function monitoring']
     },
     'Hepatitis C': {
-        'medications': ['Direct-acting antivirals (DAAs)', 'Interferon'],
-        'tips': ['Avoid alcohol', 'Practice safe hygiene', 'Eat liver-friendly foods']
+        'medications': ['Direct-acting antivirals (DAAs)', 'Ribavirin for combination therapy'],
+        'tips': ['Regular medical check-ups', 'Avoid sharing personal items', 'Adhere to treatment regimens for effectiveness']
+    },
+    'Hepatitis D': {
+        'medications': ['Interferon therapy', 'Supportive care'],
+        'tips': ['Vaccination against hepatitis B', 'Regular monitoring of liver function', 'Maintain a healthy diet and avoid alcohol']
+    },
+    'Hepatitis E': {
+        'medications': ['No specific treatment; supportive care', 'Rest and hydration'],
+        'tips': ['Ensure safe drinking water', 'Practice good hygiene', 'Avoid raw or undercooked food']
     },
     'Alcoholic hepatitis': {
-        'medications': ['Corticosteroids', 'Pentoxifylline'],
-        'tips': ['Avoid alcohol completely', 'Maintain a balanced diet', 'Monitor liver health']
+        'medications': ['Corticosteroids for severe cases', 'Pentoxifylline as an alternative'],
+        'tips': ['Abstain from alcohol', 'Nutritional support and counseling', 'Regular medical follow-ups']
     },
     'Tuberculosis': {
-        'medications': ['Isoniazid', 'Rifampin', 'Ethambutol'],
-        'tips': ['Take medication as prescribed', 'Avoid contact with others during contagious periods', 'Eat a nutrient-rich diet']
+        'medications': ['Antibiotics (Isoniazid, Rifampicin)', 'Ethambutol and Pyrazinamide'],
+        'tips': ['Complete the full course of treatment', 'Regular check-ups to monitor progress', 'Maintain a nutritious diet']
     },
     'Common Cold': {
-        'medications': ['Decongestants', 'Antihistamines'],
-        'tips': ['Stay hydrated', 'Rest', 'Avoid close contact with others']
+        'medications': ['Decongestants (Pseudoephedrine)', 'Cough suppressants', 'Antihistamines for runny nose'],
+        'tips': ['Rest and stay hydrated', 'Use saline nasal sprays', 'Avoid cold and dry air']
     },
     'Pneumonia': {
-        'medications': ['Antibiotics for bacterial pneumonia', 'Antipyretics'],
-        'tips': ['Rest', 'Stay hydrated', 'Follow doctor’s advice on breathing exercises']
+        'medications': ['Antibiotics if bacterial', 'Cough medicine', 'Fever reducers (Acetaminophen)'],
+        'tips': ['Get vaccinated (Pneumonia vaccine)', 'Rest and drink fluids', 'Use a humidifier for easier breathing']
+    },
+    'Dimorphic hemmorhoids(piles)': {
+        'medications': ['Topical creams (Hydrocortisone)', 'Oral pain relievers', 'Laxatives for stool softening'],
+        'tips': ['Increase fiber intake', 'Stay hydrated and exercise regularly', 'Avoid prolonged sitting and straining']
     },
     'Heart attack': {
-        'medications': ['Aspirin', 'ACE inhibitors', 'Beta-blockers'],
-        'tips': ['Follow a heart-healthy diet', 'Exercise as advised', 'Avoid smoking']
+        'medications': ['Antiplatelet agents (Aspirin)', 'Beta-blockers', 'ACE inhibitors'],
+        'tips': ['Follow a heart-healthy diet', 'Regular exercise and monitoring', 'Avoid smoking and manage stress']
     },
     'Varicose veins': {
-        'medications': ['Compression stockings', 'Pain relievers'],
-        'tips': ['Avoid standing for long periods', 'Elevate legs when resting', 'Exercise regularly']
+        'medications': ['Compression stockings', 'Sclerotherapy for severe cases', 'Pain relievers'],
+        'tips': ['Elevate legs when resting', 'Avoid standing for long periods', 'Exercise to improve circulation']
     },
     'Hypothyroidism': {
-        'medications': ['Levothyroxine'],
-        'tips': ['Take medication as prescribed', 'Maintain a balanced diet', 'Get regular thyroid check-ups']
+        'medications': ['Levothyroxine (Thyroid hormone replacement)'],
+        'tips': ['Regular monitoring of thyroid levels', 'Maintain a balanced diet', 'Avoid certain foods that can interfere with absorption']
     },
     'Hyperthyroidism': {
-        'medications': ['Methimazole', 'Beta-blockers'],
-        'tips': ['Avoid iodine-rich foods', 'Reduce stress', 'Get regular thyroid check-ups']
+        'medications': ['Antithyroid drugs (Methimazole)', 'Beta-blockers for symptoms'],
+        'tips': ['Avoid caffeine and excess iodine', 'Regular check-ups with an endocrinologist', 'Maintain a healthy lifestyle with stress management']
     },
-    'Hypoglycemia': {
-        'medications': ['Glucose tablets', 'Hormone injections if needed'],
-        'tips': ['Eat small, frequent meals', 'Carry a glucose source', 'Monitor blood sugar levels']
+     'Hypoglycemia': {
+        'medications': ['Glucose tablets', 'Glucose gel', 'Dextrose injections for emergency use', 'Fast-acting carbohydrates (fruit juice, candy)'],
+        'tips': ['Keep quick sources of sugar on hand at all times', 'Eat regular meals and snacks with balanced carbohydrates and proteins', 'Monitor blood glucose levels regularly', 'Avoid skipping meals or prolonged fasting']
     },
     'Osteoarthritis': {
-        'medications': ['NSAIDs', 'Pain relievers'],
-        'tips': ['Stay active with low-impact exercises', 'Use hot and cold compresses', 'Maintain a healthy weight']
+        'medications': ['Pain relievers (Acetaminophen, NSAIDs)', 'Topical analgesics (Capsaicin cream)', 'Corticosteroid injections', 'Hyaluronic acid injections'],
+        'tips': ['Engage in regular low-impact physical activity such as swimming or walking', 'Maintain a healthy weight to reduce joint stress', 'Practice gentle stretching exercises for flexibility', 'Use supportive devices like braces or shoe inserts']
+    },
+    'Arthritis': {
+        'medications': ['Disease-modifying antirheumatic drugs (DMARDs)', 'NSAIDs', 'Biologic agents (Etanercept, Infliximab)', 'Corticosteroids'],
+        'tips': ['Perform regular low-impact exercise like yoga or swimming', 'Use hot/cold therapy for pain relief and inflammation reduction', 'Maintain a healthy diet rich in anti-inflammatory foods', 'Practice joint protection techniques']
+    },
+    '(Vertigo) Paroxysmal Positional Vertigo': {
+        'medications': ['Vestibular suppressants (Meclizine)', 'Antihistamines (Dimenhydrinate)', 'Benzodiazepines (Diazepam) for severe cases'],
+        'tips': ['Avoid sudden head movements or quick changes in posture', 'Follow specific maneuvers such as the Epley maneuver recommended by a healthcare provider', 'Stay hydrated to help maintain inner ear balance', 'Sleep with the head slightly elevated']
+    },
+    'Acne': {
+        'medications': ['Topical retinoids (Adapalene, Tretinoin)', 'Oral antibiotics (Doxycycline, Minocycline)', 'Topical antibiotics (Clindamycin)', 'Oral isotretinoin for severe cases'],
+        'tips': ['Keep skin clean and moisturized with non-comedogenic products', 'Avoid touching the face to prevent bacteria transfer', 'Use gentle cleansers without harsh scrubbing', 'Limit exposure to greasy environments and avoid oily cosmetics']
     },
     'Urinary tract infection': {
-        'medications': ['Antibiotics (Ciprofloxacin, Nitrofurantoin)'],
-        'tips': ['Stay hydrated', 'Practice good hygiene', 'Avoid holding urine for long periods']
+        'medications': ['Antibiotics (Nitrofurantoin, Trimethoprim-Sulfamethoxazole)', 'Pain relievers (Phenazopyridine)', 'Cranberry supplements as preventive'],
+        'tips': ['Stay hydrated by drinking plenty of water', 'Urinate after intercourse to flush out bacteria', 'Avoid using harsh soaps or douches', 'Wear cotton underwear and avoid tight clothing']
     },
     'Psoriasis': {
-        'medications': ['Topical corticosteroids', 'Vitamin D analogues'],
-        'tips': ['Keep skin moisturized', 'Avoid skin irritants', 'Manage stress']
+        'medications': ['Topical corticosteroids', 'Phototherapy (UVB light therapy)', 'Biologic drugs (Adalimumab, Ustekinumab)', 'Systemic agents (Methotrexate, Cyclosporine)'],
+        'tips': ['Moisturize skin regularly to reduce dryness', 'Avoid known triggers such as stress, smoking, or alcohol', 'Take warm baths with added bath oil or oatmeal', 'Manage stress through mindfulness or relaxation techniques']
     },
     'Impetigo': {
-        'medications': ['Antibiotics (Mupirocin ointment)', 'Oral antibiotics if severe'],
-        'tips': ['Keep affected areas clean', 'Avoid touching affected areas', 'Practice good hygiene']
+        'medications': ['Topical antibiotics (Mupirocin)', 'Oral antibiotics for severe cases (Cephalexin)', 'Antiseptic washes (Chlorhexidine)', 'Topical retapamulin for resistant cases'],
+        'tips': ['Keep the affected area clean and dry', 'Avoid scratching or touching the rash', 'Wash hands frequently to prevent the spread of infection', 'Cover the sores with loose clothing or bandages to prevent contact']
     }
 }
+
 
 
 DATA_PATH = "Training.csv"
@@ -342,6 +367,10 @@ def predictDisease(symptoms):
     input_data = [0] * len(data_dict["symptom_index"])
     for symptom in symptoms:
         no_under=symptom.replace('_',' ')
+
+        if no_under not in data_dict["symptom_index"]:
+         print(f"Symptom '{no_under}' not found in symptom index.")
+
         index = data_dict["symptom_index"][no_under]
         input_data[index] = 1
         
@@ -369,6 +398,7 @@ def predictDisease(symptoms):
 
 #       "final_prediction":final_prediction
 #  }
+    print(f"Predicted disease: {final_prediction}")
     return final_prediction
 # Testing the function
 
@@ -394,7 +424,7 @@ def disease():
         
         # Filter valid symptoms
         valid_symptoms = [symptom for symptom in symptoms if symptom in symptoms_list]
-        print(valid_symptoms)  # For debugging; consider using logging in production
+        print(f"valid_symptoms:{valid_symptoms}")  # For debugging; consider using logging in production
         
         # Ensure at least 3 valid symptoms
         if len(valid_symptoms) < 3:
@@ -406,7 +436,8 @@ def disease():
         # Get disease name from predictions
         disease_name = predictions  # Adjust this based on your prediction function
         medications_data = medications_tips.get(disease_name, {})
-        
+        print(f"Predicted Disease: {disease_name}, Medications Data: {medications_data}") 
+       
         return jsonify({
             "predicted_disease": disease_name, 
             "medications": medications_data.get("medications", []), 
@@ -422,12 +453,21 @@ def disease():
 @app.route('/medications', methods=["GET"])
 def medications():
     disease = request.args.get("disease")
+    # Normalize the input to ensure consistent formatting
+    normalized_disease = disease.strip().lower().replace(' ', '_')
+    
+    # Debug print
+    print(f"Received request for disease: {normalized_disease}")
+    print("Available diseases:", list(medications_tips.keys()))
 
-    # Check if the disease exists in the medications_tips dictionary
-    if disease in medications_tips:
-        return jsonify(medications_tips[disease])
-    else:
-        return jsonify({"error": "Disease not found."}), 404
+    # Check against the normalized keys in the dictionary
+    for key in medications_tips.keys():
+        normalized_key = key.lower().replace(' ', '_')
+        if normalized_key == normalized_disease:
+            return jsonify(medications_tips[key])
+
+    return jsonify({"error": "Disease not found."}), 404
+
 
 
 @app.route('/doctors', methods=["GET"])
