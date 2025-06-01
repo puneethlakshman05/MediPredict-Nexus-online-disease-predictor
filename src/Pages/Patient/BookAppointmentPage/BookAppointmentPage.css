@@ -1,0 +1,168 @@
+/* BookAppointmentPage.css */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #2d2d2d; /* Dark gray for text */
+  background: linear-gradient(135deg, #ffebcc, #ccffeb); /* Light peach to soft mint gradient */
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appointment-container {
+  width: 100%;
+  max-width: 390px; /* Unchanged from previous update */
+  margin: 15px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff7e6, #f0fff4); /* Soft cream gradient */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appointment-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  font-size: 1.4rem;
+  background: linear-gradient(90deg, #6b48ff, #a48bff); /* Gradient text for heading */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-wrapper {
+  width: 100%;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #3a3a3a;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.input-field {
+  width: 100%;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  border: none;
+  border-bottom: 1.5px solid #ff8787; /* Soft coral baseline */
+  background: transparent;
+  box-sizing: border-box;
+  transition: border-bottom-color 0.3s ease;
+  color: #2d2d2d;
+}
+
+.input-field[readonly] {
+  background: transparent;
+  cursor: not-allowed;
+  border-bottom: 1.5px dashed #ff8787;
+}
+
+.input-field:focus {
+  outline: none;
+  border-bottom-color: #40c4ff; /* Vibrant teal on focus */
+}
+
+.input-field[type="date"],
+.input-field[type="time"],
+.input-field[type="number"],
+.input-field[type="select"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #2d2d2d;
+}
+
+.input-field[type="select"] {
+  padding-right: 20px; /* Space for dropdown arrow */
+  background: url('data:image/svg+xml;utf8,<svg fill="%232d2d2d" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right center;
+}
+
+.form-divider {
+  border: 0;
+  border-top: 1px solid #ff8787; /* Soft coral for horizontal rule */
+  margin: 6px 0;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.appointment-button {
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 100px;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #40c4ff, #0288d1); /* Teal to aqua gradient */
+  color: #fff;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #0288d1, #0277bd);
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background: linear-gradient(135deg, #ff8787, #ff6f61); /* Coral to peach gradient */
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background: linear-gradient(135deg, #ff6f61, #ff5252);
+  transform: translateY(-2px);
+}
+
+.error-message {
+  background-color: #ffe6e6;
+  color: #ff5252;
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .appointment-container {
+    max-width: 85%;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .input-field {
+    padding: 5px 0;
+  }
+
+  .appointment-button {
+    width: 85px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}

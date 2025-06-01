@@ -1,0 +1,322 @@
+/* HeroCarousel.css */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 500px;
+  }
+  
+  .carousel-slides {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  /* HeroSection Slide Styling (First Slide) */
+  .carousel-slide .hero-section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #4c2c69, #7c3aed);
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+    opacity: 0.2;
+    z-index: -1;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  .hero-section p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-in-out 0.3s forwards;
+  }
+  
+  .hero-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease-in-out 0.6s forwards;
+  }
+  
+  .hero-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Image Slides Styling */
+  .image-slide {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Caption Styling */
+  .carousel-caption {
+    position: absolute;
+    bottom: 60px; /* Adjusted to account for indicators */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    animation: slideInUp 1s ease-in-out;
+  }
+  
+  .carousel-caption h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 500;
+  }
+  
+  /* Navigation Arrows */
+  .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background:none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+    border-radius: 50%;
+  }
+  
+  .carousel-control.prev {
+    left: 10px;
+  }
+  
+  .carousel-control.next {
+    right: 10px;
+  }
+  
+  .carousel-control:hover {
+    background: rgba(0, 0, 0, 0.699);
+    transform: translateY(-50%) scale(1.1); /* Scale animation on hover */
+  }
+  
+  /* Indicators */
+  .carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    right: 20px; /* Moved to the right */
+    left: auto; /* Override centering */
+    transform: none; /* Remove centering transform */
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+  }
+  
+  .indicator {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .indicator.active {
+    background: #fff;
+    animation: pulse 1.5s infinite ease-in-out; /* Pulse animation for active dot */
+  }
+  
+  .indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    50% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .hero-carousel {
+      height: 400px;
+    }
+  
+    .carousel-slide .hero-section {
+      padding: 40px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 2.2rem;
+    }
+  
+    .hero-section p {
+      font-size: 1.1rem;
+    }
+  
+    .hero-btn {
+      padding: 10px 25px;
+      font-size: 1rem;
+    }
+  
+    .carousel-caption h3 {
+      font-size: 1.3rem;
+    }
+  
+    .carousel-control {
+      font-size: 1.5rem;
+      padding: 8px 12px;
+    }
+  
+    .indicator {
+      width: 10px;
+      height: 10px;
+    }
+  
+    .carousel-indicators {
+      right: 15px;
+      bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-carousel {
+      height: 350px;
+    }
+  
+    .carousel-slide .hero-section {
+      padding: 30px 0;
+    }
+  
+    .hero-section h1 {
+      font-size: 1.8rem;
+    }
+  
+    .hero-section p {
+      font-size: 1rem;
+    }
+  
+    .hero-btn {
+      padding: 8px 20px;
+      font-size: 0.9rem;
+    }
+  
+    .carousel-caption h3 {
+      font-size: 1.1rem;
+    }
+  
+    .carousel-control {
+      font-size: 1.2rem;
+      padding: 6px 10px;
+    }
+  
+    .indicator {
+      width: 8px;
+      height: 8px;
+    }
+  
+    .carousel-indicators {
+      right: 10px;
+      bottom: 8px;
+    }
+  }

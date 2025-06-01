@@ -15,7 +15,7 @@ function Carousel() {
       <BootstrapCarousel.Item>
         <img className="d-block w-100" src={image2} alt="Second slide" />
         <BootstrapCarousel.Caption>
-          <h3 classname="caption">A computer can become your online Health checker</h3>
+          <h3 className="caption">A computer can become your online Health checker</h3>
         </BootstrapCarousel.Caption>
       </BootstrapCarousel.Item>
       <BootstrapCarousel.Item>

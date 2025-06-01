@@ -1,0 +1,230 @@
+/* Ensure the page background doesn't interfere */
+:root {
+  background: transparent !important;
+}
+
+.appointments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 20px 0 20px;
+  background: transparent !important;
+}
+
+h1 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #e8ecea;
+}
+
+.message {
+  background-color: #e2e8f0;
+  color: #4c2c69;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #c53030;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.delete-button {
+  background: linear-gradient(135deg, #1a5e2e, #2e8b57);
+  color: #fff;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.delete-icon {
+  font-size: 0.9rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirm-modal {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.confirm-title {
+  font-size: 1.4rem;
+  color: #4c2c69;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.confirm-text {
+  font-size: 1rem;
+  color: #374151;
+  margin-bottom: 20px;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.yes-button {
+  background: linear-gradient(135deg, #2dd4bf, #22d3ee);
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+}
+
+.no-button {
+  background-color: #6b7280;
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.approve-button {
+  background-color: var(--success-color);
+  color: #fff;
+  margin-right: 10px;
+}
+
+.approve-button:hover {
+  background-color: #4ade80;
+}
+
+.reject-button {
+  background-color: #c53030;
+  color: #fff;
+}
+
+.reject-button:hover {
+  background-color: #991b1b;
+}
+
+.button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 15px 15px 0 15px;
+  }
+
+  table {
+    font-size: 0.85rem;
+    max-width: 90%;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .approve-button,
+  .reject-button,
+  .delete-button {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    max-width: 100%;
+  }
+}

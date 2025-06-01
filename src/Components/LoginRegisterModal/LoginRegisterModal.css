@@ -1,86 +1,318 @@
-/* src/Components/LoginRegisterModal/LoginRegisterModal.css */
-
-.modal-background {
+/* Login Modal CSS */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* Removed align-items: center to prevent centering conflict */
+  z-index: 11000 !important; /* Increased and reinforced to ensure overlay is above all elements */
+  background-color: rgba(0, 0, 0, 0.5) !important; /* Reinforced semi-transparent grey background */
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
-/* Transition for smooth appearance */
-.modal-container {
-  background-color: white;
+.login-modal-container {
+  background: linear-gradient(135deg, #f9fafb, #e5e7eb);
+  border-radius: 20px;
   padding: 30px;
-  border-radius: 10px;
-  width: 500px;
-  max-width: 90%;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform: translateY(-30px); /* Initial state for animation */
-  opacity: 0; /* Initial state for animation */
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 500px;
+  max-height: 80vh; /* Limit height to 80% of viewport height */
+  margin: 0; /* Removed margin, using padding-top on parent instead */
+  margin-bottom: 20px; /* Small margin at bottom for spacing */
 }
 
-/* Add a class to show the modal */
-.modal-container.show {
-  transform: translateY(0);
-  opacity: 1;
+.dark-mode .login-modal-container {
+  background: linear-gradient(135deg, #2d3748, #1f2937);
+  color: #e2e8f0;
+}
+
+.modal-body-content {
+  padding: 0;
+  width: 100%;
 }
 
 .close-btn {
   position: absolute;
   top: 15px;
-  right: 20px;
+  right: 15px;
+  font-size: 1.3rem;
+  color: #6b7280;
   background: none;
   border: none;
-  font-size: 1.5rem;
-  cursor: pointer; /* Added cursor pointer */
-  color: #aaa; /* Default color */
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-/* Close button hover effect */
 .close-btn:hover {
-  color: #ff0000; /* Change to your desired hover color */
+  color: #1f2937;
 }
 
-.form-toggle {
+.dark-mode .close-btn {
+  color: #9ca3af;
+}
+
+.dark-mode .close-btn:hover {
+  color: #fff;
+}
+
+.theme-toggle-icon {
+  color: #6b7280;
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle-icon:hover {
+  color: #1f2937;
+}
+
+.dark-mode .theme-toggle-icon {
+  color: #9ca3af;
+}
+
+.dark-mode .theme-toggle-icon:hover {
+  color: #fff;
+}
+
+.modal-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-title-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #4c2c69;
+  margin: 0;
+}
+
+.dark-mode .modal-title-text {
+  color: #a5b4fc;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .input-group {
+  background: #4b5563;
+  border-color: #6b7280;
+}
+
+.input-icon {
+  padding: 12px;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+.dark-mode .input-icon {
+  color: #d1d5db;
+}
+
+.eye-icon {
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.eye-icon:hover {
+  color: #4c2c69;
+}
+
+.dark-mode .eye-icon:hover {
+  color: #a5b4fc;
+}
+
+.icon-click {
+  background-color: transparent;
+  border-left: none;
+  cursor: pointer;
+}
+
+input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  background: transparent;
+  outline: none;
+  color: #374151;
+}
+
+.dark-mode input {
+  color: #e2e8f0;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #c53030;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.button-group {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
-}
-
-.form-toggle .btn {
-  margin: 0 5px;
-  transition: background-color 0.3s, color 0.3s; /* Button transition */
-}
-
-/* Button hover effect */
-.form-toggle .btn:hover {
-  background-color: #007bff; /* Change to your desired hover color */
-  color: white; /* Change text color on hover */
-}
-
-.submit-btn {
+  gap: 15px;
   margin-top: 10px;
+  width: 100%;
 }
 
-/* Focus styles for accessibility */
-.btn:focus,
-input:focus {
-  outline: 2px solid #007bff; /* Outline color on focus */
-  outline-offset: 2px; /* Space between outline and element */
+.custom-btn,
+.forgot-btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  text-align: center;
+  display: inline-block;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .modal-container {
-    padding: 20px; /* Reduce padding on small screens */
+.custom-btn {
+  background: linear-gradient(135deg, #7c3aed, #8c5db8);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+}
+
+.forgot-btn {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(107, 114, 128, 0.3);
+}
+
+.custom-btn:hover,
+.forgot-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.custom-btn:hover {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+}
+
+.forgot-btn:hover {
+  background: linear-gradient(135deg, #5a6268, #6b7280);
+}
+
+.switch-link {
+  margin-top: 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: #374151;
+}
+
+.switch-link span {
+  color: #7c3aed;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.switch-link span:hover {
+  color: #4c2c69;
+}
+
+.dark-mode .switch-link {
+  color: #d1d5db;
+}
+
+.dark-mode .switch-link span {
+  color: #a5b4fc;
+}
+
+.dark-mode .switch-link span:hover {
+  color: #fff;
+}
+
+.zoom-on-hover {
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding-top: 50px; /* Adjust for navbar height (50px) */
   }
 
-  .modal-container h2 {
-    font-size: 1.5rem; /* Adjust heading size for mobile */
+  .login-modal-container {
+    max-height: 70vh; /* Slightly smaller on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding-top: 45px; /* Adjust for navbar height (45px) */
+  }
+
+  .login-modal-container {
+    max-width: 90%;
+    padding: 20px;
+    min-height: 450px;
+    max-height: 60vh; /* Further limit height on small screens */
+  }
+
+  .modal-title-text {
+    font-size: 1.4rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .custom-btn,
+  .forgot-btn {
+    padding: 10px 25px;
+    width: 100%;
   }
 }

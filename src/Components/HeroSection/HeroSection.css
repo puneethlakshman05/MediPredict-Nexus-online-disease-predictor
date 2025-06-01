@@ -1,20 +1,127 @@
+/* HeroSection.css */
 .hero-section {
-  text-align: center;
-  padding: 50px 0;
-  background-color: #f0f0f0;
+  position: relative;
   width: 100%;
+  padding: 60px 0; /* Reduced from 80px 0 to minimize gap */
+  background: linear-gradient(135deg, #4c2c69, #7c3aed);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .hero-section h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeInDown 1s ease-in-out;
 }
 
 .hero-section p {
-  font-size: 1.2rem;
-  margin: 20px 0;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  opacity: 0.9;
+  animation: fadeInUp 1s ease-in-out 0.3s forwards;
 }
 
-.hero-section .btn {
-  background-color: #4caf50;
-  color: white;
+.hero-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 1s ease-in-out 0.6s forwards;
+}
+
+.hero-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0; /* Further reduced padding */
+  }
+
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-section p {
+    font-size: 1.1rem;
+  }
+
+  .hero-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 30px 0; /* Further reduced padding */
+  }
+
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .hero-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
 }

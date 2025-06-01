@@ -1,13 +1,13 @@
 // src/Pages/Home/Home.jsx
 import React from 'react';
-import CarouselComponent from '../../Components/Carousel/Carousel';
-import HeroSection from '../../Components/HeroSection/HeroSection';
+
+import HeroCarousel from '../../Components/HeroCarousel/HeroCarousel';
 
 const Home = () => {
   return (
     <>
-      <CarouselComponent />
-      <HeroSection />
+      
+      <HeroCarousel />
     </>
   );
 };

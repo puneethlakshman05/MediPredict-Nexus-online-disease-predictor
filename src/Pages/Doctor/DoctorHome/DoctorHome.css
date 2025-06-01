@@ -1,0 +1,72 @@
+:root {
+    --primary-color: #1a3c5e;
+    --secondary-color: #2a6ea6;
+    --success-color: #38a169;
+    --text-color: #333;
+    --background-color: #e6edf3;
+    --card-background: #ffffff;
+    --border-color: #d1d9e0;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+  }
+  
+  p.welcome {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  
+  .button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .button-primary {
+    background-color: var(--secondary-color);
+    color: #fff;
+  }
+  
+  .button-primary:hover {
+    background-color: #1e4978;
+    transform: translateY(-2px);
+  }
+  
+  .button-success {
+    background-color: var(--success-color);
+    color: #fff;
+  }
+  
+  .button-success:hover {
+    background-color: #2f855a;
+    transform: translateY(-2px);
+  }
