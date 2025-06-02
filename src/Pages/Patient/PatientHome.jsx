@@ -236,6 +236,7 @@ function PatientSymptoms() {
       )}
     </Container>
       )
+      
   );
 
 
