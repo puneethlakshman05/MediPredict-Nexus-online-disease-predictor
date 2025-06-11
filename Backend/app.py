@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -20,17 +20,16 @@ from bson import ObjectId
 import datetime
 import re
 from datetime import timedelta
-import uuid  # For generating reset tokens
+import uuid
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # JWT Config
-app.config["JWT_SECRET_KEY"] = "your_secret_key"
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
 jwt = JWTManager(app)
-
-
-
 
 # MongoDB Connection
 try:
@@ -43,32 +42,21 @@ try:
     notifications_collection = db["notifications"]
     reset_tokens_collection = db["reset_tokens"]
 
-    # Set up TTL index for notifications_collection to auto-delete after 24 hours
+    # Set up TTL index for notifications_collection
     notifications_collection.create_index("expires_at", expireAfterSeconds=0)
 except Exception as e:
     print(f"MongoDB connection error: {e}")
     raise
 
-
-# Create a TTL index on the expires_at field for automatic deletion after 24 hours
-try:
-    notifications_collection.create_index("expires_at", expireAfterSeconds=0)
-    print("TTL index created on expires_at field for notifications_collection.")
-except Exception as e:
-    print(f"Error creating TTL index: {e}")
-
-# Ensure existing notifications have an expires_at field
+# Ensure existing notifications have expires_at
 try:
     current_time = datetime.datetime.utcnow()
     notifications_collection.update_many(
-        {"expires_at": {"$exists": False}},  # Find notifications missing expires_at
-        {"$set": {
-            "expires_at": current_time + timedelta(hours=24)
-        }}
+        {"expires_at": {"$exists": False}},
+        {"$set": {"expires_at": current_time + timedelta(hours=24)}}
     )
-    print("Updated existing notifications with expires_at field.")
 except Exception as e:
-    print(f"Error updating existing notifications: {e}")
+    print(f"Error updating notifications: {e}")
 
 # Load and preprocess dataset
 try:
@@ -87,7 +75,7 @@ final_svm_model = SVC()
 final_nb_model = GaussianNB()
 final_rf_model = RandomForestClassifier(random_state=18)
 final_dt_model = DecisionTreeClassifier(criterion='entropy', random_state=100)
-final_kn_model = KNeighborsClassifier(n_neighbors=2, p=2)
+final_kn_model = KNeighborsClassifier(n_neighbors=5)
 
 final_svm_model.fit(X, y)
 final_nb_model.fit(X, y)
@@ -113,7 +101,6 @@ def predictDisease(symptoms_list):
                 input_data[symptom_index[key]] = 1
                 break
 
-
     input_data = np.array(input_data).reshape(1, -1)
     preds = [
         final_rf_model.predict(input_data)[0],
@@ -124,13 +111,76 @@ def predictDisease(symptoms_list):
     ]
     return statistics.mode([data_dict["predictions_classes"][p] for p in preds])
 
+# Serve uploaded images
+@app.route('/Uploads/<filename>')
+def serve_uploaded_file(filename):
+    try:
+        return send_from_directory('Uploads', filename)
+    except FileNotFoundError:
+        return jsonify({"error": "File not found"}), 404
+
+# Remove profile photo
+@app.route('/api/remove-profile-photo', methods=['DELETE', 'OPTIONS'])
+@jwt_required()
+def remove_profile_photo():
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        return response, 200
+
+    try:
+        identity = get_jwt_identity()
+        collection = (
+            doctors_collection if identity['role'] == 'doctor' else
+            patients_collection if identity['role'] == 'patient' else
+            admins_collection
+        )
+        user = collection.find_one({'_id': ObjectId(identity['id'])})
+        if not user:
+            print(f"User not found: {identity['id']}")
+            return jsonify({"error": "User not found"}), 404
+
+        profile_photo = user.get('profilePhoto', '')
+        if profile_photo:
+            file_path = os.path.join('Uploads', profile_photo.lstrip('/Uploads/'))
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"File deleted: {file_path}")
+            else:
+                print(f"File not found: {file_path}")
+
+        collection.update_one(
+            {'_id': ObjectId(identity['id'])},
+            {'$set': {'profilePhoto': ''}}
+        )
+        print(f"Profile photo removed for user: {identity['email']}")
+
+        return jsonify({
+            'id': str(user['_id']),
+            'name': user.get('name', ''),
+            'email': user['email'],
+            'role': identity['role'],
+            'profilePhoto': ''
+        }), 200
+    except Exception as e:
+        print(f"Error in remove_profile_photo: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+# Global OPTIONS handler for undefined routes
+@app.route('/<path:path>', methods=['OPTIONS'])
+def handle_options(path):
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+    response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    return response, 200
 
 # Routes
-
 @app.route("/")
 def main():
     return "API is running"
-
 
 @app.route('/api/symptoms', methods=["GET"])
 def get_symptoms():
@@ -150,7 +200,6 @@ def get_disease():
     prediction = predictDisease(valid_symptoms)
     return jsonify({"disease": prediction})
 
-
 @app.route('/api/medications', methods=["GET"])
 def get_medications():
     disease = request.args.get("disease")
@@ -160,16 +209,10 @@ def get_medications():
 @jwt_required()
 def get_doctors():
     try:
-        # Removed role-based condition; any authenticated user can access this endpoint
         specialization = request.args.get('specialization', '').strip()
         query = {}
         if specialization:
-            query = {
-                'specialization': {
-                    '$regex': f'^{specialization}$',
-                    '$options': 'i'
-                }
-            }
+            query = {'specialization': {'$regex': f'^{specialization}$', '$options': 'i'}}
         doctors_cursor = doctors_collection.find(query)
         doctors = []
         for doc in doctors_cursor:
@@ -181,14 +224,13 @@ def get_doctors():
         print(f"Error in get_doctors: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== REGISTRATION ROUTES ==================
-
+# Registration Routes
 @app.route('/register/doctor', methods=['POST'])
 def register_doctor():
     try:
         data = request.json
         if not all(key in data for key in ['name', 'email', 'password', 'specialization']):
-            return jsonify({"error": "Missing required fields: name, email, password, specialization"}), 400
+            return jsonify({"error": "Missing required fields"}), 400
 
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(email_regex, data['email']):
@@ -204,7 +246,8 @@ def register_doctor():
             "password": hashed_pw.decode('utf-8'),
             "specialization": data["specialization"],
             "role": "doctor",
-            "created_at": datetime.datetime.utcnow()
+            "created_at": datetime.datetime.utcnow(),
+            "profilePhoto": ""
         }
         result = doctors_collection.insert_one(doctor)
         return jsonify({"message": "Doctor registered successfully", "id": str(result.inserted_id)}), 201
@@ -217,7 +260,7 @@ def register_patient():
     try:
         data = request.json
         if not all(key in data for key in ['name', 'email', 'password']):
-            return jsonify({"error": "Missing required fields: name, email, password"}), 400
+            return jsonify({"error": "Missing required fields"}), 400
 
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(email_regex, data['email']):
@@ -232,7 +275,8 @@ def register_patient():
             "email": data["email"],
             "password": hashed_pw.decode('utf-8'),
             "role": "patient",
-            "created_at": datetime.datetime.utcnow()
+            "created_at": datetime.datetime.utcnow(),
+            "profilePhoto": ""
         }
         result = patients_collection.insert_one(patient)
         return jsonify({"message": "Patient registered successfully", "id": str(result.inserted_id)}), 201
@@ -245,7 +289,7 @@ def register_admin():
     try:
         data = request.get_json()
         if not all(key in data for key in ['email', 'password']):
-            return jsonify({"error": "Missing required fields: email, password"}), 400
+            return jsonify({"error": "Missing required fields"}), 400
 
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(email_regex, data['email']):
@@ -259,49 +303,64 @@ def register_admin():
             "email": data["email"],
             "password": hashed_pw,
             "role": "admin",
-            "created_at": datetime.datetime.utcnow()
+            "created_at": datetime.datetime.utcnow(),
+            "profilePhoto": ""
         })
         return jsonify({"message": "Admin registered successfully"}), 201
     except Exception as e:
         print(f"Error in register_admin: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== LOGIN ROUTE WITH JWT ==================
-
-@app.route('/login/<role>', methods=['POST'])
+# Login Route
+@app.route('/login/<role>', methods=['POST', 'OPTIONS'])
 def login(role):
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        return response, 200
+
     try:
         data = request.json
+        if not data or not isinstance(data, dict):
+            return jsonify({"error": "Invalid request body"}), 400
+
         email = data.get("email")
         password = data.get("password")
+
+        if not email or not password:
+            return jsonify({"error": "Email and password are required"}), 400
 
         if role not in ['doctor', 'patient', 'admin']:
             return jsonify({"error": "Invalid role"}), 400
 
         collection = db[f"{role}s"] if role != 'admin' else admins_collection
         user = collection.find_one({"email": email})
+
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
             token = create_access_token(
                 identity={"id": str(user["_id"]), "email": user["email"], "role": role},
-                expires_delta=timedelta(hours=24)  # 24-hour expiration
+                expires_delta=timedelta(hours=24)
             )
             response = {
                 "id": str(user["_id"]),
                 "email": user["email"],
+                "name": user.get("name", ""),
                 "role": role,
-                "token": token
+                "token": token,
+                "profilePhoto": user.get("profilePhoto", "")
             }
-            if role != 'admin':
-                response["name"] = user.get("name")
+            if role == "doctor":
+                response["specialization"] = user.get("specialization", "")
             return jsonify(response), 200
 
         return jsonify({"error": "Invalid credentials"}), 401
     except Exception as e:
-        print(f"Error in login: {e}")
+        print(f"Error in login for role {role}, email {email}: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== FORGOT PASSWORD AND RESET PASSWORD ==================
-
+# Forgot Password and Reset Password
 @app.route('/api/forgot-password', methods=['POST'])
 def forgot_password():
     try:
@@ -310,12 +369,10 @@ def forgot_password():
         if not email:
             return jsonify({"error": "Email is required"}), 400
 
-        # Validate email format
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(email_regex, email):
             return jsonify({"error": "Invalid email format"}), 400
 
-        # Check if user exists in any collection
         user = None
         role = None
         for collection_name, collection in [("doctors", doctors_collection), ("patients", patients_collection), ("admins", admins_collection)]:
@@ -327,17 +384,15 @@ def forgot_password():
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # Generate a reset token
         reset_token = str(uuid.uuid4())
         reset_token_doc = {
             "email": email,
             "token": reset_token,
             "created_at": datetime.datetime.utcnow(),
-            "expires_at": datetime.datetime.utcnow() + timedelta(hours=1)  # Token expires in 1 hour
+            "expires_at": datetime.datetime.utcnow() + timedelta(hours=1)
         }
         reset_tokens_collection.insert_one(reset_token_doc)
 
-        # Return the token to the frontend
         return jsonify({"message": "Proceed to reset password", "token": reset_token}), 200
     except Exception as e:
         print(f"Error in forgot_password: {e}")
@@ -354,7 +409,6 @@ def reset_password():
         if not all([email, token, new_password]):
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Validate the reset token
         reset_token_doc = reset_tokens_collection.find_one({
             "email": email,
             "token": token,
@@ -363,7 +417,6 @@ def reset_password():
         if not reset_token_doc:
             return jsonify({"error": "Invalid or expired token"}), 400
 
-        # Find the user in any collection
         user = None
         collection = None
         for coll_name, coll in [("doctors", doctors_collection), ("patients", patients_collection), ("admins", admins_collection)]:
@@ -375,14 +428,12 @@ def reset_password():
         if not user:
             return jsonify({"error": "User not found"}), 404
 
-        # Update the password
         hashed_pw = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
         collection.update_one(
             {"email": email},
             {"$set": {"password": hashed_pw.decode('utf-8')}}
         )
 
-        # Delete the used reset token
         reset_tokens_collection.delete_one({"email": email, "token": token})
 
         return jsonify({"message": "Password reset successful"}), 200
@@ -390,8 +441,7 @@ def reset_password():
         print(f"Error in reset_password: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== APPOINTMENTS ==================
-
+# Appointments
 @app.route('/api/appointments', methods=['POST'])
 @jwt_required()
 def create_appointment():
@@ -402,20 +452,18 @@ def create_appointment():
             if 'patientName' in data and 'firstName' not in data:
                 data['firstName'], data['lastName'] = data['patientName'].split(' ', 1) if ' ' in data['patientName'] else (data['patientName'], '')
             else:
-                return jsonify({"error": "Missing required fields: " + ", ".join(field for field in required_fields if field not in data)}), 400
+                return jsonify({"error": "Missing required fields"}), 400
 
-        # Validate email
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if not re.match(email_regex, data['patientEmail']):
             return jsonify({"error": "Invalid email format"}), 400
 
-        # Validate age
         try:
             age = int(data['age'])
             if age < 0 or age > 100:
                 return jsonify({"error": "Age must be between 0 and 100"}), 400
         except (ValueError, TypeError):
-            return jsonify({"error": "Invalid age: must be a valid number"}), 400
+            return jsonify({"error": "Invalid age"}), 400
 
         appointment = {
             "firstName": data['firstName'],
@@ -438,9 +486,6 @@ def create_appointment():
         result = appointments_collection.insert_one(appointment)
         appointment['_id'] = str(result.inserted_id)
 
-        print(f"Appointment created: {appointment['_id']} for {data['patientEmail']} by {get_jwt_identity()['email']}")
-
-        # Create notification for patientEmail with expiration
         current_time = datetime.datetime.utcnow()
         notifications_collection.insert_one({
             "patient_email": data['patientEmail'],
@@ -449,7 +494,7 @@ def create_appointment():
             "status": "pending",
             "read": False,
             "created_at": current_time,
-            "expires_at": current_time + timedelta(hours=24)  # Set to expire after 24 hours
+            "expires_at": current_time + timedelta(hours=24)
         })
 
         return jsonify({"message": "Appointment booked", "appointment": appointment}), 201
@@ -512,7 +557,6 @@ def respond_to_appointment(appointment_id):
             print(f"Appointment not found: {appointment_id}")
             return jsonify({"error": "Appointment not found"}), 404
 
-        # Update notification for patientEmail only
         appointment = appointments_collection.find_one({'_id': appointment_obj_id})
         current_time = datetime.datetime.utcnow()
         notifications_collection.update_one(
@@ -523,12 +567,11 @@ def respond_to_appointment(appointment_id):
                     'status': status,
                     'read': False,
                     'created_at': current_time,
-                    'expires_at': current_time + timedelta(hours=24)  # Set to expire after 24 hours
+                    'expires_at': current_time + timedelta(hours=24)
                 }
             },
             upsert=True
         )
-        print(f"Notification updated for {appointment['patientEmail']}: Your appointment with Dr. {appointment['doctorName']} on {appointment['date']} has been {status}.")
 
         return jsonify({"message": f"Appointment {status}"}), 200
     except Exception as e:
@@ -546,27 +589,22 @@ def delete_appointment(appointment_id):
         return response, 200
 
     try:
-        # Validate appointment_id
         if not appointment_id or appointment_id.lower() == 'undefined':
             return jsonify({"error": "Invalid appointment ID"}), 400
 
         try:
             object_id = ObjectId(appointment_id)
-        except Exception as e:
-            print(f"Invalid appointment_id format: {appointment_id}, Error: {e}")
+        except Exception:
             return jsonify({"error": "Invalid appointment ID format"}), 400
 
-        # Check if the appointment exists
         appointment = appointments_collection.find_one({'_id': object_id})
         if not appointment:
             return jsonify({"error": "Appointment not found"}), 404
 
-        # Delete the appointment
         result = appointments_collection.delete_one({'_id': object_id})
         if result.deleted_count == 0:
             return jsonify({"error": "Failed to delete appointment"}), 500
 
-        # Delete associated notifications
         notifications_collection.delete_many({'appointment_id': appointment_id})
 
         return jsonify({"message": "Appointment deleted successfully"}), 200
@@ -590,8 +628,7 @@ def get_doctor_appointments():
         print(f"Error in get_doctor_appointments: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== NOTIFICATIONS ==================
-
+# Notifications
 @app.route('/api/notifications', methods=['POST'])
 @jwt_required()
 def create_notification():
@@ -601,13 +638,12 @@ def create_notification():
         if not all(field in data for field in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Check if a notification already exists for this appointment and patient
         existing_notification = notifications_collection.find_one({
             'patient_email': data['patientEmail'],
             'appointment_id': data['appointmentId']
         })
         if existing_notification:
-            return jsonify({"error": "A notification for this appointment already exists"}), 409
+            return jsonify({"error": "Notification already exists"}), 409
 
         current_time = datetime.datetime.utcnow()
         notification = {
@@ -617,7 +653,7 @@ def create_notification():
             "status": data.get('status', 'pending'),
             "read": data.get('read', False),
             "created_at": current_time,
-            "expires_at": current_time + timedelta(hours=24)  # Set to expire after 24 hours
+            "expires_at": current_time + timedelta(hours=24)
         }
         result = notifications_collection.insert_one(notification)
         notification['_id'] = str(result.inserted_id)
@@ -658,13 +694,12 @@ def mark_notification_read(notification_id):
         if result.matched_count == 0:
             print(f"Notification not found: {notification_id}")
             return jsonify({"error": "Notification not found"}), 404
-        print(f"Notification marked as read: {notification_id}")
         return jsonify({"message": "Notification marked as read"}), 200
     except Exception as e:
         print(f"Error in mark_notification_read: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# =================DOCTOR DELETION FROM DOCTOR_LIST===========
+# Doctor Deletion
 @app.route('/api/doctors/<doctor_id>', methods=['DELETE'])
 @jwt_required()
 def delete_doctor(doctor_id):
@@ -673,14 +708,12 @@ def delete_doctor(doctor_id):
         if identity['role'] != 'admin':
             return jsonify({"error": "Unauthorized: Admin access required"}), 403
 
-        # Validate doctor_id
         if not doctor_id or doctor_id.lower() == 'undefined':
             return jsonify({"error": "Invalid doctor ID"}), 400
 
         try:
             object_id = ObjectId(doctor_id)
-        except Exception as e:
-            print(f"Invalid doctor_id format: {doctor_id}, Error: {e}")
+        except Exception:
             return jsonify({"error": "Invalid doctor ID format"}), 400
 
         result = doctors_collection.delete_one({'_id': object_id})
@@ -692,7 +725,7 @@ def delete_doctor(doctor_id):
         print(f"Error in delete_doctor: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# =================PATIENTS ENTRY TO PATIENT_LIST===========
+# Patients
 @app.route('/api/patients', methods=['GET'])
 @jwt_required()
 def get_patients():
@@ -712,7 +745,6 @@ def get_patients():
         print(f"Error in get_patients: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== DELETING PATIENTS FROM PATIENT_LIST ==================
 @app.route('/api/patients/<patient_id>', methods=['DELETE'])
 @jwt_required()
 def delete_patient(patient_id):
@@ -721,14 +753,12 @@ def delete_patient(patient_id):
         if identity['role'] != 'admin':
             return jsonify({"error": "Unauthorized: Admin access required"}), 403
 
-        # Validate patient_id
         if not patient_id or patient_id.lower() == 'undefined':
             return jsonify({"error": "Invalid patient ID"}), 400
 
         try:
             object_id = ObjectId(patient_id)
-        except Exception as e:
-            print(f"Invalid patient_id format: {patient_id}, Error: {e}")
+        except Exception:
             return jsonify({"error": "Invalid patient ID format"}), 400
 
         result = patients_collection.delete_one({'_id': object_id})
@@ -740,14 +770,79 @@ def delete_patient(patient_id):
         print(f"Error in delete_patient: {e}")
         return jsonify({"error": "Internal server error"}), 500
 
-# ================== CURRENT USER (VIA JWT) ==================
+# Profile Update
+@app.route('/api/update-profile', methods=['POST', 'OPTIONS'])
+@jwt_required()
+def update_profile():
+    if request.method == 'OPTIONS':
+        response = make_response()
+        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        return response, 200
 
+    try:
+        identity = get_jwt_identity()
+        collection = (
+            doctors_collection if identity['role'] == 'doctor' else
+            patients_collection if identity['role'] == 'patient' else
+            admins_collection
+        )
+        user = collection.find_one( {'_id': ObjectId(identity['id'])})
+        if not user:
+            print(f"User not found: {identity['id']}")
+            return jsonify({"error": "User not found"}), 404
+
+        name = request.form.get('name', user.get('name', ''))
+        photo = request.files.get('photo')
+        if not name and not photo:
+            return jsonify({"error": "At least one field (name or photo) is required"}), 400
+
+        profile_photo = user.get('profilePhoto', '')
+        if photo:
+            if not photo.filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                return jsonify({"error": "Invalid file type. Only JPEG, PNG, GIF allowed."}), 400
+            if len(photo.read()) > 5 * 1024 * 1024:
+                return jsonify({"error": "File size must be less than 5MB."}), 400
+            photo.seek(0)
+
+            upload_folder = 'Uploads'
+            os.makedirs(upload_folder, exist_ok=True)
+            filename = secure_filename(
+                f"{identity['id']}_{datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{photo.filename}"
+            )
+            photo_path = os.path.join(upload_folder, filename)
+            photo.save(photo_path)
+            profile_photo = f"/Uploads/{filename}"
+            print(f"Photo uploaded: {profile_photo}")
+
+        collection.update_one(
+            {'_id': ObjectId(identity['id'])},
+            {'$set': {'name': name, 'profilePhoto': profile_photo}}
+        )
+
+        return jsonify({
+            'id': str(user['_id']),
+            "name": name,
+            "email": user["email"],
+            "role": identity["role"],
+            "profilePhoto": profile_photo
+        }), 200
+    except Exception as e:
+        print(f"Error in update_profile: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+# Current User
 @app.route('/api/me', methods=['GET'])
 @jwt_required()
 def get_current_user():
     try:
         identity = get_jwt_identity()
-        collection = doctors_collection if identity['role'] == 'doctor' else patients_collection if identity['role'] == 'patient' else admins_collection
+        collection = (
+            doctors_collection if identity['role'] == 'doctor' else
+            patients_collection if identity['role'] == 'patient' else
+            admins_collection
+        )
         user = collection.find_one({'_id': ObjectId(identity['id'])})
         if not user:
             return jsonify({"error": "User not found"}), 404
@@ -755,10 +850,12 @@ def get_current_user():
             "id": str(user["_id"]),
             "email": user["email"],
             "role": identity["role"],
-            "name": user.get("name", "")
+            "name": user.get("name", ""),
+            "profilePhoto": user.get("profilePhoto", "")
         }), 200
     except Exception as e:
         print(f"Error in get_current_user: {e}")
         return jsonify({"error": "Unauthorized or invalid token"}), 401
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

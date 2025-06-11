@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 import LoginRegisterModal from './Components/LoginRegisterModal/LoginRegisterModal';
+import Sidebar from './Components/Sidebar/Sidebar';
+import ProfileModal from './Components/ProfileModal/ProfileModal';
 import Home from './Pages/Home/Home';
 import AdminHome from './Pages/Admin/AdminHome';
 import DoctorHome from './Pages/Doctor/DoctorHome/DoctorHome';
@@ -14,6 +17,7 @@ import PatientAppointments from './Pages/Patient/PatientAppointments/PatientAppo
 import Appointments from './Pages/Doctor/Appointments/Appointments';
 import DoctorsList from './Pages/Admin/DoctorsList';
 import PatientsList from './Pages/Admin/PatientList';
+import PropTypes from 'prop-types';
 
 class ErrorBoundary extends React.Component {
   state = { hasError: false };
@@ -28,10 +32,23 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
 function App() {
-  const [user, setUser] = useState({ isLoggedIn: false, role: '', email: '', id: '', token: '' });
+  const [user, setUser] = useState({
+    isLoggedIn: false,
+    role: '',
+    email: '',
+    id: '',
+    token: '',
+    name: '',
+    profilePhoto: ''
+  });
   const [showModal, setShowModal] = useState(false);
   const [modalRole, setModalRole] = useState('');
+  const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
 
   const fetchUserWithToken = useCallback(async (token) => {
@@ -55,25 +72,47 @@ function App() {
     if (storedUser?.token) {
       fetchUserWithToken(storedUser.token).then(data => {
         if (data) {
-          setUser({ ...data, isLoggedIn: true, token: storedUser.token });
-          localStorage.setItem('user', JSON.stringify({ ...data, token: storedUser.token }));
+          const updatedUser = {
+            isLoggedIn: true,
+            role: data.role || '',
+            email: data.email || '',
+            id: data.id || '',
+            token: storedUser.token,
+            name: data.name || '',
+            profilePhoto: data.profilePhoto || ''
+          };
+          setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
         } else {
-          setUser({ isLoggedIn: false, role: '', email: '', id: '', token: '' });
+          setUser({
+            isLoggedIn: false,
+            role: '',
+            email: '',
+            id: '',
+            token: '',
+            name: '',
+            profilePhoto: ''
+          });
         }
       });
     }
   }, [fetchUserWithToken]);
 
-  useEffect(() => {
-    console.log('Modal state updated:', { showModal, modalRole });
-  }, [showModal, modalRole]);
-
   const handleLoginSuccess = async (authData) => {
     if (authData?.token) {
       const userData = await fetchUserWithToken(authData.token);
       if (userData) {
-        setUser({ ...userData, isLoggedIn: true, token: authData.token });
-        localStorage.setItem('user', JSON.stringify({ ...userData, token: authData.token }));
+        const updatedUser = {
+          isLoggedIn: true,
+          role: authData.role || '',
+          email: userData.email || '',
+          id: userData.id || '',
+          token: authData.token,
+          name: userData.name || '',
+          profilePhoto: userData.profilePhoto || ''
+        };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
       }
       setShowModal(false);
       setModalRole('');
@@ -83,11 +122,29 @@ function App() {
   };
 
   const handleLogout = () => {
-    setUser({ isLoggedIn: false, role: '', email: '', id: '', token: '' });
+    setUser({
+      isLoggedIn: false,
+      role: '',
+      email: '',
+      id: '',
+      token: '',
+      name: '',
+      profilePhoto: ''
+    });
     localStorage.removeItem('user');
     setShowModal(false);
     setModalRole('');
     navigate('/');
+  };
+
+  const updateUser = (updatedUser) => {
+    const newUser = {
+      ...user,
+      name: updatedUser.name || user.name,
+      profilePhoto: updatedUser.profilePhoto || user.profilePhoto
+    };
+    setUser(newUser);
+    localStorage.setItem('user', JSON.stringify(newUser));
   };
 
   return (
@@ -98,7 +155,16 @@ function App() {
           handleLogout={handleLogout}
           setShowModal={setShowModal}
           setModalRole={setModalRole}
+          setShowSidebar={setShowSidebar}
+          token={user.token}
         />
+        {showSidebar && (
+          <Sidebar
+            setShowModal={setShowModal}
+            setModalRole={setModalRole}
+            setShowSidebar={setShowSidebar}
+          />
+        )}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -138,7 +204,7 @@ function App() {
           </Routes>
         </div>
         <Footer />
-        {showModal && (
+        {showModal && modalRole !== 'profile' && (
           <LoginRegisterModal
             role={modalRole}
             onLoginSuccess={handleLoginSuccess}
@@ -146,6 +212,18 @@ function App() {
               setShowModal(false);
               setModalRole('');
             }}
+          />
+        )}
+        {showModal && modalRole === 'profile' && (
+          <ProfileModal
+            show={showModal}
+            onClose={() => {
+              setShowModal(false);
+              setModalRole('');
+            }}
+            user={user}
+            token={user.token}
+            updateUser={updateUser}
           />
         )}
       </div>

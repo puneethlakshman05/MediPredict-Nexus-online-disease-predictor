@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react'; // Removed unused React import
 import axios from 'axios';
 import './LoginRegisterModal.css';
-import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'; // Added for PropTypes validation
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,8 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
-  const [isLogin, setIsLogin] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false); // Removed unused isLogin state
 
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -32,8 +31,6 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
   const [newPassword, setNewPassword] = useState('');
   const [resetToken, setResetToken] = useState('');
   const [mode, setMode] = useState('login'); // login, register, forgot, reset
-
-  const navigate = useNavigate();
 
   const capitalize = (str) => {
     if (!str) return '';
@@ -155,7 +152,6 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
         newPassword
       });
       setMode('login');
-      setIsLogin(true);
       setLoginError('');
       alert('Password reset successful. Please login with your new password.');
       setResetEmail('');
@@ -237,7 +233,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
                 </button>
               </div>
               <div className="switch-link">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '} {/* Escaped single quote */}
                 <span className="zoom-on-hover" onClick={() => setMode('register')}>
                   Register
                 </span>
@@ -395,5 +391,12 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
     </div>
   );
 }
+
+// Added PropTypes validation
+LoginRegisterModal.propTypes = {
+  role: PropTypes.oneOf(['admin', 'doctor', 'patient']).isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default LoginRegisterModal;

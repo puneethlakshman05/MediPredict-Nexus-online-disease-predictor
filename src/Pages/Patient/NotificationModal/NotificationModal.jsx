@@ -1,7 +1,8 @@
-import React from 'react';
+
 import { Modal, Button, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import './NotificationModal.css';
 
@@ -13,11 +14,11 @@ function NotificationModal({ show, onHide, notifications, setNotifications, toke
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setNotifications(notifications.map(notif =>
+      setNotifications(notifications.map((notif) =>
         notif._id === notificationId ? { ...notif, read: true } : notif
       ));
     } catch (err) {
-      console.error('Error marking notification as read:', err);
+      console.error('Error marking notification as read:', err.response?.data || err.message);
     }
   };
 
@@ -31,7 +32,7 @@ function NotificationModal({ show, onHide, notifications, setNotifications, toke
           <p>No notifications available.</p>
         ) : (
           <ListGroup>
-            {notifications.map(notification => (
+            {notifications.map((notification) => (
               <ListGroup.Item
                 key={notification._id}
                 className={notification.read ? 'read' : 'unread'}
@@ -66,5 +67,22 @@ function NotificationModal({ show, onHide, notifications, setNotifications, toke
     </Modal>
   );
 }
+
+NotificationModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  notifications: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+      status: PropTypes.oneOf(['approved', 'rejected']).isRequired,
+      read: PropTypes.bool.isRequired,
+      created_at: PropTypes.string,
+      appointmentId: PropTypes.string,
+    })
+  ).isRequired,
+  setNotifications: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default NotificationModal;

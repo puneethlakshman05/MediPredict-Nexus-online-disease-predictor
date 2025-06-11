@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faTimes } from '@fortawesome/free-solid-svg-icons';
-import NotificationModal from '../NotificationModal/NotificationModal';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 import './PatientHome.css';
 
 function PatientHome({ token }) {
@@ -13,10 +14,6 @@ function PatientHome({ token }) {
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
   const [result, setResult] = useState({ disease: '', medications: [], doctors: [] });
   const [error, setError] = useState('');
-  const [unreadNotifications, setUnreadNotifications] = useState(0);
-  const [notifications, setNotifications] = useState([]);
-  const [showNotificationModal, setShowNotificationModal] = useState(false);
-  const [refreshNotifications, setRefreshNotifications] = useState(0);
   const [showMedications, setShowMedications] = useState(false);
   const [showDoctors, setShowDoctors] = useState(false);
   const [showNoDoctorsModal, setShowNoDoctorsModal] = useState(false);
@@ -30,29 +27,6 @@ function PatientHome({ token }) {
     } catch (err) {
       setError('Failed to load symptoms.');
       console.error('Fetch symptoms error:', err);
-    }
-  }, [token]);
-
-  const fetchNotifications = useCallback(async () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.role === 'patient') {
-      const patientEmail = storedUser.email;
-      console.log('Fetching notifications for:', patientEmail);
-      try {
-        const res = await axios.get(`http://localhost:5000/api/notifications/${patientEmail}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        console.log('Notifications fetched:', res.data);
-        setNotifications(res.data);
-        const unreadCount = res.data.filter(notif => !notif.read).length;
-        setUnreadNotifications(unreadCount);
-      } catch (err) {
-        console.error('Failed to load notifications:', err.response?.data || err.message);
-        setError('Failed to load notifications.');
-      }
-    } else {
-      setError('No logged-in patient found.');
-      console.error('Stored user:', storedUser);
     }
   }, [token]);
 
@@ -97,7 +71,6 @@ function PatientHome({ token }) {
       symptoms: selectedSymptoms.map(s => s.label)
     }));
     navigate('/patient/book-appointment');
-    setRefreshNotifications(prev => prev + 1);
   }, [navigate, result.disease, selectedSymptoms]);
 
   const handleViewMedications = () => {
@@ -141,19 +114,10 @@ function PatientHome({ token }) {
 
   useEffect(() => {
     fetchSymptoms();
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000);
-    return () => clearInterval(interval);
-  }, [fetchSymptoms, fetchNotifications, refreshNotifications]);
+  }, [fetchSymptoms]);
 
   return (
     <div className="patient-home">
-      <div className="notification-container">
-        <div className="notification-icon" onClick={() => setShowNotificationModal(true)}>
-          <FontAwesomeIcon icon={faBell} />
-          {unreadNotifications > 0 && <span className="notification-dot"></span>}
-        </div>
-      </div>
       <h3>Select Symptoms</h3>
       <div className="symptom-select-container">
         <Select
@@ -237,15 +201,12 @@ function PatientHome({ token }) {
           </div>
         </div>
       )}
-      <NotificationModal
-        notifications={notifications}
-        setNotifications={setNotifications}
-        show={showNotificationModal}
-        onHide={() => setShowNotificationModal(false)}
-        token={token}
-      />
     </div>
   );
 }
+
+PatientHome.propTypes = {
+  token: PropTypes.string.isRequired
+};
 
 export default PatientHome;

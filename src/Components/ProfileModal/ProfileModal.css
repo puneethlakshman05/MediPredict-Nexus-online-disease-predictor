@@ -1,0 +1,141 @@
+.profile-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 13000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-modal-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  width: 400px;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0,0, 0,0.2);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.close-btn:hover {
+  color: #1f2937;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.input-icon {
+  padding: 12px;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  background: transparent;
+  outline: none;
+  color: #374151;
+}
+
+input::placeholder {
+  color: placeholder;
+}
+
+.photo-preview {
+  width: 100px;
+  height: auto;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: block;
+}
+
+.error-message {
+  background-color: error-message;
+  color: #fee2e2;
+  color: #c53030;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.custom-btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #7c3aed, #8c5d);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(124px,255px,237, 0.3);
+}
+
+.custom-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+}
+
+@media (max-width: 480px) {
+  .profile-modal-container {
+    max-width: 90%;
+    padding: 20px;
+  }
+}
+
+.preview-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
