@@ -48,7 +48,7 @@ body {
 }
 
 .navbar-heading {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
   color: #f8f7f7;
   font-family: 'Poppins', sans-serif;
@@ -104,7 +104,7 @@ body {
 
 .navbar-links {
   display: flex;
-  gap: 20px;
+  gap: 0px;
   align-items: center;
   justify-content: center;
 }
@@ -294,7 +294,7 @@ body {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  border: 2px solid #7c3aed;
+  border: 2px solid red;
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
@@ -309,7 +309,7 @@ body {
 
 .profile-holder .user-icon-placeholder {
   background: linear-gradient(135deg, #d3d3d3d3, #a9a9a9);
-  color: #000000;
+  color: #474646;
   font-size: 16px;
   width: 100%;
   height: 100%;
@@ -322,8 +322,8 @@ body {
   border-radius: 50%;
   padding: 0;
   cursor: pointer;
-  width: 54px;
-  height: 54px;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -333,10 +333,10 @@ body {
 
 .dropdown-profile .profile-photo,
 .dropdown-profile .user-icon-placeholder {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  border: 2.4px solid #094d14;
+  border: 2px solid rgb(12, 228, 210);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -350,7 +350,7 @@ body {
 
 .dropdown-profile .user-icon-placeholder {
   background: linear-gradient(135deg, #d3d3, d3, #a9a9a9);
-  color: #000000;
+  color:  #474646;
   font-size: 19.2px;
   width: 100%;
   height: 100%;
@@ -360,8 +360,8 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: #f4f3f7;
-  color: hsl(0, 2%, 27%);
+  background:white;
+  color: hsla(0, 0%, 3%, 0.829);
   width: 16.8px;
   height: 16.8px;
   border-radius: 50%;
@@ -370,31 +370,35 @@ body {
   justify-content: center;
   font-size: 9.6px;
   cursor: pointer;
-  border: 2.4px solid #faf5f5;
+  border:2px solid white;
 }
 
 .trash-icon {
   position: absolute;
   bottom: -10px;
   right: -25px;
-  background: #f4f3f7;
-  color: hsl(0, 2%, 27%);
+  background: none;
+  color: hsla(0, 2%, 27%, 0.753);
   width: 16.4px;
   height: 16.4px;
-
+  
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 9.6px;
   cursor: pointer;
 }
+.trash-icon :hover
+{
+  color: black;
+}
 
 .profile-dropdown {
   position: absolute;
   top: 60px;
   right: 20px;
-  background: #fff7ed;
-  border: 8px solid;
+  background: #f0cca8;
+  border: 2px solid orangered;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px 15px 15px;
@@ -416,7 +420,7 @@ body {
 }
 
 .close-button:hover {
-  color: #7c3aed;
+  color: #05000e;
 }
 
 .dropdown-profile-container {
@@ -438,13 +442,13 @@ body {
 .user-name,
 .user-email {
   font-size: 0.9rem;
-  color: #333;
+  color: #181717;
   margin: 0;
   font-weight: 500;
 }
 
 .user-detail-icon {
-  color: #7c3aed;
+  color: #200c01;
   font-size: 16px;
 }
 
@@ -455,14 +459,16 @@ body {
 .dropdown-link {
   display: block;
   font-size: 0.8rem;
-  color: #333;
+  color: #1b1b1b;
   text-decoration: none;
   margin: 5px 0;
   transition: color 0.3s ease;
 }
 
 .dropdown-link:hover {
-  color: #7c3aed;
+  color: #6d0513;
+  text-decoration: underline;
+
 }
 
 .dropdown-footer {

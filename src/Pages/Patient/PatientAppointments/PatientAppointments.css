@@ -18,11 +18,11 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  height: 100%; /* Stretch to fill the min-height of .content */
-  display: flex; /* Use flexbox to distribute child elements */
+  height: 100%;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align content at the top */
-  align-items: center; /* Center content horizontally */
+  justify-content: flex-start;
+  align-items: center;
 }
 
 h1, h2 {
@@ -59,7 +59,7 @@ h1, h2 {
 }
 
 .Button-Primary.notification-button {
-  background: linear-gradient(135deg, #3b82f6, #1e40af); /* Gradient for View Notifications button */
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
   color: #fff;
   margin-bottom: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -72,26 +72,42 @@ h1, h2 {
 }
 
 .table-container {
-  width: 100%; /* Remove background and shadow to blend with page */
+  width: 100%;
   padding: 20px 0;
+  overflow-x: auto; /* Added for horizontal scrolling */
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
 table {
   width: 100%;
+  max-width: 100%; /* Ensure table doesn't exceed container */
   border-collapse: collapse;
   font-size: 0.95rem;
+  table-layout: auto; /* Allow columns to adjust based on content */
+  background-color: #fff; /* Added to make table visible */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Added for visibility */
 }
 
 th, td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+  white-space: normal; /* Allow text wrapping */
+  word-wrap: break-word; /* Ensure long content wraps */
+  max-width: 180px; /* Constrain column width */
+  min-width: 100px; /* Ensure minimum width */
+  box-sizing: border-box;
+  vertical-align: middle; /* Moved from App.css */
 }
 
 th {
   background-color: var(--primary-color);
   color: #fff;
   font-weight: 600;
+  position: sticky; /* Make headers sticky */
+  top: 0;
+  z-index: 1;
 }
 
 tr {
@@ -202,7 +218,7 @@ tr:hover {
 }
 
 .button-notification {
-  background: linear-gradient(135deg, #10b981, #059669); /* Gradient for Mark as Read button */
+  background: linear-gradient(135deg, #10b981, #059669);
   color: #fff;
   padding: 6px 12px;
   font-size: 0.9rem;
@@ -220,7 +236,7 @@ tr:hover {
 }
 
 .button-secondary {
-  background: linear-gradient(135deg, #6b7280, #4b5563); /* Gradient for Close button */
+  background: linear-gradient(135deg, #6b7280, #4b5563);
   color: #fff;
   padding: 8px 16px;
   font-size: 1rem;

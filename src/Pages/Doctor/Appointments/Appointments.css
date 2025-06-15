@@ -4,7 +4,7 @@
 }
 
 .appointments-container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px 20px 0 20px;
   background: transparent !important;
@@ -18,7 +18,7 @@ h1 {
 
 table {
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 0.95rem;
@@ -26,7 +26,7 @@ table {
 }
 
 th, td {
-  padding: 12px 15px;
+  padding: 8px 12px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
@@ -42,13 +42,13 @@ tr:hover {
 }
 
 .message {
-  background-color: #e2e8f0;
-  color: #4c2c69;
+  background-color: none;
+  color: #100818;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 15px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   width: 100%;
 }
 
@@ -147,7 +147,7 @@ tr:hover {
 }
 
 .button {
-  padding: 8px 16px;
+  padding: 8px 10px;
   font-size: 0.9rem;
   font-weight: 500;
   border: none;
@@ -163,7 +163,7 @@ tr:hover {
 }
 
 .approve-button:hover {
-  background-color: #4ade80;
+  background-color: #4de284;
 }
 
 .reject-button {

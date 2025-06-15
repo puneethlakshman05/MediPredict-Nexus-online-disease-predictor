@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCapsules, faSyringe, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import './PatientHome.css';
 
@@ -12,7 +12,7 @@ function PatientHome({ token }) {
   const navigate = useNavigate();
   const [symptomsOptions, setSymptomsOptions] = useState([]);
   const [selectedSymptoms, setSelectedSymptoms] = useState([]);
-  const [result, setResult] = useState({ disease: '', medications: [], doctors: [] });
+  const [result, setResult] = useState({ disease: '', medicines: [], doctors: [] });
   const [error, setError] = useState('');
   const [showMedications, setShowMedications] = useState(false);
   const [showDoctors, setShowDoctors] = useState(false);
@@ -54,7 +54,8 @@ function PatientHome({ token }) {
       });
       setResult({
         disease,
-        medications: medRes.data.medications,
+        medicines: medRes.data.medicines || [],
+        injections:medRes.data.injections || [],
         doctors: docRes.data.doctors
       });
     } catch (err) {
@@ -106,7 +107,7 @@ function PatientHome({ token }) {
   };
 
   const handleCloseResult = () => {
-    setResult({ disease: '', medications: [], doctors: [] });
+    setResult({ disease: '', medications: [], injections: [], doctors: [] });
     setShowMedications(false);
     setShowDoctors(false);
     setShowNoDoctorsModal(false);
@@ -149,7 +150,7 @@ function PatientHome({ token }) {
               Book Appointments
             </button>
           </div>
-          {showMedications && result.medications.length > 0 && (
+          {showMedications && (result.medicines.length > 0 || result.injections.length > 0) && (
             <div className="medication-section">
               <div className="section-header">
                 <h5>Medications:</h5>
@@ -157,11 +158,23 @@ function PatientHome({ token }) {
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
               </div>
-              <ul className="medication-list">
-                {result.medications.map((med, idx) => (
-                  <li key={idx}>{med}</li>
-                ))}
-              </ul>
+             {result.medicines.length > 0 && (
+                <>
+                  <h6>
+                    <FontAwesomeIcon icon={faCapsules} className='medication-icon'/>
+                     Medicines:</h6>
+                  <p className='medication-paragraph'>{result.medicines.join(',')}</p>
+                </>
+              )}
+              {result.injections.length > 0 && (
+                <>
+                  <h6>
+                    <FontAwesomeIcon icon={faSyringe} className='medication-icon '/>
+                    Injections:
+                    </h6>
+                  <p className='medication-paragraph'>{result.injections.join(', ')}</p>
+                </>
+              )}
             </div>
           )}
           {showDoctors && result.doctors.length > 0 && (

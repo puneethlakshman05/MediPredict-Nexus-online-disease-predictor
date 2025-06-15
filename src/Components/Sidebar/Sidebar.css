@@ -4,86 +4,277 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 12000;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: flex-end;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
 }
 
 .sidebar {
-  background: linear-gradient(135deg, #f9fafb, #e5e7eb);
-  width: 250px;
+  background: #ffffff;
+  width: 300px;
   height: 100%;
-  padding: 20px;
-  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
-  transform: translateX(0);
-  transition: transform 0.3s ease-in-out;
+  padding: 24px;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #6b7280;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: #1f2937;
-}
-
-.sidebar h3 {
-  font-size: 1.8rem;
-  color: #4c2c69;
-  margin-bottom: 20px;
-}
-
-.sidebar-links {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-links li {
-  margin-bottom: 15px;
-}
-
-.sidebar-button {
-  background: none;
-  border: none;
-  color: #333333;
-  font-size: 1.1rem;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 10px;
+.sidebar-header {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  text-align: left;
-  border-radius: 6px;
-  transition: background 0.3s ease, color 0.3s ease;
+  justify-content: center;
+  margin-bottom: 16px;
+  min-height: 80px;
+  padding-top: 16px;
 }
 
-.sidebar-button:hover {
+.sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-logo-img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sidebar-logo-text {
+  color: #260942;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.sidebar-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #4c2c69;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 8px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-close-btn:hover {
+  color: #100620;
+  transform: rotate(90deg);
+}
+
+.sidebar-divider {
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 16px 0;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.sidebar-menu li {
+  margin-bottom: 12px;
+}
+
+.sidebar-menu-btn {
+  background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+  border: none;
+  color: #4c2c69;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.sidebar-menu-btn:hover {
+  background: linear-gradient(135deg, #e9d5ff, #d4b8ff);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+.menu-icon {
+  margin-right: 12px;
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.passcode-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.passcode-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passcode-input {
+  width: 100%;
+  padding: 10px 48px 10px 16px;
+  font-size: 0.95rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.passcode-input:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 6px rgba(124, 58, 237, 0.25);
+}
+
+.passcode-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s ease;
+}
+
+.passcode-toggle-btn:hover {
+  color: #4c2c69;
+}
+
+.passcode-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  text-align: center;
+  background: #fef2f2;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+}
+
+.passcode-submit-btn {
   background: #7c3aed;
-  color: #fff;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.passcode-submit-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  text-align: center;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.sidebar-footer-text {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 480px) {
   .sidebar {
-    width: 200px;
+    width: 260px;
+    padding: 16px;
   }
 
-  .sidebar h3 {
-    font-size: 1.5rem;
+  .sidebar-header {
+    min-height: 70px;
+    padding-top: 12px;
   }
 
-  .sidebar-button {
+  .sidebar-logo-img {
+    height: 35px;
+  }
+
+  .sidebar-logo-text {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-close-btn {
+    font-size: 1.1rem;
+    top: 6px;
+    right: 6px;
+    padding: 6px;
+  }
+
+  .sidebar-divider {
+    margin: 12px 0;
+  }
+
+  .sidebar-menu-btn {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .menu-icon {
     font-size: 1rem;
+    width: 18px;
+  }
+
+  .passcode-form {
+    padding: 10px;
+  }
+
+  .passcode-input {
+    font-size: 0.9rem;
+    padding: 8px 40px 8px 12px;
+  }
+
+  .passcode-submit-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .passcode-error {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .sidebar-footer-text {
+    font-size: 0.8rem;
   }
 }

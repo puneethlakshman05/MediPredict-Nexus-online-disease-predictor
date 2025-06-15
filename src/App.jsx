@@ -8,15 +8,15 @@ import LoginRegisterModal from './Components/LoginRegisterModal/LoginRegisterMod
 import Sidebar from './Components/Sidebar/Sidebar';
 import ProfileModal from './Components/ProfileModal/ProfileModal';
 import Home from './Pages/Home/Home';
-import AdminHome from './Pages/Admin/AdminHome';
+import AdminHome from './Pages/Admin/AdminHome/AdminHome';
 import DoctorHome from './Pages/Doctor/DoctorHome/DoctorHome';
 import PatientHome from './Pages/Patient/PatientHome/PatientHome';
 import NotFound from './Pages/NotFound';
 import BookAppointmentPage from './Pages/Patient/BookAppointmentPage/BookAppointmentPage';
 import PatientAppointments from './Pages/Patient/PatientAppointments/PatientAppointments';
 import Appointments from './Pages/Doctor/Appointments/Appointments';
-import DoctorsList from './Pages/Admin/DoctorsList';
-import PatientsList from './Pages/Admin/PatientList';
+import DoctorsList from './Pages/Admin/DoctorsList/DoctorsList';
+import PatientsList from './Pages/Admin/PatientList/PatientList';
 import PropTypes from 'prop-types';
 
 class ErrorBoundary extends React.Component {
@@ -113,6 +113,7 @@ function App() {
         };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
+        localStorage.setItem('token', authData.token);
       }
       setShowModal(false);
       setModalRole('');

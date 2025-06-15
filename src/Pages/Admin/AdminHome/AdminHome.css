@@ -1,0 +1,267 @@
+.page-container.short-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  text-align: center; /* Ensure text alignment cascades to children if needed */
+}
+
+.admin-home-container .admin-heading {
+  font-size: 2rem;
+  color: #472e5c;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%; /* Ensure the heading takes the full width of the parent */
+  display: block; /* Ensure the heading behaves as a block element */
+  margin-left: auto; /* Additional centering fallback */
+  margin-right: auto;
+}
+
+.admin-home-container .welcome-text {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 30px;
+  font-style: italic;
+  text-align: center;
+}
+
+.admin-home-container .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.admin-home-container .button-col {
+  flex: 0 0 auto;
+}
+
+.admin-home-container .manage-doctors-button,
+.admin-home-container .manage-patients-button {
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  color: #fff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-home-container .manage-doctors-button.hovered,
+.admin-home-container .manage-patients-button.hovered {
+  background: linear-gradient(135deg, #6d28d9, #be185d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.admin-home-container .analytics-section {
+  margin-top: 30px;
+}
+
+.admin-home-container .error-message {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.admin-home-container .stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.admin-home-container .stats-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.admin-home-container .stats-row.centered {
+  justify-content: center;
+}
+
+.admin-home-container .stat-card {
+  background: #fff;
+  border: 2px solid green;
+  border-radius: 10px;
+  width: 450px;
+  height: 150px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-home-container .stat-card.clickable {
+  cursor: pointer;
+}
+
+.admin-home-container .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.admin-home-container .stat-label {
+  font-size: 1.3rem;
+  color: #374151;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.admin-home-container .stat-number {
+  font-size: 2.2rem;
+  color: #472e5c;
+  font-weight: 700;
+}
+
+.admin-home-container .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.admin-home-container .popup {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding: 20px;
+}
+
+.admin-home-container .popup-heading {
+  font-size: 1.5rem;
+  color: #472e5c;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.admin-home-container .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.admin-home-container .activity-content {
+  margin-top: 20px;
+}
+
+.admin-home-container .doctors-table-container {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+  padding-bottom: 10px;
+}
+
+.admin-home-container .appointments-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.admin-home-container .appointments-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-home-container .close-appointments-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.admin-home-container .activity-subheading {
+  font-size: 1.2rem;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.admin-home-container .activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.admin-home-container .table-header {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 500;
+  text-align: left;
+}
+
+.admin-home-container .table-header-cell {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-home-container .table-row {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-home-container .table-row:hover {
+  background: #f9fafb;
+}
+
+.admin-home-container .table-cell {
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.admin-home-container .action-link {
+  color: #472e5c;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.admin-home-container .action-link:hover {
+  text-decoration: underline;
+}

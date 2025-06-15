@@ -1,11 +1,13 @@
-/* src/App.css */
-
 /* Global Font and Colors */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+  background: rgb(236, 245, 247);
   color: #212529;
   margin: 0;
+  width: 100%;
+  min-width: 100vw;
+  min-height: 180vh;
+  box-sizing: border-box;
 }
 
 /* Container Padding */
@@ -20,6 +22,9 @@ body {
 .btn-info,
 .btn-danger {
   border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
 }
 
 .btn-primary:hover,
@@ -29,49 +34,41 @@ body {
   opacity: 0.8;
 }
 
-/* Table Styles */
-.table th,
-.table td {
-  vertical-align: middle;
-}
-
 /* Modal Styles */
 .modal-title {
   font-weight: bold;
+  font-size: 1.25rem;
 }
 
 .alert {
   margin-top: 10px;
+  font-size: 1rem;
 }
 
-/* src/App.css */
+/* Loading Styles */
 .loading {
   padding: 2rem;
   text-align: center;
-}
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  font-size: 1.2rem;
 }
 
-.content {
-  flex: 1;
-}
+/* App Container */
 .app-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, #ece2ec 0%, #f5eaf4 100%);
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 180vh;
 }
 
 .content {
-  padding-top: 60px; /* Matches navbar height */
-  padding-bottom: 60px; /* Space for footer */
-  background: linear-gradient(135deg, #f5f5f5 0%, #e0e7ff 100%);
-  min-height: calc(100vh - 120px); /* Fills viewport minus navbar and footer */
-  min-height: 600px; /* Ensures minimum height equivalent to homepage with HeroCarousel (500px + 100px buffer) */
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background: linear-gradient(135deg, #e79e9e 0%, #ec8cec 100%);
+  min-height: calc(100vh - 60px - 55px);
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,22 +84,150 @@ body {
   width: 100%;
   position: relative;
   margin-top: auto;
+  box-sizing: border-box;
+  font-size: 1rem;
 }
 
-@media (max-width: 768px) {
+/* Responsive Design */
+
+/* Smaller desktops and large tablets (1024px and below) */
+@media (max-width: 1024px) {
+  .container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
   .content {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    min-height: calc(100vh - 100px); /* Adjust for smaller navbar and footer */
-    min-height: 500px; /* Adjust for smaller HeroCarousel (e.g., 400px + 100px buffer) */
+    padding-top: 55px;
+    padding-bottom: 55px;
+    min-height: calc(100vh - 110px);
+    min-height: 450px;
+  }
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-danger {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+  }
+  .alert {
+    font-size: 0.9rem;
+  }
+  .loading {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+  }
+  .footer {
+    padding: 15px;
+    font-size: 0.9rem;
   }
 }
 
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    min-height: calc(100vh - 100px);
+    min-height: 400px;
+  }
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-danger {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  .modal-title {
+    font-size: 1rem;
+  }
+  .alert {
+    font-size: 0.85rem;
+  }
+  .loading {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .footer {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile devices (480px and below) */
 @media (max-width: 480px) {
+  .container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
   .content {
     padding-top: 45px;
     padding-bottom: 40px;
-    min-height: calc(100vh - 85px); /* Adjust for smaller navbar and footer */
-    min-height: 400px; /* Adjust for smaller HeroCarousel (e.g., 300px + 100px buffer) */
+    min-height: calc(100vh - 85px);
+    min-height: 350px;
+  }
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-danger {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    min-height: 44px; /* Ensure touch target size */
+  }
+  .modal-title {
+    font-size: 0.9rem;
+  }
+  .alert {
+    font-size: 0.8rem;
+  }
+  .loading {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  .footer {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Very small mobile devices (360px and below) */
+@media (max-width: 360px) {
+  .container {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .content {
+    padding-top: 40px;
+    padding-bottom: 35px;
+    min-height: calc(100vh - 75px);
+    min-height: 300px;
+  }
+  .btn-primary,
+  .btn-success,
+  .btn-info,
+  .btn-danger {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    min-height: 40px;
+  }
+  .modal-title {
+    font-size: 0.85rem;
+  }
+  .alert {
+    font-size: 0.75rem;
+  }
+  .loading {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .footer {
+    padding: 8px;
+    font-size: 0.75rem;
   }
 }

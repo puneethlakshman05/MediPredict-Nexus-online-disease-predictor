@@ -1,36 +1,50 @@
-import { useState } from 'react'; // Removed unused React import
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './LoginRegisterModal.css';
-import PropTypes from 'prop-types'; // Added for PropTypes validation
-
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEye, faEyeSlash,
   faEnvelope, faLock, faUser, faUserMd,
-  faMoon, faSun
+  faMoon, faSun, faKey
 } from '@fortawesome/free-solid-svg-icons';
 
 function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
-  const [darkMode, setDarkMode] = useState(false); // Removed unused isLogin state
-
+  const [darkMode, setDarkMode] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
+  const [loginMessage, setLoginMessage] = useState('');
   const [showLoginPassword, setShowLoginPassword] = useState(false);
-
   const [registerName, setRegisterName] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
   const [registerSpecialization, setRegisterSpecialization] = useState('');
-  const [registerError, setRegisterError] = useState('');
+  const [registerMessage, setRegisterMessage] = useState('');
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const [resetEmail, setResetEmail] = useState('');
+  const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [resetToken, setResetToken] = useState('');
-  const [mode, setMode] = useState('login'); // login, register, forgot, reset
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [mode, setMode] = useState('login');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(20);
+  const [otpExpired, setOtpExpired] = useState(false);
+
+  // Countdown timer effect
+  useEffect(() => {
+    if (mode !== 'reset-otp' || otpExpired) return;
+    if (timeLeft <= 0) {
+      setOtpExpired(true);
+      setLoginMessage('OTP has expired. Please resend OTP.');
+      return;
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [mode, timeLeft, otpExpired]);
 
   const capitalize = (str) => {
     if (!str) return '';
@@ -40,7 +54,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!role) {
-      setLoginError('Invalid role');
+      setLoginMessage('Invalid role');
       return;
     }
     try {
@@ -50,26 +64,25 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
       });
       setLoginEmail('');
       setLoginPassword('');
-      setLoginError('');
+      setLoginMessage('');
       onLoginSuccess(res.data);
       onClose();
     } catch (err) {
-      setLoginError(err.response?.data?.error || 'Invalid credentials');
+      setLoginMessage(err.response?.data?.error || 'Invalid credentials');
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!role) {
-      setRegisterError('Invalid role');
+      setRegisterMessage('Invalid role');
       return;
     }
     if (registerPassword !== registerConfirmPassword) {
-      setRegisterError('Passwords do not match!');
+      setRegisterMessage('Passwords do not match');
       return;
     }
     try {
-      // Step 1: Register the user
       const payload = {
         name: registerName,
         email: registerEmail,
@@ -77,7 +90,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
       };
       if (role === 'doctor') {
         if (!registerSpecialization) {
-          setRegisterError('Specialization is required');
+          setRegisterMessage('Specialization is required');
           return;
         }
         payload.specialization = registerSpecialization;
@@ -92,31 +105,24 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
       };
       const eventName = role === 'doctor' ? 'doctorUpdated' : 'patientUpdated';
       window.dispatchEvent(new CustomEvent(eventName, { detail: userData }));
-      
       alert(`${capitalize(role)} registered successfully`);
-
-      // Step 2: Automatically log in the user
       const loginRes = await axios.post(`http://localhost:5000/login/${role}`, {
         email: registerEmail,
         password: registerPassword,
       });
-
-      // Step 3: Call onLoginSuccess to update user state and handle redirection
       onLoginSuccess(loginRes.data);
       onClose();
-
-      // Clear the form fields
       setRegisterName('');
       setRegisterEmail('');
       setRegisterPassword('');
       setRegisterConfirmPassword('');
       setRegisterSpecialization('');
-      setRegisterError('');
+      setRegisterMessage('');
     } catch (err) {
       if (err.response?.status === 409) {
-        setRegisterError('Email already exists');
+        setRegisterMessage('Email already exists');
       } else {
-        setRegisterError(err.response?.data?.error || 'Registration failed');
+        setRegisterMessage(err.response?.data?.error || 'Registration failed');
       }
     }
   };
@@ -124,41 +130,82 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     if (!resetEmail) {
-      setLoginError('Please enter your email address.');
+      setLoginMessage('Please enter your email address');
       return;
     }
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/forgot-password', {
+      const response = await axios.post('http://localhost:5000/api/forgot-password', {
         email: resetEmail
       });
-      setResetToken(res.data.token);
-      setMode('reset');
-      setLoginError('');
+      setMode('reset-otp'); // Updated to new sub-mode
+      setLoginMessage('');
+      setTimeLeft(20);
+      setOtpExpired(false);
+      alert(response.data.message);
     } catch (err) {
-      setLoginError(err.response?.data?.error || 'Failed to initiate password reset.');
+      const errorMessage = err.response?.data?.error || 'Failed to send OTP. Please try again';
+      setLoginMessage(errorMessage);
+      console.error('Forgot Password Error:', err.response?.data || err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResendOtp = async (e) => {
+    e.preventDefault();
+    await handleForgotPassword(e);
+  };
+
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    if (!otp) {
+      setLoginMessage('Please enter the OTP');
+      return;
+    }
+    if (isSubmitting || otpExpired) return;
+    setIsSubmitting(true);
+    try {
+      await axios.post('http://localhost:5000/api/verify-otp', {
+        email: resetEmail,
+        otp,
+      });
+      setMode('reset-password'); // Proceed to password reset step
+      setLoginMessage('');
+    } catch (err) {
+      setLoginMessage(err.response?.data?.error || 'Invalid OTP. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (!newPassword) {
-      setLoginError('Please enter a new password.');
+      setLoginMessage('Please enter a new password');
       return;
     }
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       await axios.post('http://localhost:5000/api/reset-password', {
         email: resetEmail,
-        token: resetToken,
+        otp,
         newPassword
       });
       setMode('login');
-      setLoginError('');
-      alert('Password reset successful. Please login with your new password.');
+      setLoginMessage('');
+      alert('Password reset successful. Please login with your new password');
       setResetEmail('');
+      setOtp('');
       setNewPassword('');
-      setResetToken('');
+      setTimeLeft(20);
+      setOtpExpired(false);
     } catch (err) {
-      setLoginError(err.response?.data?.error || 'Password reset failed.');
+      setLoginMessage(err.response?.data?.error || 'Password reset failed');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -182,7 +229,8 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
               {mode === 'login' && `Login as ${capitalize(role)}`}
               {mode === 'register' && `Register as ${capitalize(role)}`}
               {mode === 'forgot' && 'Forgot Password'}
-              {mode === 'reset' && 'Reset Password'}
+              {mode === 'reset-otp' && 'Verify OTP'}
+              {mode === 'reset-password' && 'Reset Password'}
             </h4>
           </div>
         </div>
@@ -221,20 +269,20 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
                   </span>
                 </div>
               </div>
-              {loginError && <div className="error-message">{loginError}</div>}
+              {loginMessage && <div className="message">{loginMessage}</div>}
               <div className="button-group">
-                <button type="submit" className="custom-btn">Login</button>
+                <button type="submit" className="custom-btn primary-btn">Login</button>
                 <button
                   type="button"
-                  className="forgot-btn"
+                  className="custom-btn secondary-btn"
                   onClick={() => setMode('forgot')}
                 >
                   Forgot Password
                 </button>
               </div>
               <div className="switch-link">
-                Don&apos;t have an account?{' '} {/* Escaped single quote */}
-                <span className="zoom-on-hover" onClick={() => setMode('register')}>
+                Do not have an account?{' '}
+                <span className="link-text" onClick={() => setMode('register')}>
                   Register
                 </span>
               </div>
@@ -316,11 +364,13 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
                   </div>
                 </div>
               )}
-              {registerError && <div className="error-message">{registerError}</div>}
-              <button type="submit" className="custom-btn">Register</button>
+              {registerMessage && <div className="message">{registerMessage}</div>}
+              <div className="button-group">
+                <button type="submit" className="custom-btn primary-btn">Register</button>
+              </div>
               <div className="switch-link">
                 Already have an account?{' '}
-                <span className="zoom-on-hover" onClick={() => setMode('login')}>
+                <span className="link-text" onClick={() => setMode('login')}>
                   Login
                 </span>
               </div>
@@ -340,18 +390,22 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
                   />
                 </div>
               </div>
-              {loginError && <div className="error-message">{loginError}</div>}
-              <button type="submit" className="custom-btn">Proceed to Reset</button>
+              {loginMessage && <div className="message">{loginMessage}</div>}
+              <div className="button-group">
+                <button type="submit" className="custom-btn primary-btn" disabled={isSubmitting}>
+                  {isSubmitting ? 'Sending...' : 'Send OTP'}
+                </button>
+              </div>
               <div className="switch-link">
                 Back to{' '}
-                <span className="zoom-on-hover" onClick={() => setMode('login')}>
+                <span className="link-text" onClick={() => setMode('login')}>
                   Login
                 </span>
               </div>
             </form>
           )}
-          {mode === 'reset' && (
-            <form onSubmit={handleResetPassword} className="modal-form">
+          {mode === 'reset-otp' && (
+            <form onSubmit={handleVerifyOtp} className="modal-form">
               <div className="form-group">
                 <div className="input-group">
                   <span className="input-icon"><FontAwesomeIcon icon={faEnvelope} /></span>
@@ -366,21 +420,81 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
               </div>
               <div className="form-group">
                 <div className="input-group">
+                  <span className="input-icon"><FontAwesomeIcon icon={faKey} /></span>
+                  <input
+                    type="text"
+                    placeholder="Enter OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    required
+                    className="otp-input"
+                  />
+                </div>
+              </div>
+              <div className="timer">
+                {otpExpired ? 'OTP Expired' : `OTP expires in ${timeLeft} seconds`}
+              </div>
+              {loginMessage && <div className="message">{loginMessage}</div>}
+              <div className="button-group">
+                <button
+                  type="submit"
+                  className="custom-btn primary-btn"
+                  disabled={isSubmitting || otpExpired}
+                >
+                  {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+                </button>
+                {otpExpired && (
+                  <button
+                    type="button"
+                    className="custom-btn secondary-btn"
+                    onClick={handleResendOtp}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Resend OTP'}
+                  </button>
+                )}
+              </div>
+              <div className="switch-link">
+                Back to{' '}
+                <span className="link-text" onClick={() => setMode('login')}>
+                  Login
+                </span>
+              </div>
+            </form>
+          )}
+          {mode === 'reset-password' && (
+            <form onSubmit={handleResetPassword} className="modal-form">
+              <div className="form-group">
+                <div className="input-group">
                   <span className="input-icon"><FontAwesomeIcon icon={faLock} /></span>
                   <input
-                    type="password"
+                    type={showNewPassword ? 'text' : 'password'}
                     placeholder="New Password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
                   />
+                  <span
+                    className="input-icon eye-icon icon-click"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} />
+                  </span>
                 </div>
               </div>
-              {loginError && <div className="error-message">{loginError}</div>}
-              <button type="submit" className="custom-btn">Reset Password</button>
+              {loginMessage && <div className="message">{loginMessage}</div>}
+              <div className="button-group">
+                <button
+                  type="submit"
+                  className="custom-btn primary-btn"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Resetting...' : 'Reset Password'}
+                </button>
+              </div>
               <div className="switch-link">
                 Back to{' '}
-                <span className="zoom-on-hover" onClick={() => setMode('login')}>
+                <span className="link-text" onClick={() => setMode('login')}>
                   Login
                 </span>
               </div>
@@ -392,7 +506,6 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
   );
 }
 
-// Added PropTypes validation
 LoginRegisterModal.propTypes = {
   role: PropTypes.oneOf(['admin', 'doctor', 'patient']).isRequired,
   onLoginSuccess: PropTypes.func.isRequired,

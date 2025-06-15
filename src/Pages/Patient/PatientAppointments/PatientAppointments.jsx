@@ -11,13 +11,25 @@ function PatientAppointments({ token }) {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser && storedUser.role === 'patient') {
-      const patientId = storedUser.id;
+      const patientEmail= storedUser.email;
       axios
-        .get(`http://localhost:5000/api/appointments/patient/${patientId}`, {
+        .get(`http://localhost:5000/api/appointments/patient/${patientEmail}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((res) => setAppointments(res.data))
-        .catch(() => setError('Failed to load appointments'));
+        .then((res) => {
+          if (!Array.isArray(res.data)) {
+            setError('Unexpected response format from server');
+            return;
+          }
+          setAppointments(res.data);
+          if (res.data.length === 0) {
+            setError('No appointments found for this patient.');
+          }
+        })
+        .catch((err) => {
+          console.error('Error fetching appointments:', err);
+          setError('Failed to load appointments: ' + (err.response?.data?.error || err.message));
+        });
     } else {
       setError('No logged-in patient found.');
     }

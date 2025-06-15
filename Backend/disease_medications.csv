@@ -1,0 +1,42 @@
+Disease,Prognosis,Medicines,Injections
+Fungal Infection,Acute,"Fluconazole,Itraconazole,Terbinafine,Voriconazole,Clotrimazole,Miconazole,Ketoconazole cream","Amphotericin B,Anidulafungin,Caspofungin"
+Allergy,Chronic,"Cetirizine,Loratadine,Montelukast,Prednisone,Fluticasone,Budesonide,Azelastine","Epinephrine,Allergy shots"
+GERD,Chronic,"Omeprazole,Esomeprazole,Ranitidine,Famotidine,Calcium carbonate,Magnesium hydroxide",IV Pantoprazole
+Chronic Cholestasis,Chronic,"Ursodeoxycholic acid,Cholestyramine,Rifampicin","Vitamin K,IV Antibiotics"
+Drug Reaction,Acute,"Diphenhydramine,Prednisone,Hydrocortisone cream","Epinephrine,IV Methylprednisolone"
+Peptic Ulcer Disease,Acute,"Omeprazole,Lansoprazole,Ranitidine,Amoxicillin,Clarithromycin,Aluminum hydroxide","IV Pantoprazole,IV Metronidazole"
+AIDS,Chronic,"Tenofovir,Emtricitabine,Dolutegravir,Co-trimoxazole","IV Ganciclovir,IV Amphotericin B"
+Diabetes,Chronic,"Metformin,Glimepiride,Empagliflozin","Insulin Glargine,Regular Insulin,Liraglutide,Semaglutide"
+Gastroenteritis,Acute,"Oral rehydration salts,Ciprofloxacin,Ondansetron","IV Normal saline,IV Ceftriaxone"
+Bronchial Asthma,Chronic,"Budesonide,Fluticasone,Salmeterol,Prednisone","IV Magnesium sulfate,IV Hydrocortisone,Omalizumab"
+Hypertension,Chronic,"Lisinopril,Amlodipine,Hydrochlorothiazide,Atenolol","IV Labetalol,IV Hydralazine"
+Migraine,Chronic,"Sumatriptan,Ibuprofen,Naproxen,Propranolol,Topiramate","Subcutaneous Sumatriptan,IV Dihydroergotamine"
+Cervical Spondylosis,Chronic,"Ibuprofen,Diclofenac,Cyclobenzaprine,Paracetamol","Cervical epidural steroid injections,Trigger point injections"
+Paralysis (Brain Hemorrhage),Potentially Fatal,"Levetiracetam,Amlodipine","IV Mannitol,IV Phenytoin,IV Labetalol"
+Jaundice,Acute,"Ursodeoxycholic acid,Antiviral agents","IV Fluids,Vitamin K,IV Antibiotics"
+Malaria,Acute,"Artemether-Lumefantrine,Chloroquine,Primaquine","IV Artesunate,IV Quinine"
+Chicken Pox,Self-limiting,"Acyclovir,Cetirizine,Paracetamol,Calamine lotion",IV Acyclovir
+Dengue,Acute,"Paracetamol,Oral rehydration solutions","IV Normal saline,Platelet transfusions"
+Typhoid,Acute,"Ciprofloxacin,Azithromycin,Paracetamol","IV Ceftriaxone,IV Fluids"
+Hepatitis A,Self-limiting,Ondansetron,IV Fluids
+Hepatitis B,Chronic,"Tenofovir,Entecavir",Hepatitis B immunoglobulin
+Hepatitis C,Chronic,"Sofosbuvir,Ledipasvir",Pegylated interferon
+Hepatitis D,Chronic,Tenofovir,Pegylated interferon
+Hepatitis E,Self-limiting,Supportive care,IV Fluids
+Alcoholic Hepatitis,Potentially Fatal,"Prednisolone,Pentoxifylline","IV Fluids,Thiamine"
+Tuberculosis,Potentially Fatal,"Isoniazid,Rifampicin,Ethambutol,Pyrazinamide,Levofloxacin","IM Streptomycin,IV Amikacin"
+Common Cold,Self-limiting,"Chlorpheniramine,Pseudoephedrine,Paracetamol",None
+Pneumonia,Acute,"Amoxicillin,Azithromycin,Oseltamivir","IV Ceftriaxone,IV Vancomycin"
+Dimorphic Hemorrhoids (Piles),Chronic,"Psyllium husk,Ibuprofen,Daflon,Hydrocortisone cream,Lidocaine ointment",Sclerotherapy
+Heart Attack,Potentially Fatal,"Aspirin,Clopidogrel,Atorvastatin,Metoprolol","IV Heparin,IV Tenecteplase,IV Morphine"
+Varicose Veins,Chronic,"Diosmin,Paracetamol",Sclerotherapy
+Hypothyroidism,Chronic,Levothyroxine,IV Levothyroxine
+Hyperthyroidism,Chronic,"Methimazole,Propylthiouracil,Propranolol","IV Iodine,IV Dexamethasone"
+Hypoglycemia,Acute,"Glucose tablets,Dextrose","IV Dextrose,IM Glucagon"
+Osteoarthritis,Chronic,"Ibuprofen,Celecoxib,Paracetamol,Glucosamine","Intra-articular Triamcinolone,Hyaluronic acid injections"
+Arthritis (Rheumatoid),Chronic,"Methotrexate,Hydroxychloroquine,Ibuprofen,Prednisone","Adalimumab,Etanercept,Intra-articular Methylprednisolone"
+(vertigo) Paroxysmal Positional Vertigo,Acute,"Meclizine,Ondansetron",None
+Acne,Chronic,"Doxycycline,Isotretinoin,Benzoyl peroxide,Tretinoin,Clindamycin",Intralesional Triamcinolone
+Urinary Tract Infection,Acute,"Nitrofurantoin,Trimethoprim-Sulfamethoxazole,Phenazopyridine","IV Ceftriaxone,IV Gentamicin"
+Psoriasis,Chronic,"Methotrexate,Acitretin,Cyclosporine,Betamethasone,Calcipotriene","Adalimumab,Secukinumab,Intralesional steroids"
+Impetigo,Acute,"Amoxicillin-Clavulanate,Cephalexin,Mupirocin,Fusidic acid",IV Vancomycin

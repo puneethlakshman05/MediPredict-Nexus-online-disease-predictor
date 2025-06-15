@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // Removed unused React import
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'; // Added PropTypes import
 import axios from 'axios';
 import './BookAppointmentPage.css';
 
@@ -238,6 +239,11 @@ const BookAppointmentPage = ({ token }) => {
       )}
     </div>
   );
+};
+
+// Add PropTypes validation for the token prop
+BookAppointmentPage.propTypes = {
+  token: PropTypes.string.isRequired,
 };
 
 export default BookAppointmentPage;

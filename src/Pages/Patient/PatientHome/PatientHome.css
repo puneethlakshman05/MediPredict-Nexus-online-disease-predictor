@@ -145,44 +145,48 @@
   color: #4c2c69;
   transform: scale(1.1);
 }
-
 .medication-section {
-  margin-top: 10px;
-  padding: 20px 0;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  transition: transform 0.3s ease;
+  margin: 20px auto;
+  padding: 20px ;
+  min-width: 280px;
+  min-height: 150px;
+  max-width: 420px;
+  background-color: #dae3e9;
+  border: 1.2px solid #d1d5db;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
 }
 
 .medication-section:hover {
-  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(124, 58, 237, 0.15);
+  transform: translateY(-4px);
 }
 
-.medication-list {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.medication-list li {
-  background-color: #fff;
-  padding: 12px 18px;
-  margin-bottom: 10px;
-  border-radius: 10px;
+.medication-section h6 {
+  font-size: 1rem;
+  color: #4c2c69;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-  border-left: 4px solid #7c3aed;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 8px;
+  margin: 12px 0 4px;
 }
 
-.medication-list li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
-  background-color: #f9fafb;
+.medication-paragraph {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0 0 8px 0;
+  line-height: 1.6;
+  padding-left: 24px;
+  padding-right: 24px;
+  text-align: justify;
 }
+
+.medication-icon {
+  color: #7c3aed;
+  font-size: 1rem;
+}
+
 
 .doctors-section {
   margin-top: 10px;
@@ -198,7 +202,7 @@
 }
 
 .doctor-card {
-  background: #fff;
+  background: #eef7f7;
   border: none;
   padding: 18px;
   margin-bottom: 10px;
@@ -206,13 +210,16 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   border-left: 4px solid #4c2c69;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 100%;
+  width: 60%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .doctor-card:hover {
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
-  background-color: #f9fafb;
+  background-color: #ebe99e;
 }
 
 .no-doctors-modal-overlay {
@@ -297,11 +304,11 @@
 }
 
 .book-button {
-  background: linear-gradient(135deg, #6d28d9, #a78bfa);
+  background: linear-gradient(135deg, #0a6407, #04421c);
 }
 
 .book-button:hover {
-  background: linear-gradient(135deg, #5b21b6, #8b5cf6);
+  background: linear-gradient(135deg, #261442, #070214);
 }
 
 h3, h4, h5, h6 {

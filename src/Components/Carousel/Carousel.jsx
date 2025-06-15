@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Carousel as BootstrapCarousel } from 'react-bootstrap';
 import './Carousel.css';
 

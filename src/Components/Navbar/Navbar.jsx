@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBell, faSignOutAlt, faCamera, faTrash, faTimes,  faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faUser, faBell, faRightFromBracket, faCamera, faTrashCan, faXmark, 
+  faEnvelope, faCircleUser, faPhone 
+} from '@fortawesome/free-solid-svg-icons';
 import NotificationModal from '../../Pages/Patient/NotificationModal/NotificationModal.jsx';
 import './Navbar.css';
 import logo5 from '../../assets/images/logo5.png';
-import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone';
 
 // Debug: Log imports
 console.log('Imported NotificationModal:', typeof NotificationModal);
@@ -20,6 +22,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [imageError, setImageError] = useState(false); // Track image loading errors
 
   // Debug: Log props
   useEffect(() => {
@@ -76,6 +79,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
       });
       console.log('Profile photo removed:', res.data);
       setUser({ ...user, profilePhoto: '', name: res.data.name });
+      setImageError(false); // Reset image error state
       setShowConfirmPopup(false);
     } catch (err) {
       console.error('Failed to remove profile photo:', err.response?.data || err.message);
@@ -119,6 +123,11 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
     setShowConfirmPopup(false);
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+    console.error('Failed to load profile photo');
+  };
+
   const profilePhotoUrl = user.profilePhoto
     ? `http://localhost:5000${user.profilePhoto}?t=${Date.now()}`
     : null;
@@ -144,7 +153,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                   <i className="fas fa-user-injured"></i> Patient
                 </button>
                 <button onClick={toggleSidebar} className="navbar-button">
-                  <i className="fas fa-user-shield"></i> Admin
+                  <b>☰</b>
                 </button>
               </>
             ) : (
@@ -198,25 +207,35 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                   </div>
                 )}
                 <div className="profile-holder" onClick={handleProfileClick}>
-                  {profilePhotoUrl ? (
-                    <img src={profilePhotoUrl} alt="Profile" className="profile-photo" />
+                  {!imageError && profilePhotoUrl ? (
+                    <img
+                      src={profilePhotoUrl}
+                      alt="Profile"
+                      className="profile-photo"
+                      onError={handleImageError}
+                    />
                   ) : (
-                    <FontAwesomeIcon icon={faUser} className="profile-photo user-icon-placeholder" />
+                    <FontAwesomeIcon icon={faCircleUser} className="profile-photo user-icon-placeholder" />
                   )}
                 </div>
                 {showProfileDropdown && (
                   <div className="profile-dropdown">
                     <FontAwesomeIcon
-                      icon={faTimes}
+                      icon={faXmark}
                       className="close-button"
                       onClick={handleCloseDropdown}
                     />
                     <div className="dropdown-profile-container">
                       <div className="profile-holder dropdown-profile">
-                        {profilePhotoUrl ? (
-                          <img src={profilePhotoUrl} alt="Profile" className="profile-photo" />
+                        {!imageError && profilePhotoUrl ? (
+                          <img
+                            src={profilePhotoUrl}
+                            alt="Profile"
+                            className="profile-photo"
+                            onError={handleImageError}
+                          />
                         ) : (
-                          <FontAwesomeIcon icon={faUser} className="profile-photo user-icon-placeholder" />
+                          <FontAwesomeIcon icon={faCircleUser} className="profile-photo user-icon-placeholder" />
                         )}
                         <FontAwesomeIcon
                           icon={faCamera}
@@ -225,7 +244,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                         />
                         {profilePhotoUrl && (
                           <FontAwesomeIcon
-                            icon={faTrash}
+                            icon={faTrashCan}
                             className="trash-icon"
                             onClick={handleTrashClick}
                           />
@@ -233,8 +252,8 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                       </div>
                     </div>
                     {showConfirmPopup && (
-                      <div className="confirm-popup ">
-                        <p className='content'>Are you sure you want to remove your profile photo?</p>
+                      <div className="confirm-popup">
+                        <p className="content">Are you sure you want to remove your profile photo?</p>
                         <div className="confirm-buttons">
                           <button className="confirm-yes" onClick={handleRemovePhoto}>Yes</button>
                           <button className="confirm-no" onClick={handleCancelRemove}>No</button>
@@ -253,15 +272,15 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                     </div>
                     <div className="dropdown-links">
                       <a href="mailto:admin@hospital.com" className="dropdown-link">Contact Us</a>
-                    <div className="user-detail-item">
-                      <FontAwesomeIcon icon={faPhone} className="user-detail-icon" />
-                      <a href="tel:+917989736421" className="dropdown-link"> +91 7989736421</a>
+                      <div className="user-detail-item">
+                        <FontAwesomeIcon icon={faPhone} className="user-detail-icon" />
+                        <a href="tel:+917989736421" className="dropdown-link">+91 7989736421</a>
                       </div>
                       <Link to="/faqs" className="dropdown-link">FAQs</Link>
                       <p className="dropdown-footer">© 2025 MediPredict Nexus. All Rights Reserved.</p>
                     </div>
                     <button onClick={handleLogoutClick} className="navbar-button logout-button">
-                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                      <FontAwesomeIcon icon={faRightFromBracket} /> Logout
                     </button>
                   </div>
                 )}

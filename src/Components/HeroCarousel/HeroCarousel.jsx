@@ -1,5 +1,4 @@
-// src/Components/HeroCarousel/HeroCarousel.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './HeroCarousel.css';
 
 // Import images (replace with your actual image paths)
@@ -21,12 +20,15 @@ const slides = [
     type: 'image',
     src: image2,
     alt: 'Second slide',
+    caption: 'A computer can become your online Health checker\
+              gives you Medi Suggests,Available Dctor Appointments Booking\
+               a Flexible Hand-on Hospital Facilities ',
   },
   {
     type: 'image',
     src: image3,
     alt: 'Third slide',
-    caption: 'A computer can become your online Health checker', // Moved caption to third slide
+
   },
 ];
 
@@ -78,8 +80,8 @@ const HeroCarousel = () => {
               <div className="image-slide">
                 <img src={slide.src} alt={slide.alt} className="slide-image" />
                 {slide.caption && (
-                  <div className="carousel-caption">
-                    <h3>{slide.caption}</h3>
+                  <div className={`carousel-caption ${activeIndex === index ? 'visible' : 'hidden'}`}>
+                    <h4>{slide.caption}</h4>
                   </div>
                 )}
               </div>
@@ -90,10 +92,10 @@ const HeroCarousel = () => {
 
       {/* Navigation Arrows */}
       <button className="carousel-control prev" onClick={handlePrev}>
-        <span>&lt;</span> {/* Changed to < */}
+        <span>&lt;</span>
       </button>
       <button className="carousel-control next" onClick={handleNext}>
-        <span>&gt;</span> {/* Changed to > */}
+        <span>&gt;</span>
       </button>
 
       {/* Indicators */}
