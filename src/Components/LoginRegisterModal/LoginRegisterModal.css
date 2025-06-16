@@ -221,13 +221,13 @@ input::placeholder {
 .custom-btn {
   border: none;
   border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.8rem; /* Reduced font size */
+  font-weight: 600;
+  font-size: 0.85rem; /* Reduced font size */
   cursor: pointer;
   transition: background 0.3s ease, box-shadow 0.2s ease;
   text-align: center;
   padding: 4px 8px; /* Reduced padding */
-  max-width: 110px; /* Reduced max-width */
+  max-width: 120px; /* Reduced max-width */
   min-width: 80px; /* Reduced min-width */
   flex: 1;
   border: 1px solid transparent; /* Add subtle border for depth */

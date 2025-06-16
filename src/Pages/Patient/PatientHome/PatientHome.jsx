@@ -163,7 +163,7 @@ function PatientHome({ token }) {
                   <h6>
                     <FontAwesomeIcon icon={faCapsules} className='medication-icon'/>
                      Medicines:</h6>
-                  <p className='medication-paragraph'>{result.medicines.join(',')}</p>
+                  <p className='medication-paragraph'>{result.medicines.join(' ')}</p>
                 </>
               )}
               {result.injections.length > 0 && (
@@ -172,7 +172,7 @@ function PatientHome({ token }) {
                     <FontAwesomeIcon icon={faSyringe} className='medication-icon '/>
                     Injections:
                     </h6>
-                  <p className='medication-paragraph'>{result.injections.join(', ')}</p>
+                  <p className='medication-paragraph'>{result.injections.join('  ')}</p>
                 </>
               )}
             </div>

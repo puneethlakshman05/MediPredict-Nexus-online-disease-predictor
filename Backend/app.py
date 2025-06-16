@@ -35,9 +35,9 @@ CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"], "methods": ["
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
 jwt = JWTManager(app)
 
-# Brevo SMTP Config
-BREVO_SMTP_LOGIN = os.getenv('BREVO_SMTP_LOGIN')
-BREVO_SMTP_KEY = os.getenv('BREVO_SMTP_KEY')
+# Gmail SMTP Config
+GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
+GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
 env_file = os.getenv('ENV_FILE', '.env')  
 load_dotenv(env_file)
@@ -49,7 +49,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 logger = logging.getLogger(__name__)
 
 # Verify environment variables
-required_env_vars = ['BREVO_SMTP_LOGIN', 'BREVO_SMTP_KEY', 'SENDER_EMAIL', 'JWT_SECRET_KEY']
+required_env_vars = ['GMAIL_SMTP_USER', 'GMAIL_APP_PASSWORD', 'SENDER_EMAIL', 'JWT_SECRET_KEY']
 missing_vars = [var for var in required_env_vars if not os.getenv(var)]
 if missing_vars:
     logger.error(f"Missing environment variables: {', '.join(missing_vars)}")
@@ -144,22 +144,22 @@ def predictDisease(symptoms_list):
     ]
     return statistics.mode([data_dict["predictions_classes"][p] for p in preds])
 
-# Send OTP via Brevo
+# Send OTP via Gmail SMTP
 def send_otp_email(email, otp):
     msg = MIMEText(f"<p>Your OTP for MediPredict Nexus password reset is: <strong>{otp}</strong>. It expires in 5 minutes.</p>", "html")
     msg['Subject'] = 'MediPredict Nexus Password Reset OTP'
     msg['From'] = os.getenv('SENDER_EMAIL')
     msg['To'] = email
     try:
-        logger.debug(f"Attempting to send OTP to {email}")
-        with smtplib.SMTP('smtp-relay.brevo.com', 587) as server:
+        logger.debug(f"Attempting to send OTP to {email} via Gmail SMTP")
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()
-            server.login(os.getenv('BREVO_SMTP_LOGIN'), os.getenv('BREVO_SMTP_KEY'))
+            server.login(os.getenv('GMAIL_SMTP_USER'), os.getenv('GMAIL_APP_PASSWORD'))
             server.send_message(msg)
             logger.info(f"OTP email sent successfully to {email}")
     except smtplib.SMTPAuthenticationError as e:
         logger.error(f"SMTP Authentication Error: {e}")
-        raise Exception("Invalid Brevo SMTP credentials")
+        raise Exception("Invalid Gmail SMTP credentials")
     except smtplib.SMTPException as e:
         logger.error(f"SMTP Error: {e}")
         raise Exception("Failed to send email due to SMTP error")
