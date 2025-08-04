@@ -6,8 +6,9 @@ body {
   margin: 0;
   width: 100%;
   min-width: 100vw;
-  min-height: 180vh;
+  min-height: 100vh; /* Reduced to match viewport */
   box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Container Padding */
@@ -60,20 +61,23 @@ body {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  min-height: 180vh;
+  min-height: 100vh; /* Reduced to match viewport */
+  overflow: visible; /* Ensure children (e.g., modals) are not clipped */
 }
 
 .content {
   padding-top: 60px;
   padding-bottom: 60px;
   background: linear-gradient(135deg, #e79e9e 0%, #ec8cec 100%);
-  min-height: calc(100vh - 60px - 55px);
+  min-height: calc(100vh - 60px - 55px); /* Adjusted for footer and navbar */
   min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+  position: relative; /* Ensure z-index context */
+  z-index: 1; /* Lower than modal z-index */
 }
 
 .footer {
@@ -83,7 +87,7 @@ body {
   text-align: center;
   width: 100%;
   position: relative;
-  margin-top: auto;
+  margin-top: 8px;
   box-sizing: border-box;
   font-size: 1rem;
 }
@@ -135,7 +139,7 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     min-height: calc(100vh - 100px);
-    min-height: 400px;
+    min-height: 400px; /* Reduced to prevent overflow */
   }
   .btn-primary,
   .btn-success,
@@ -178,7 +182,7 @@ body {
   .btn-danger {
     padding: 5px 10px;
     font-size: 0.8rem;
-    min-height: 44px; /* Ensure touch target size */
+    min-height: 44px;
   }
   .modal-title {
     font-size: 0.9rem;

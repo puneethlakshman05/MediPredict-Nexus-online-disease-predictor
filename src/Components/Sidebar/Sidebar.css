@@ -1,3 +1,4 @@
+/* Sidebar Overlay */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -11,6 +12,7 @@
   backdrop-filter: blur(2px);
 }
 
+/* Sidebar */
 .sidebar {
   background: #ffffff;
   width: 300px;
@@ -20,8 +22,10 @@
   animation: slideInRight 0.3s ease-out;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
+/* Sidebar Header */
 .sidebar-header {
   position: relative;
   display: flex;
@@ -32,6 +36,7 @@
   padding-top: 16px;
 }
 
+/* Sidebar Logo */
 .sidebar-logo {
   display: flex;
   flex-direction: column;
@@ -39,12 +44,14 @@
   gap: 8px;
 }
 
+/* Sidebar Logo Image */
 .sidebar-logo-img {
   height: 90px;
   width: auto;
   object-fit: contain;
 }
 
+/* Sidebar Logo Text */
 .sidebar-logo-text {
   color: #260942;
   font-size: 1.25rem;
@@ -55,6 +62,7 @@
   text-align: center;
 }
 
+/* Sidebar Close Button */
 .sidebar-close-btn {
   background: none;
   border: none;
@@ -73,12 +81,14 @@
   transform: rotate(90deg);
 }
 
+/* Sidebar Divider */
 .sidebar-divider {
   border: 0;
   border-top: 1px solid #e5e7eb;
   margin: 16px 0;
 }
 
+/* Sidebar Menu */
 .sidebar-menu {
   list-style: none;
   padding: 0;
@@ -89,6 +99,7 @@
   margin-bottom: 12px;
 }
 
+/* Sidebar Menu Button */
 .sidebar-menu-btn {
   background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
   border: none;
@@ -111,6 +122,7 @@
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
 }
 
+/* Menu Icon */
 .menu-icon {
   margin-right: 12px;
   font-size: 1.1rem;
@@ -118,6 +130,7 @@
   text-align: center;
 }
 
+/* Passcode Form */
 .passcode-form {
   display: flex;
   flex-direction: column;
@@ -128,12 +141,14 @@
   border-radius: 8px;
 }
 
+/* Passcode Input Wrapper */
 .passcode-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
+/* Passcode Input */
 .passcode-input {
   width: 100%;
   padding: 10px 48px 10px 16px;
@@ -150,6 +165,7 @@
   box-shadow: 0 0 6px rgba(124, 58, 237, 0.25);
 }
 
+/* Passcode Toggle Button */
 .passcode-toggle-btn {
   position: absolute;
   right: 12px;
@@ -165,6 +181,7 @@
   color: #4c2c69;
 }
 
+/* Passcode Error */
 .passcode-error {
   color: #b91c1c;
   font-size: 0.85rem;
@@ -175,6 +192,7 @@
   border: 1px solid #fecaca;
 }
 
+/* Passcode Submit Button */
 .passcode-submit-btn {
   background: #7c3aed;
   color: #ffffff;
@@ -193,6 +211,7 @@
   box-shadow: 0 4px 12px rgba(109, 40, 217, 0.3);
 }
 
+/* Sidebar Footer */
 .sidebar-footer {
   margin-top: auto;
   text-align: center;
@@ -200,12 +219,119 @@
   border-top: 1px solid #e5e7eb;
 }
 
+/* Sidebar Footer Text */
 .sidebar-footer-text {
   color: #6b7280;
   font-size: 0.85rem;
   margin: 0;
 }
 
+/* Profile Dropdown (restored from original) */
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #f0cca8;
+  border: 2px solid orangered;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 15px 15px;
+  z-index: 1000;
+  min-width: 220px;
+  text-align: center;
+  max-width: 90vw;
+  box-sizing: border-box;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hidden state for toggle */
+.profile-dropdown.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Close Button for Dropdown */
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #05000e;
+}
+
+/* Dropdown Profile Container */
+.dropdown-profile-container {
+  margin: 0 auto 10px;
+}
+
+/* User Details */
+.user-details {
+  margin-bottom: 10px;
+}
+
+/* User Detail Item */
+.user-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+/* User Name and Email */
+.user-name,
+.user-email {
+  font-size: 0.9rem;
+  color: #181717;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* User Detail Icon */
+.user-detail-icon {
+  color: #200c01;
+  font-size: 16px;
+}
+
+/* Dropdown Links */
+.dropdown-links {
+  margin: 10px 0;
+}
+
+/* Dropdown Link */
+.dropdown-link {
+  display: block;
+  font-size: 0.8rem;
+  color: #1b1b1b;
+  text-decoration: none;
+  margin: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #6d0513;
+  text-decoration: underline;
+}
+
+/* Dropdown Footer */
+.dropdown-footer {
+  font-size: 0.8rem;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Animation */
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -215,6 +341,192 @@
   }
 }
 
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 320px;
+    padding: 28px;
+  }
+
+  .sidebar-header {
+    min-height: 90px;
+    padding-top: 20px;
+  }
+
+  .sidebar-logo-img {
+    height: 100px;
+  }
+
+  .sidebar-logo-text {
+    font-size: 1.35rem;
+  }
+
+  .sidebar-close-btn {
+    font-size: 1.35rem;
+    padding: 10px;
+  }
+
+  .sidebar-divider {
+    margin: 20px 0;
+  }
+
+  .sidebar-menu-btn {
+    font-size: 1.1rem;
+    padding: 14px 18px;
+  }
+
+  .menu-icon {
+    font-size: 1.2rem;
+    width: 22px;
+  }
+
+  .passcode-form {
+    padding: 14px;
+  }
+
+  .passcode-input {
+    font-size: 1rem;
+    padding: 12px 50px 12px 18px;
+  }
+
+  .passcode-toggle-btn {
+    right: 14px;
+    padding: 10px;
+  }
+
+  .passcode-submit-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .passcode-error {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .sidebar-footer-text {
+    font-size: 0.9rem;
+  }
+
+  .profile-dropdown {
+    min-width: 250px;
+    padding: 25px 20px 20px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 1rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.9rem;
+  }
+
+  .close-button {
+    font-size: 18px;
+  }
+
+  .user-detail-icon {
+    font-size: 18px;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px;
+    padding: 20px;
+  }
+
+  .sidebar-header {
+    min-height: 75px;
+    padding-top: 14px;
+  }
+
+  .sidebar-logo-img {
+    height: 80px;
+  }
+
+  .sidebar-logo-text {
+    font-size: 1.2rem;
+  }
+
+  .sidebar-close-btn {
+    font-size: 1.2rem;
+    top: 7px;
+    right: 7px;
+    padding: 7px;
+  }
+
+  .sidebar-divider {
+    margin: 14px 0;
+  }
+
+  .sidebar-menu-btn {
+    font-size: 0.95rem;
+    padding: 11px 14px;
+  }
+
+  .menu-icon {
+    font-size: 1.05rem;
+    width: 19px;
+  }
+
+  .passcode-form {
+    padding: 11px;
+  }
+
+  .passcode-input {
+    font-size: 0.9rem;
+    padding: 9px 45px 9px 14px;
+  }
+
+  .passcode-toggle-btn {
+    right: 11px;
+    padding: 7px;
+  }
+
+  .passcode-submit-btn {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  .passcode-error {
+    font-size: 0.8rem;
+    padding: 7px;
+  }
+
+  .sidebar-footer-text {
+    font-size: 0.8rem;
+  }
+
+  .profile-dropdown {
+    top: 50px;
+    right: 15px;
+    width: 200px;
+    min-width: 180px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 14px;
+  }
+
+  .user-detail-icon {
+    font-size: 14px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.85rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
 @media (max-width: 480px) {
   .sidebar {
     width: 260px;
@@ -264,6 +576,11 @@
     padding: 8px 40px 8px 12px;
   }
 
+  .passcode-toggle-btn {
+    right: 10px;
+    padding: 6px;
+  }
+
   .passcode-submit-btn {
     font-size: 0.9rem;
     padding: 8px;
@@ -276,5 +593,125 @@
 
   .sidebar-footer-text {
     font-size: 0.8rem;
+  }
+
+  .profile-dropdown {
+    top: 45px;
+    right: 10px;
+    width: 180px;
+    min-width: 160px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 12px;
+  }
+
+  .user-detail-icon {
+    font-size: 12px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.8rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.7rem;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 240px;
+    padding: 12px;
+  }
+
+  .sidebar-header {
+    min-height: 60px;
+    padding-top: 10px;
+  }
+
+  .sidebar-logo-img {
+    height: 30px;
+  }
+
+  .sidebar-logo-text {
+    font-size: 1rem;
+  }
+
+  .sidebar-close-btn {
+    font-size: 1rem;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+  }
+
+  .sidebar-divider {
+    margin: 10px 0;
+  }
+
+  .sidebar-menu-btn {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+
+  .menu-icon {
+    font-size: 0.95rem;
+    width: 16px;
+  }
+
+  .passcode-form {
+    padding: 8px;
+  }
+
+  .passcode-input {
+    font-size: 0.85rem;
+    padding: 7px 35px 7px 10px;
+  }
+
+  .passcode-toggle-btn {
+    right: 8px;
+    padding: 5px;
+  }
+
+  .passcode-submit-btn {
+    font-size: 0.85rem;
+    padding: 7px;
+  }
+
+  .passcode-error {
+    font-size: 0.75rem;
+    padding: 5px;
+  }
+
+  .sidebar-footer-text {
+    font-size: 0.75rem;
+  }
+
+  .profile-dropdown {
+    top: 40px;
+    right: 8px;
+    width: 160px;
+    min-width: 140px;
+    padding: 10px 8px 8px;
+  }
+
+  .close-button {
+    font-size: 10px;
+  }
+
+  .user-detail-icon {
+    font-size: 10px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.75rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.65rem;
   }
 }

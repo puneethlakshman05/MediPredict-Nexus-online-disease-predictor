@@ -16,16 +16,17 @@ body {
 .content {
   flex: 1;
   padding-bottom: 10px;
+  /* min-height: 100px; */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   body {
     font-size: 0.95rem;
-    min-height: 160vh;
+    min-height: 140vh;
   }
   .app-container {
-    min-height: 160vh;
+    min-height: 140vh;
   }
   .content {
     padding-bottom: 8px;
@@ -35,10 +36,10 @@ body {
 @media (max-width: 768px) {
   body {
     font-size: 0.9rem;
-    min-height: 140vh;
+    min-height: 120vh;
   }
   .app-container {
-    min-height: 140vh;
+    min-height: 110vh;
   }
   .content {
     padding-bottom: 6px;
@@ -48,10 +49,10 @@ body {
 @media (max-width: 480px) {
   body {
     font-size: 0.85rem;
-    min-height: 120vh;
+    min-height: 80vh;
   }
   .app-container {
-    min-height: 120vh;
+    min-height: 80vh;
   }
   .content {
     padding-bottom: 4px;

@@ -39,12 +39,8 @@ function ProfileModal({ show, onClose, user, token, updateUser }) {
     }
 
     const formData = new FormData();
-    if (selectedFile) {
-      formData.append('photo', selectedFile);
-    }
-    if (name) {
-      formData.append('name', name);
-    }
+    if (selectedFile) formData.append('photo', selectedFile);
+    if (name) formData.append('name', name);
 
     try {
       const res = await axios.post(
@@ -71,7 +67,13 @@ function ProfileModal({ show, onClose, user, token, updateUser }) {
   };
 
   return (
-    <Modal show={show} onHide={onClose} centered>
+    <Modal
+      show={show}
+      onHide={onClose}
+      centered
+      dialogClassName="profile-modal-container" // Apply custom container styling
+      backdropClassName="profile-modal-overlay" // Apply custom overlay styling
+    >
       <Modal.Header closeButton>
         <Modal.Title>Update Profile</Modal.Title>
       </Modal.Header>

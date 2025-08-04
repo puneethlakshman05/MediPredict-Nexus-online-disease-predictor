@@ -1,48 +1,92 @@
 /* Ensure the page background doesn't interfere */
 :root {
   background: transparent !important;
+  --primary-color: #4c2c69;
+  --border-color: #e5e7eb;
+  --success-color: #22c55e;
 }
 
+/* Appointments Container */
 .appointments-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 40px 20px; /* Increased bottom padding for footer space */
   background: transparent !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Heading */
 h1 {
   font-size: 2rem;
   color: var(--primary-color);
   margin-bottom: 10px;
+  text-align: center;
 }
 
-table {
+/* Table Wrapper */
+.table-wrapper {
   width: 100%;
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0 auto; /* Centers the table wrapper */
+  overflow-x: auto; /* Horizontal scrollbar for table only */
+  -webkit-overflow-scrolling: touch;
+  padding-left: 10px; /* Prevents left cutoff */
+  box-sizing: border-box;
+}
+
+/* Table */
+table {
+  width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
-  background: transparent;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
 }
 
+/* Table Header and Cell */
 th, td {
-  padding: 8px 12px;
-  text-align: left;
+  padding: 8px 10px;
+  text-align: center; /* Ensures consistent centering */
   border-bottom: 1px solid var(--border-color);
+  min-width: 60px;
+  white-space: nowrap;
 }
 
+/* Specific Styling for Serial No Column */
+th:first-child,
+td:first-child {
+  min-width: 35px;
+  padding-left: 10px;
+}
+
+/* Specific Styling for Action Buttons and Remove Columns */
+th:nth-last-child(2),
+td:nth-last-child(2),
+th:last-child,
+td:last-child {
+  min-width: 90px;
+  padding-right: 10px;
+}
+
+/* Table Header */
 th {
   background-color: var(--primary-color);
   color: #fff;
   font-weight: 600;
 }
 
+/* Table Row Hover */
 tr:hover {
   background-color: #e8ecea;
 }
 
+/* Message */
 .message {
-  background-color: none;
+  background-color: transparent;
   color: #100818;
   padding: 10px;
   border-radius: 8px;
@@ -50,8 +94,10 @@ tr:hover {
   text-align: center;
   font-size: 1.2rem;
   width: 100%;
+  max-width: 700px;
 }
 
+/* Error Message */
 .error-message {
   background-color: #fee2e2;
   color: #c53030;
@@ -59,8 +105,12 @@ tr:hover {
   border-radius: 8px;
   margin-bottom: 20px;
   font-size: 1rem;
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
 }
 
+/* Delete Button */
 .delete-button {
   background: linear-gradient(135deg, #1a5e2e, #2e8b57);
   color: #fff;
@@ -74,12 +124,21 @@ tr:hover {
   align-items: center;
   gap: 6px;
   font-weight: 500;
+  text-align: center; /* Ensures button text is centered */
 }
 
+.delete-button:hover {
+  background: linear-gradient(135deg, #155e2e, #2a7b4a);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Icon */
 .delete-icon {
   font-size: 0.9rem;
 }
 
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -93,6 +152,7 @@ tr:hover {
   z-index: 1000;
 }
 
+/* Confirm Modal */
 .confirm-modal {
   background-color: #fff;
   border-radius: 12px;
@@ -104,25 +164,31 @@ tr:hover {
   animation: fadeIn 0.3s ease;
 }
 
+/* Confirm Title */
 .confirm-title {
   font-size: 1.4rem;
   color: #4c2c69;
   margin-bottom: 15px;
   font-weight: 600;
+  text-align: center;
 }
 
+/* Confirm Text */
 .confirm-text {
   font-size: 1rem;
   color: #374151;
   margin-bottom: 20px;
+  text-align: center;
 }
 
+/* Confirm Buttons */
 .confirm-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
+/* Yes Button */
 .yes-button {
   background: linear-gradient(135deg, #2dd4bf, #22d3ee);
   color: #fff;
@@ -133,8 +199,16 @@ tr:hover {
   transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   font-weight: 500;
+  text-align: center;
 }
 
+.yes-button:hover {
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* No Button */
 .no-button {
   background-color: #6b7280;
   color: #fff;
@@ -142,10 +216,18 @@ tr:hover {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
+.no-button:hover {
+  background-color: #5b616e;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Button */
 .button {
   padding: 8px 10px;
   font-size: 0.9rem;
@@ -153,19 +235,22 @@ tr:hover {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  text-align: center; /* Ensures button text is centered */
 }
 
+/* Approve Button */
 .approve-button {
   background-color: var(--success-color);
   color: #fff;
-  margin-right: 10px;
 }
 
 .approve-button:hover {
   background-color: #4de284;
+  transform: scale(1.05);
 }
 
+/* Reject Button */
 .reject-button {
   background-color: #c53030;
   color: #fff;
@@ -173,18 +258,23 @@ tr:hover {
 
 .reject-button:hover {
   background-color: #991b1b;
+  transform: scale(1.05);
 }
 
+/* Disabled Button */
 .button:disabled {
   background-color: #d1d5db;
   cursor: not-allowed;
 }
 
+/* Action Buttons */
 .action-buttons {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  justify-content: center;
 }
 
+/* FadeIn Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -196,35 +286,276 @@ tr:hover {
   }
 }
 
-@media (max-width: 768px) {
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
   .appointments-container {
-    padding: 15px 15px 0 15px;
+    max-width: 1100px;
+    padding: 30px 20px 50px 20px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  .table-wrapper {
+    max-width: 800px;
   }
 
   table {
-    font-size: 0.85rem;
-    max-width: 90%;
+    font-size: 1rem;
   }
 
   th, td {
-    padding: 8px 10px;
+    padding: 10px 12px;
+    min-width: 70px;
+  }
+
+  th:first-child,
+  td:first-child {
+    min-width: 40px;
+  }
+
+  th:nth-last-child(2),
+  td:nth-last-child(2),
+  th:last-child,
+  td:last-child {
+    min-width: 100px;
+  }
+
+  .message {
+    font-size: 1.3rem;
+    max-width: 800px;
+  }
+
+  .error-message {
+    font-size: 1.1rem;
+    max-width: 800px;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 15px 10px 35px 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .table-wrapper {
+    max-width: 100%;
+    margin: 0 auto; /* Centers the wrapper */
+    padding-left: 8px;
+    overflow-x: auto; /* Horizontal scrollbar for table */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 6px 8px;
+    min-width: 50px;
+  }
+
+  th:first-child,
+  td:first-child {
+    min-width: 30px;
+    padding-left: 8px;
+  }
+
+  th:nth-last-child(2),
+  td:nth-last-child(2),
+  th:last-child,
+  td:last-child {
+    min-width: 80px;
+    padding-right: 8px;
+  }
+
+  .message {
+    font-size: 1.1rem;
+    padding: 8px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .error-message {
+    font-size: 0.9rem;
+    padding: 12px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .delete-button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    text-align: center;
   }
 
   .action-buttons {
     flex-direction: column;
     gap: 5px;
+    justify-content: center;
   }
 
   .approve-button,
   .reject-button,
   .delete-button {
-    margin-right: 0;
     width: 100%;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    text-align: center;
   }
 }
 
+/* Media Query for Small Screens (up to 480px) */
 @media (max-width: 480px) {
-  table {
+  .appointments-container {
+    padding: 10px 5px 30px 5px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .table-wrapper {
     max-width: 100%;
+    margin: 0 auto; /* Centers the wrapper */
+    padding-left: 6px;
+    overflow-x: auto; /* Horizontal scrollbar for table */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 5px 6px;
+    min-width: 45px;
+  }
+
+  th:first-child,
+  td:first-child {
+    min-width: 25px;
+    padding-left: 6px;
+  }
+
+  th:nth-last-child(2),
+  td:nth-last-child(2),
+  th:last-child,
+  td:last-child {
+    min-width: 70px;
+    padding-right: 6px;
+  }
+
+  .message {
+    font-size: 1rem;
+    padding: 6px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .error-message {
+    font-size: 0.85rem;
+    padding: 10px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .delete-button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .action-buttons {
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .approve-button,
+  .reject-button,
+  .delete-button {
+    padding: 5px 6px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .appointments-container {
+    padding: 8px 3px 25px 3px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .table-wrapper {
+    max-width: 100%;
+    margin: 0 auto; /* Centers the wrapper */
+    padding-left: 5px;
+    overflow-x: auto; /* Horizontal scrollbar for table */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 4px 5px;
+    min-width: 40px;
+  }
+
+  th:first-child,
+  td:first-child {
+    min-width: 20px;
+    padding-left: 5px;
+  }
+
+  th:nth-last-child(2),
+  td:nth-last-child(2),
+  th:last-child,
+  td:last-child {
+    min-width: 65px;
+    padding-right: 5px;
+  }
+
+  .message {
+    font-size: 0.9rem;
+    padding: 5px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+    padding: 8px;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .delete-button {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .action-buttons {
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .approve-button,
+  .reject-button,
+  .delete-button {
+    padding: 4px 5px;
+    font-size: 0.75rem;
+    text-align: center;
   }
 }

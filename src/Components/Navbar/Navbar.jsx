@@ -22,9 +22,9 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
-  const [imageError, setImageError] = useState(false); // Track image loading errors
+  const [imageError, setImageError] = useState(false);
 
-  // Debug: Log props
+  // Debug: Log props and state updates
   useEffect(() => {
     console.log('Navbar props:', { user, token });
     console.log('Profile photo URL:', user.profilePhoto ? `http://localhost:5000${user.profilePhoto}` : 'No photo');
@@ -52,8 +52,8 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
 
   const handleProfileClick = () => {
     setShowProfileDropdown(!showProfileDropdown);
-    setIsOpen(false);
-    setShowConfirmPopup(false);
+    setIsOpen(true); // Ensure navbar-links is active when dropdown is opened
+    console.log('Profile dropdown toggled, isOpen:', isOpen, 'Dropdown visible:', showProfileDropdown);
   };
 
   const handleCloseDropdown = (e) => {
@@ -69,6 +69,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
     setShowProfileDropdown(false);
     setShowConfirmPopup(false);
     setIsOpen(false);
+    console.log('Profile modal triggered, width:', window.innerWidth, 'Dropdown visible:', showProfileDropdown, 'ShowModal called');
   };
 
   const handleRemovePhoto = async (e) => {
@@ -79,7 +80,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
       });
       console.log('Profile photo removed:', res.data);
       setUser({ ...user, profilePhoto: '', name: res.data.name });
-      setImageError(false); // Reset image error state
+      setImageError(false);
       setShowConfirmPopup(false);
     } catch (err) {
       console.error('Failed to remove profile photo:', err.response?.data || err.message);
@@ -226,7 +227,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                       onClick={handleCloseDropdown}
                     />
                     <div className="dropdown-profile-container">
-                      <div className="profile-holder dropdown-profile">
+                      <div className="dropdown-profile">
                         {!imageError && profilePhotoUrl ? (
                           <img
                             src={profilePhotoUrl}
@@ -241,6 +242,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
                           icon={faCamera}
                           className="camera-icon"
                           onClick={handleProfileUpdate}
+                          style={{ zIndex: 13000 }} // Ensure clickable
                         />
                         {profilePhotoUrl && (
                           <FontAwesomeIcon

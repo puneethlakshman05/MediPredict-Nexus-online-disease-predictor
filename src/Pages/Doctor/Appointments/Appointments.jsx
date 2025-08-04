@@ -20,7 +20,7 @@ function Appointments({ token }) {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {
-        const doctorEmail = res.data.email; // Use email instead of id
+        const doctorEmail = res.data.email;
         axios.get(`http://localhost:5000/api/appointments/doctor/${doctorEmail}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
@@ -101,7 +101,7 @@ function Appointments({ token }) {
     setAppointmentToDelete(null);
   };
 
-  return (
+    return (
     <div className="appointments-container">
       <h1>Your Appointments</h1>
       {message && <div className="message">{message}</div>}
@@ -109,7 +109,7 @@ function Appointments({ token }) {
       {appointments.length === 0 && !error ? (
         <p>No appointments booked yet.</p>
       ) : (
-        <div className="table-container">
+        <div className="table-wrapper"> {/* Updated from table-container */}
           <table>
             <thead>
               <tr>
@@ -168,7 +168,6 @@ function Appointments({ token }) {
           </table>
         </div>
       )}
-
       {showConfirmModal && (
         <div className="modal-overlay">
           <div className="confirm-modal">

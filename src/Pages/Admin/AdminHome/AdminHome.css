@@ -1,29 +1,33 @@
+/* Page Container */
 .page-container.short-content {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+/* Admin Home Container */
 .admin-home-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   flex: 1;
-  text-align: center; /* Ensure text alignment cascades to children if needed */
+  text-align: center;
 }
 
+/* Admin Heading */
 .admin-home-container .admin-heading {
   font-size: 2rem;
   color: #472e5c;
   font-weight: 600;
   margin-bottom: 15px;
   text-align: center;
-  width: 100%; /* Ensure the heading takes the full width of the parent */
-  display: block; /* Ensure the heading behaves as a block element */
-  margin-left: auto; /* Additional centering fallback */
+  width: 100%;
+  display: block;
+  margin-left: auto;
   margin-right: auto;
 }
 
+/* Welcome Text */
 .admin-home-container .welcome-text {
   font-size: 1.1rem;
   color: #374151;
@@ -32,6 +36,7 @@
   text-align: center;
 }
 
+/* Button Row */
 .admin-home-container .button-row {
   display: flex;
   justify-content: center;
@@ -39,10 +44,78 @@
   margin-bottom: 40px;
 }
 
+/* Button Column */
 .admin-home-container .button-col {
   flex: 0 0 auto;
 }
 
+/* Manage Buttons */
+.admin-home-container .manage-doctors-button,
+.admin-home-container .manage-patients-button {
+  background: linear-gradient(135deg, #7c3aed, #db2777);
+  color: #fff;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}/* Page Container */
+.page-container.short-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Admin Home Container */
+.admin-home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+}
+
+/* Admin Heading */
+.admin-home-container .admin-heading {
+  font-size: 2rem;
+  color: #472e5c;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Welcome Text */
+.admin-home-container .welcome-text {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 30px;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Button Row */
+.admin-home-container .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Button Column */
+.admin-home-container .button-col {
+  flex: 0 0 auto;
+}
+
+/* Manage Buttons */
 .admin-home-container .manage-doctors-button,
 .admin-home-container .manage-patients-button {
   background: linear-gradient(135deg, #7c3aed, #db2777);
@@ -66,10 +139,12 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Analytics Section */
 .admin-home-container .analytics-section {
   margin-top: 30px;
 }
 
+/* Error Message */
 .admin-home-container .error-message {
   color: #dc2626;
   background-color: #fee2e2;
@@ -80,6 +155,7 @@
   text-align: center;
 }
 
+/* Stats Container */
 .admin-home-container .stats-container {
   display: flex;
   flex-direction: column;
@@ -89,6 +165,7 @@
   width: 100%;
 }
 
+/* Stats Row */
 .admin-home-container .stats-row {
   display: flex;
   flex-direction: row;
@@ -102,6 +179,7 @@
   justify-content: center;
 }
 
+/* Stat Card */
 .admin-home-container .stat-card {
   background: #fff;
   border: 2px solid green;
@@ -127,6 +205,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Stat Label */
 .admin-home-container .stat-label {
   font-size: 1.3rem;
   color: #374151;
@@ -134,12 +213,14 @@
   margin-bottom: 15px;
 }
 
+/* Stat Number */
 .admin-home-container .stat-number {
   font-size: 2.2rem;
   color: #472e5c;
   font-weight: 700;
 }
 
+/* Popup Overlay */
 .admin-home-container .popup-overlay {
   position: fixed;
   top: 0;
@@ -153,6 +234,7 @@
   z-index: 1000;
 }
 
+/* Popup */
 .admin-home-container .popup {
   background: #fff;
   width: 90%;
@@ -165,6 +247,7 @@
   padding: 20px;
 }
 
+/* Popup Heading */
 .admin-home-container .popup-heading {
   font-size: 1.5rem;
   color: #472e5c;
@@ -172,6 +255,7 @@
   margin-bottom: 15px;
 }
 
+/* Close Button */
 .admin-home-container .close-btn {
   position: absolute;
   top: 10px;
@@ -183,10 +267,12 @@
   cursor: pointer;
 }
 
+/* Activity Content */
 .admin-home-container .activity-content {
   margin-top: 20px;
 }
 
+/* Doctors Table Container */
 .admin-home-container .doctors-table-container {
   position: sticky;
   top: 0;
@@ -195,12 +281,14 @@
   padding-bottom: 10px;
 }
 
+/* Appointments Table Container */
 .admin-home-container .appointments-table-container {
   max-height: 300px;
   overflow-y: auto;
   margin-top: 20px;
 }
 
+/* Appointments Table Header */
 .admin-home-container .appointments-table-header {
   display: flex;
   justify-content: space-between;
@@ -208,6 +296,7 @@
   margin-bottom: 10px;
 }
 
+/* Close Appointments Button */
 .admin-home-container .close-appointments-btn {
   background: none;
   border: none;
@@ -216,6 +305,7 @@
   cursor: pointer;
 }
 
+/* Activity Subheading */
 .admin-home-container .activity-subheading {
   font-size: 1.2rem;
   color: #374151;
@@ -223,6 +313,7 @@
   margin-bottom: 10px;
 }
 
+/* Activity Table */
 .admin-home-container .activity-table {
   width: 100%;
   border-collapse: collapse;
@@ -230,6 +321,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* Table Header */
 .admin-home-container .table-header {
   background: #f9fafb;
   color: #374151;
@@ -237,11 +329,13 @@
   text-align: left;
 }
 
+/* Table Header Cell */
 .admin-home-container .table-header-cell {
   padding: 10px;
   border-bottom: 1px solid #e5e7eb;
 }
 
+/* Table Row */
 .admin-home-container .table-row {
   border-bottom: 1px solid #e5e7eb;
 }
@@ -250,12 +344,14 @@
   background: #f9fafb;
 }
 
+/* Table Cell */
 .admin-home-container .table-cell {
   padding: 10px;
   font-size: 0.9rem;
   color: #374151;
 }
 
+/* Action Link */
 .admin-home-container .action-link {
   color: #472e5c;
   text-decoration: none;
@@ -264,4 +360,920 @@
 
 .admin-home-container .action-link:hover {
   text-decoration: underline;
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .admin-home-container {
+    max-width: 1300px;
+    padding: 30px;
+  }
+
+  .admin-heading {
+    font-size: 2.2rem;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+  }
+
+  .button-row {
+    gap: 40px;
+    margin-bottom: 50px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 14px 35px;
+    font-size: 1.2rem;
+  }
+
+  .stats-row {
+    max-width: 1100px;
+    gap: 40px;
+  }
+
+  .stat-card {
+    width: 500px;
+    height: 170px;
+    padding: 30px;
+  }
+
+  .stat-label {
+    font-size: 1.4rem;
+  }
+
+  .stat-number {
+    font-size: 2.4rem;
+  }
+
+  .popup {
+    max-width: 900px;
+  }
+
+  .popup-heading {
+    font-size: 1.6rem;
+  }
+
+  .activity-subheading {
+    font-size: 1.3rem;
+  }
+
+  .table-cell {
+    font-size: 1rem;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .admin-home-container {
+    padding: 15px;
+  }
+
+  .admin-heading {
+    font-size: 1.8rem;
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .button-row {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 400px;
+    height: 130px;
+    padding: 20px;
+  }
+
+  .stat-label {
+    font-size: 1.2rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 600px;
+  }
+
+  .popup-heading {
+    font-size: 1.4rem;
+  }
+
+  .activity-subheading {
+    font-size: 1.1rem;
+  }
+
+  .table-cell {
+    font-size: 0.85rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
+@media (max-width: 480px) {
+  .admin-home-container {
+    padding: 10px;
+  }
+
+  .admin-heading {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .welcome-text {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+
+  .button-row {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .stats-row {
+    gap: 12px;
+  }
+
+  .stat-card {
+    max-width: 300px;
+    height: 110px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .error-message {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 400px;
+    padding: 15px;
+    max-height: 85vh;
+  }
+
+  .popup-heading {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .close-btn,
+  .close-appointments-btn {
+    font-size: 1.3rem;
+    top: 8px;
+    right: 8px;
+  }
+
+  .activity-subheading {
+    font-size: 1rem;
+  }
+
+  .appointments-table-container {
+    max-height: 250px;
+  }
+
+  .table-cell {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .table-header-cell {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .action-link {
+    font-size: 0.8rem;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .admin-home-container {
+    padding: 8px;
+  }
+
+  .admin-heading {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .welcome-text {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .button-row {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 6px 15px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+
+  .stats-row {
+    gap: 10px;
+  }
+
+  .stat-card {
+    max-width: 280px;
+    height: 100px;
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .stat-number {
+    font-size: 1.6rem;
+  }
+
+  .error-message {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 320px;
+    padding: 12px;
+    max-height: 80vh;
+  }
+
+  .popup-heading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .close-btn,
+  .close-appointments-btn {
+    font-size: 1.2rem;
+    top: 6px;
+    right: 6px;
+  }
+
+  .activity-subheading {
+    font-size: 0.9rem;
+  }
+
+  .appointments-table-container {
+    max-height: 200px;
+  }
+
+  .table-cell {
+    font-size: 0.75rem;
+    padding: 6px;
+  }
+
+  .table-header-cell {
+    padding: 6px;
+    font-size: 0.8rem;
+  }
+
+  .action-link {
+    font-size: 0.75rem;
+  }
+}
+
+.admin-home-container .manage-doctors-button.hovered,
+.admin-home-container .manage-patients-button.hovered {
+  background: linear-gradient(135deg, #6d28d9, #be185d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Analytics Section */
+.admin-home-container .analytics-section {
+  margin-top: 30px;
+}
+
+/* Error Message */
+.admin-home-container .error-message {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Stats Container */
+.admin-home-container .stats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* Stats Row */
+.admin-home-container .stats-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.admin-home-container .stats-row.centered {
+  justify-content: center;
+}
+
+/* Stat Card */
+.admin-home-container .stat-card {
+  background: #fff;
+  border: 2px solid green;
+  border-radius: 10px;
+  width: 450px;
+  height: 150px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.admin-home-container .stat-card.clickable {
+  cursor: pointer;
+}
+
+.admin-home-container .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Stat Label */
+.admin-home-container .stat-label {
+  font-size: 1.3rem;
+  color: #374151;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Stat Number */
+.admin-home-container .stat-number {
+  font-size: 2.2rem;
+  color: #472e5c;
+  font-weight: 700;
+}
+
+/* Popup Overlay */
+.admin-home-container .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup */
+.admin-home-container .popup {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Popup Heading */
+.admin-home-container .popup-heading {
+  font-size: 1.5rem;
+  color: #472e5c;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Close Button */
+.admin-home-container .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Activity Content */
+.admin-home-container .activity-content {
+  margin-top: 20px;
+}
+
+/* Doctors Table Container */
+.admin-home-container .doctors-table-container {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+  padding-bottom: 10px;
+}
+
+/* Appointments Table Container */
+.admin-home-container .appointments-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+/* Appointments Table Header */
+.admin-home-container .appointments-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Close Appointments Button */
+.admin-home-container .close-appointments-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* Activity Subheading */
+.admin-home-container .activity-subheading {
+  font-size: 1.2rem;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* Activity Table */
+.admin-home-container .activity-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Table Header */
+.admin-home-container .table-header {
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Table Header Cell */
+.admin-home-container .table-header-cell {
+  padding: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Table Row */
+.admin-home-container .table-row {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-home-container .table-row:hover {
+  background: #f9fafb;
+}
+
+/* Table Cell */
+.admin-home-container .table-cell {
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* Action Link */
+.admin-home-container .action-link {
+  color: #472e5c;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.admin-home-container .action-link:hover {
+  text-decoration: underline;
+}
+
+/* No Activity Message */
+.admin-home-container .no-activity {
+  font-size: 1rem;
+  color: #374151;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .admin-home-container {
+    max-width: 1300px;
+    padding: 30px;
+  }
+
+  .admin-heading {
+    font-size: 2.2rem;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+  }
+
+  .button-row {
+    gap: 40px;
+    margin-bottom: 50px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 14px 35px;
+    font-size: 1.2rem;
+  }
+
+  .stats-row {
+    max-width: 1100px;
+    gap: 40px;
+  }
+
+  .stat-card {
+    width: 500px;
+    height: 170px;
+    padding: 30px;
+  }
+
+  .stat-label {
+    font-size: 1.4rem;
+  }
+
+  .stat-number {
+    font-size: 2.4rem;
+  }
+
+  .popup {
+    max-width: 900px;
+  }
+
+  .popup-heading {
+    font-size: 1.6rem;
+  }
+
+  .activity-subheading {
+    font-size: 1.3rem;
+  }
+
+  .table-cell {
+    font-size: 1rem;
+  }
+
+  .no-activity {
+    font-size: 1.1rem;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .admin-home-container {
+    padding: 15px;
+  }
+
+  .admin-heading {
+    font-size: 1.8rem;
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .button-row {
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 400px;
+    height: 130px;
+    padding: 20px;
+  }
+
+  .stat-label {
+    font-size: 1.2rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 600px;
+  }
+
+  .popup-heading {
+    font-size: 1.4rem;
+  }
+
+  .activity-subheading {
+    font-size: 1.1rem;
+  }
+
+  .table-cell {
+    font-size: 0.85rem;
+  }
+
+  .no-activity {
+    font-size: 0.9rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
+@media (max-width: 480px) {
+  .admin-home-container {
+    padding: 10px;
+  }
+
+  .admin-heading {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .welcome-text {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+
+  .button-row {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    max-width: 100%;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 320px;
+    height: 110px;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .error-message {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 400px;
+    padding: 15px;
+    max-height: 85vh;
+  }
+
+  .popup-heading {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .close-btn,
+  .close-appointments-btn {
+    font-size: 1.3rem;
+    top: 8px;
+    right: 8px;
+  }
+
+  .activity-subheading {
+    font-size: 1rem;
+  }
+
+  .appointments-table-container {
+    max-height: 250px;
+  }
+
+  .table-cell {
+    font-size: 0.8rem;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table-header-cell {
+    padding: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .action-link {
+    font-size: 0.8rem;
+  }
+
+  .no-activity {
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .admin-home-container {
+    padding: 8px;
+  }
+
+  .admin-heading {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .welcome-text {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .button-row {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .manage-doctors-button,
+  .manage-patients-button {
+    padding: 6px 15px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .stat-card {
+    width: 100%;
+    max-width: 280px;
+    height: 100px;
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .stat-number {
+    font-size: 1.6rem;
+  }
+
+  .error-message {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+
+  .popup {
+    width: 95%;
+    max-width: 320px;
+    padding: 12px;
+    max-height: 80vh;
+  }
+
+  .popup-heading {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .close-btn,
+  .close-appointments-btn {
+    font-size: 1.2rem;
+    top: 6px;
+    right: 6px;
+  }
+
+  .activity-subheading {
+    font-size: 0.9rem;
+  }
+
+  .appointments-table-container {
+    max-height: 200px;
+  }
+
+  .table-cell {
+    font-size: 0.75rem;
+    padding: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .table-header-cell {
+    padding: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .action-link {
+    font-size: 0.75rem;
+  }
+
+  .no-activity {
+    font-size: 0.8rem;
+    margin-top: 12px;
+  }
 }

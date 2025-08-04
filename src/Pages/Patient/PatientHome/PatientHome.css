@@ -1,3 +1,19 @@
+:root {
+  --primary-color: #1e4d6b;
+  --secondary-color: #3b82f6;
+  --success-color: #10b981;
+  --text-color: #333;
+  --background-color: #df2cb8;
+  --card-background: #ffffff;
+  --border-color: #d1e2ec;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
 .patient-home {
   position: relative;
   padding: 15px 0;
@@ -145,9 +161,10 @@
   color: #4c2c69;
   transform: scale(1.1);
 }
+
 .medication-section {
   margin: 20px auto;
-  padding: 20px ;
+  padding: 20px;
   min-width: 280px;
   min-height: 150px;
   max-width: 420px;
@@ -186,7 +203,6 @@
   color: #7c3aed;
   font-size: 1rem;
 }
-
 
 .doctors-section {
   margin-top: 10px;
@@ -342,6 +358,16 @@ h3, h4, h5, h6 {
     max-width: 80%;
   }
 
+  .symptom-select {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .predict-button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
   .action-buttons {
     flex-direction: column;
     gap: 8px;
@@ -357,21 +383,169 @@ h3, h4, h5, h6 {
     max-width: 90%;
     padding: 15px 0;
   }
+
+  .doctor-card {
+    width: 80%;
+  }
+
+  .no-doctors-modal {
+    max-width: 300px;
+    padding: 20px;
+  }
+
+  .no-doctors-modal-content p {
+    font-size: 0.95rem;
+  }
+
+  .ok-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .patient-home {
+    padding: 8px 0;
+  }
+
+  .notification-container {
+    top: 8px;
+    right: 8px;
+  }
+
   .symptom-select-container {
     max-width: 90%;
   }
 
+  .symptom-select {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
   .predict-button {
     width: 100%;
-    padding: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .action-buttons {
+    gap: 6px;
+  }
+
+  .button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
   }
 
   .medication-section,
   .doctors-section {
     max-width: 100%;
     padding: 10px 0;
+  }
+
+  .doctor-card {
+    width: 90%;
+    padding: 12px;
+  }
+
+  .medication-section {
+    padding: 12px;
+  }
+
+  .medication-section h6 {
+    font-size: 0.9rem;
+  }
+
+  .medication-paragraph {
+    font-size: 0.85rem;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .no-doctors-modal {
+    max-width: 280px;
+    padding: 15px;
+  }
+
+  .no-doctors-modal-content p {
+    font-size: 0.9rem;
+  }
+
+  .ok-button {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .patient-home {
+    padding: 6px 0;
+  }
+
+  .notification-container {
+    top: 6px;
+    right: 6px;
+  }
+
+  .symptom-select-container {
+    max-width: 95%;
+  }
+
+  .symptom-select {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .predict-button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .action-buttons {
+    gap: 4px;
+  }
+
+  .button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .medication-section,
+  .doctors-section {
+    padding: 8px 0;
+  }
+
+  .doctor-card {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .medication-section {
+    padding: 10px;
+    min-width: 240px;
+  }
+
+  .medication-section h6 {
+    font-size: 0.85rem;
+  }
+
+  .medication-paragraph {
+    font-size: 0.8rem;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .no-doctors-modal {
+    max-width: 260px;
+    padding: 12px;
+  }
+
+  .no-doctors-modal-content p {
+    font-size: 0.85rem;
+  }
+
+  .ok-button {
+    padding: 4px 8px;
+    font-size: 0.8rem;
   }
 }

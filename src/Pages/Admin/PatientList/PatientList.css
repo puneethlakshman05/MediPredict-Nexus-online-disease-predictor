@@ -1,10 +1,13 @@
+/* Patients List Container */
 .patients-list-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 15px;
+  box-sizing: border-box;
 }
 
+/* Patients List Message */
 .patients-list-message {
   background-color: #e2e8f0;
   color: #4c2c69;
@@ -14,8 +17,10 @@
   text-align: center;
   font-size: 0.95rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
+/* Patients List Error */
 .patients-list-error {
   background-color: #fee2e2;
   color: #c53030;
@@ -25,8 +30,10 @@
   text-align: center;
   font-size: 0.95rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
+/* Patients List Table */
 .patients-list-table {
   width: 100%;
   max-width: 600px;
@@ -34,25 +41,40 @@
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  table-layout: auto;
 }
 
+/* Table Header */
 .patients-list-th {
   background-color: #4c2c69;
   color: #fff;
-  padding: 14px;
+  padding: 14px 10px;
   text-align: left;
   font-weight: 600;
   border-bottom: 2px solid #d1d5db;
+  min-width: 60px;
 }
 
+/* Table Cell */
 .patients-list-td {
-  padding: 14px;
+  padding: 14px 10px;
   border-bottom: 1px solid #e5e7eb;
   color: #374151;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  min-width: 60px;
 }
 
+/* Specific Styling for Serial No Column */
+.patients-list-th:first-child,
+.patients-list-td:first-child {
+  min-width: 50px;
+  padding-left: 15px;
+}
+
+/* No Patients Message */
 .patients-list-no-patients-message {
   padding: 20px;
   text-align: center;
@@ -62,6 +84,7 @@
   border-bottom: none;
 }
 
+/* Delete Button */
 .patients-list-delete-button {
   background: linear-gradient(135deg, #1a5e2e, #2e8b57);
   color: #fff;
@@ -78,15 +101,17 @@
 }
 
 .patients-list-delete-button:hover {
-  background: #1e90ff;
+  background: linear-gradient(135deg, #155e2e, #2a7b4a);
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Delete Icon */
 .patients-list-delete-icon {
   font-size: 0.9rem;
 }
 
+/* Modal Overlay */
 .patients-list-modal-overlay {
   position: fixed;
   top: 0;
@@ -100,6 +125,7 @@
   z-index: 1000;
 }
 
+/* Confirm Modal */
 .patients-list-confirm-modal {
   background-color: #fff;
   border-radius: 12px;
@@ -109,8 +135,10 @@
   text-align: center;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease;
+  box-sizing: border-box;
 }
 
+/* Confirm Title */
 .patients-list-confirm-title {
   font-size: 1.4rem;
   color: #4c2c69;
@@ -118,18 +146,21 @@
   font-weight: 600;
 }
 
+/* Confirm Text */
 .patients-list-confirm-text {
   font-size: 1rem;
   color: #374151;
   margin-bottom: 20px;
 }
 
+/* Confirm Buttons */
 .patients-list-confirm-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
+/* Yes Button */
 .patients-list-yes-button {
   background: linear-gradient(135deg, #2dd4bf, #22d3ee);
   color: #fff;
@@ -148,6 +179,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* No Button */
 .patients-list-no-button {
   background-color: #6b7280;
   color: #fff;
@@ -159,7 +191,13 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Define the fadeIn animation */
+.patients-list-no-button:hover {
+  background-color: #5b616e;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* FadeIn Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -168,5 +206,307 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .patients-list-container {
+    max-width: 1300px;
+    padding: 30px 20px;
+  }
+
+  .patients-list-table {
+    max-width: 800px;
+  }
+
+  .patients-list-th,
+  .patients-list-td {
+    padding: 16px 12px;
+    font-size: 1rem;
+  }
+
+  .patients-list-th:first-child,
+  .patients-list-td:first-child {
+    min-width: 60px;
+    padding-left: 20px;
+  }
+
+  .patients-list-message,
+  .patients-list-error {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .patients-list-no-patients-message {
+    font-size: 1.3rem;
+    padding: 25px;
+  }
+
+  .patients-list-delete-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .patients-list-delete-icon {
+    font-size: 1rem;
+  }
+
+  .patients-list-confirm-modal {
+    max-width: 400px;
+    padding: 30px;
+  }
+
+  .patients-list-confirm-title {
+    font-size: 1.5rem;
+  }
+
+  .patients-list-confirm-text {
+    font-size: 1.1rem;
+  }
+
+  .patients-list-confirm-buttons {
+    gap: 20px;
+  }
+
+  .patients-list-yes-button,
+  .patients-list-no-button {
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .patients-list-container {
+    padding: 15px 10px;
+  }
+
+  .patients-list-table {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+
+  .patients-list-th,
+  .patients-list-td {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+
+  .patients-list-th:first-child,
+  .patients-list-td:first-child {
+    min-width: 50px;
+    padding-left: 12px;
+  }
+
+  .patients-list-message,
+  .patients-list-error {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin: 0 10px 12px 10px;
+  }
+
+  .patients-list-no-patients-message {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+
+  .patients-list-delete-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .patients-list-delete-icon {
+    font-size: 0.85rem;
+  }
+
+  .patients-list-confirm-modal {
+    max-width: 320px;
+    padding: 20px;
+  }
+
+  .patients-list-confirm-title {
+    font-size: 1.3rem;
+  }
+
+  .patients-list-confirm-text {
+    font-size: 0.95rem;
+  }
+
+  .patients-list-confirm-buttons {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .patients-list-yes-button,
+  .patients-list-no-button {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
+@media (max-width: 480px) {
+  .patients-list-container {
+    padding: 10px 5px;
+  }
+
+  .patients-list-table {
+    display: block;
+    max-width: 100%;
+    margin: 0 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .patients-list-th,
+  .patients-list-td {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+    min-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .patients-list-th:first-child,
+  .patients-list-td:first-child {
+    min-width: 40px;
+    padding-left: 10px;
+  }
+
+  .patients-list-message,
+  .patients-list-error {
+    font-size: 0.85rem;
+    padding: 6px;
+    margin: 0 5px 10px 5px;
+  }
+
+  .patients-list-no-patients-message {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .patients-list-delete-button {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+
+  .patients-list-delete-icon {
+    font-size: 0.8rem;
+  }
+
+  .patients-list-confirm-modal {
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .patients-list-confirm-title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .patients-list-confirm-text {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .patients-list-confirm-buttons {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .patients-list-yes-button,
+  .patients-list-no-button {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .patients-list-container {
+    padding: 8px 3px;
+  }
+
+  .patients-list-table {
+    display: block;
+    max-width: 100%;
+    margin: 0 3px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .patients-list-th,
+  .patients-list-td {
+    padding: 6px 5px;
+    font-size: 0.8rem;
+    min-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .patients-list-th:first-child,
+  .patients-list-td:first-child {
+    min-width: 35px;
+    padding-left: 8px;
+  }
+
+  .patients-list-message,
+  .patients-list-error {
+    font-size: 0.8rem;
+    padding: 5px;
+    margin: 0 3px 8px 3px;
+  }
+
+  .patients-list-no-patients-message {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .patients-list-delete-button {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+  }
+
+  .patients-list-delete-icon {
+    font-size: 0.75rem;
+  }
+
+  .patients-list-confirm-modal {
+    max-width: 280px;
+    padding: 12px;
+  }
+
+  .patients-list-confirm-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .patients-list-confirm-text {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+
+  .patients-list-confirm-buttons {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .patients-list-yes-button,
+  .patients-list-no-button {
+    padding: 5px 14px;
+    font-size: 0.8rem;
+    border-radius: 4px;
   }
 }

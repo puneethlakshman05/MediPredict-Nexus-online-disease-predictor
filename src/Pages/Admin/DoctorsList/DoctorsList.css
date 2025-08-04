@@ -1,20 +1,25 @@
+/* Doctors List Container */
 .doctors-list-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 15px;
+  box-sizing: border-box;
 }
 
+/* Doctors List Heading */
 .doctors-list-heading {
   font-size: 1.8rem;
   color: #fff;
   background-color: #4c2c69;
   padding: 10px 20px;
   border-radius: 8px 8px 0 0;
-  margin: -20px -20px 20px -20px;
+  margin: -20px -15px 20px -15px;
   font-weight: 600;
+  text-align: center;
 }
 
+/* Doctors List Message */
 .doctors-list-message {
   background-color: #e2e8f0;
   color: #4c2c69;
@@ -24,8 +29,10 @@
   text-align: center;
   font-size: 0.95rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
+/* Doctors List Error */
 .doctors-list-error {
   background-color: #fee2e2;
   color: #c53030;
@@ -35,8 +42,10 @@
   text-align: center;
   font-size: 0.95rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
+/* Doctors List Table */
 .doctors-list-table {
   width: 100%;
   max-width: 600px;
@@ -44,25 +53,40 @@
   border-collapse: collapse;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  table-layout: auto;
 }
 
+/* Table Header */
 .doctors-list-th {
   background-color: #4c2c69;
   color: #fff;
-  padding: 14px;
+  padding: 14px 10px;
   text-align: left;
   font-weight: 600;
   border-bottom: 2px solid #d1d5db;
+  min-width: 60px;
 }
 
+/* Table Cell */
 .doctors-list-td {
-  padding: 14px;
+  padding: 14px 10px;
   border-bottom: 1px solid #e5e7eb;
   color: #374151;
   background-color: #fff;
   transition: background-color 0.3s ease;
+  min-width: 60px;
 }
 
+/* Specific Styling for Serial No Column */
+.doctors-list-th:first-child,
+.doctors-list-td:first-child {
+  min-width: 50px;
+  padding-left: 15px;
+}
+
+/* No Doctors Message */
 .doctors-list-no-doctors-message {
   padding: 20px;
   text-align: center;
@@ -72,6 +96,7 @@
   border-bottom: none;
 }
 
+/* Delete Button */
 .doctors-list-delete-button {
   background: linear-gradient(135deg, #1a5e2e, #2e8b57);
   color: #fff;
@@ -87,10 +112,18 @@
   font-weight: 500;
 }
 
+.doctors-list-delete-button:hover {
+  background: linear-gradient(135deg, #155e2e, #2a7b4a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Icon */
 .doctors-list-delete-icon {
   font-size: 0.9rem;
 }
 
+/* Modal Overlay */
 .doctors-list-modal-overlay {
   position: fixed;
   top: 0;
@@ -104,6 +137,7 @@
   z-index: 1000;
 }
 
+/* Confirm Modal */
 .doctors-list-confirm-modal {
   background-color: #fff;
   border-radius: 12px;
@@ -113,8 +147,10 @@
   text-align: center;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease;
+  box-sizing: border-box;
 }
 
+/* Confirm Title */
 .doctors-list-confirm-title {
   font-size: 1.4rem;
   color: #4c2c69;
@@ -122,18 +158,21 @@
   font-weight: 600;
 }
 
+/* Confirm Text */
 .doctors-list-confirm-text {
   font-size: 1rem;
   color: #374151;
   margin-bottom: 20px;
 }
 
+/* Confirm Buttons */
 .doctors-list-confirm-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
 }
 
+/* Yes Button */
 .doctors-list-yes-button {
   background: linear-gradient(135deg, #2dd4bf, #22d3ee);
   color: #fff;
@@ -146,6 +185,13 @@
   font-weight: 500;
 }
 
+.doctors-list-yes-button:hover {
+  background: linear-gradient(135deg, #26b8a3, #1cb9d2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* No Button */
 .doctors-list-no-button {
   background-color: #6b7280;
   color: #fff;
@@ -157,7 +203,12 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Define the fadeIn animation */
+.doctors-list-no-button:hover {
+  background-color: #5b616e;
+  transform: translateY(-2px);
+}
+
+/* FadeIn Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -166,5 +217,333 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .doctors-list-container {
+    max-width: 1300px;
+    padding: 30px 20px;
+  }
+
+  .doctors-list-heading {
+    font-size: 2rem;
+    padding: 12px 24px;
+    margin: -30px -20px 20px -20px;
+  }
+
+  .doctors-list-table {
+    max-width: 800px;
+  }
+
+  .doctors-list-th,
+  .doctors-list-td {
+    padding: 16px 12px;
+    font-size: 1rem;
+  }
+
+  .doctors-list-th:first-child,
+  .doctors-list-td:first-child {
+    min-width: 60px;
+    padding-left: 20px;
+  }
+
+  .doctors-list-message,
+  .doctors-list-error {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .doctors-list-no-doctors-message {
+    font-size: 1.3rem;
+    padding: 25px;
+  }
+
+  .doctors-list-delete-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .doctors-list-delete-icon {
+    font-size: 1rem;
+  }
+
+  .doctors-list-confirm-modal {
+    max-width: 400px;
+    padding: 30px;
+  }
+
+  .doctors-list-confirm-title {
+    font-size: 1.5rem;
+  }
+
+  .doctors-list-confirm-text {
+    font-size: 1.1rem;
+  }
+
+  .doctors-list-confirm-buttons {
+    gap: 20px;
+  }
+
+  .doctors-list-yes-button,
+  .doctors-list-no-button {
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .doctors-list-container {
+    padding: 15px 10px;
+  }
+
+  .doctors-list-heading {
+    font-size: 1.6rem;
+    padding: 8px 15px;
+    margin: -15px -10px 15px -10px;
+  }
+
+  .doctors-list-table {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+
+  .doctors-list-th,
+  .doctors-list-td {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+
+  .doctors-list-th:first-child,
+  .doctors-list-td:first-child {
+    min-width: 50px;
+    padding-left: 12px;
+  }
+
+  .doctors-list-message,
+  .doctors-list-error {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin: 0 10px 12px 10px;
+  }
+
+  .doctors-list-no-doctors-message {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+
+  .doctors-list-delete-button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .doctors-list-delete-icon {
+    font-size: 0.85rem;
+  }
+
+  .doctors-list-confirm-modal {
+    max-width: 320px;
+    padding: 20px;
+  }
+
+  .doctors-list-confirm-title {
+    font-size: 1.3rem;
+  }
+
+  .doctors-list-confirm-text {
+    font-size: 0.95rem;
+  }
+
+  .doctors-list-confirm-buttons {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .doctors-list-yes-button,
+  .doctors-list-no-button {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
+@media (max-width: 480px) {
+  .doctors-list-container {
+    padding: 10px 7px;
+  }
+
+  .doctors-list-heading {
+    font-size: 1.4rem;
+    padding: 6px 10px;
+    margin: -10px -5px 12px -5px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .doctors-list-table {
+    display: block;
+    max-width: 100%;
+    margin: 0 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .doctors-list-th,
+  .doctors-list-td {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+    min-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doctors-list-th:first-child,
+  .doctors-list-td:first-child {
+    min-width: 40px;
+    padding-left: 10px;
+  }
+
+  .doctors-list-message,
+  .doctors-list-error {
+    font-size: 0.85rem;
+    padding: 6px;
+    margin: 0 5px 10px 5px;
+  }
+
+  .doctors-list-no-doctors-message {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .doctors-list-delete-button {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+
+  .doctors-list-delete-icon {
+    font-size: 0.8rem;
+  }
+
+  .doctors-list-confirm-modal {
+    max-width: 300px;
+    padding: 15px;
+  }
+
+  .doctors-list-confirm-title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .doctors-list-confirm-text {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .doctors-list-confirm-buttons {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .doctors-list-yes-button,
+  .doctors-list-no-button {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .doctors-list-container {
+    padding: 8px 3px;
+  }
+
+  .doctors-list-heading {
+    font-size: 1.3rem;
+    padding: 5px 8px;
+    margin: -8px -3px 10px -3px;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .doctors-list-table {
+    display: block;
+    max-width: 100%;
+    margin: 0 3px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .doctors-list-th,
+  .doctors-list-td {
+    padding: 6px 5px;
+    font-size: 0.8rem;
+    min-width: 70px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doctors-list-th:first-child,
+  .doctors-list-td:first-child {
+    min-width: 35px;
+    padding-left: 8px;
+  }
+
+  .doctors-list-message,
+  .doctors-list-error {
+    font-size: 0.8rem;
+    padding: 5px;
+    margin: 0 3px 8px 3px;
+  }
+
+  .doctors-list-no-doctors-message {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .doctors-list-delete-button {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+  }
+
+  .doctors-list-delete-icon {
+    font-size: 0.75rem;
+  }
+
+  .doctors-list-confirm-modal {
+    max-width: 280px;
+    padding: 12px;
+  }
+
+  .doctors-list-confirm-title {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .doctors-list-confirm-text {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+
+  .doctors-list-confirm-buttons {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .doctors-list-yes-button,
+  .doctors-list-no-button {
+    padding: 5px 14px;
+    font-size: 0.8rem;
+    border-radius: 4px;
   }
 }

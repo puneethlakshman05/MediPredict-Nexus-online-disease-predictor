@@ -1,3 +1,4 @@
+/* Profile Modal Overlay */
 .profile-modal-overlay {
   position: fixed;
   top: 0;
@@ -5,22 +6,25 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 13000;
+  z-index: 15000; /* Increased to ensure it appears above other elements */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Profile Modal Container */
 .profile-modal-container {
   background: #ffffff;
   border-radius: 20px;
   padding: 20px;
   width: 400px;
-  max-width: 400px;
-  box-shadow: 0 8px 24px rgba(0,0, 0,0.2);
+  max-width: 90vw; /* Use viewport units for responsiveness */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   position: relative;
+  box-sizing: border-box;
 }
 
+/* Close Button */
 .close-btn {
   position: absolute;
   top: 15px;
@@ -36,16 +40,19 @@
   color: #1f2937;
 }
 
+/* Profile Form */
 .profile-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Form Group */
 .form-group {
   width: 100%;
 }
 
+/* Input Group */
 .input-group {
   position: relative;
   display: flex;
@@ -56,12 +63,14 @@
   overflow: hidden;
 }
 
+/* Input Icon */
 .input-icon {
   padding: 12px;
   color: #9ca3af;
   font-size: 16px;
 }
 
+/* Input Field */
 input {
   flex: 1;
   border: none;
@@ -73,21 +82,21 @@ input {
 }
 
 input::placeholder {
-  color: placeholder;
+  color: #9ca3af;
 }
 
+/* Photo Preview */
 .photo-preview {
   width: 100px;
-  height: auto;
   height: auto;
   margin-top: 10px;
   border-radius: 10px;
   display: block;
 }
 
+/* Error Message */
 .error-message {
-  background-color: error-message;
-  color: #fee2e2;
+  background-color: #fef2f2;
   color: #c53030;
   padding: 10px;
   border-radius: 8px;
@@ -95,6 +104,7 @@ input::placeholder {
   text-align: center;
 }
 
+/* Success Message */
 .success-message {
   background-color: #d4edda;
   color: #155724;
@@ -104,6 +114,7 @@ input::placeholder {
   text-align: center;
 }
 
+/* Custom Button */
 .custom-btn {
   padding: 12px 30px;
   border: none;
@@ -111,9 +122,9 @@ input::placeholder {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  background: linear-gradient(135deg, #7c3aed, #8c5d);
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6); /* Corrected gradient */
   color: #ffffff;
-  box-shadow: 0 4px 10px rgba(124px,255px,237, 0.3);
+  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
 }
 
 .custom-btn:hover {
@@ -121,21 +132,446 @@ input::placeholder {
   background: linear-gradient(135deg, #6d28d9, #7c3aed);
 }
 
-@media (max-width: 480px) {
-  .profile-modal-container {
-    max-width: 90%;
-    padding: 20px;
-  }
-}
-
+/* Preview Container */
 .preview-container {
   margin-top: 10px;
   text-align: center;
 }
 
+/* Image Preview */
 .image-preview {
   max-width: 100%;
   max-height: 200px;
   border-radius: 8px;
   border: 1px solid #ddd;
+}
+
+/* Profile Dropdown (restored from original) */
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #f0cca8;
+  border: 2px solid orangered;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 15px 15px;
+  z-index: 1000;
+  min-width: 220px;
+  text-align: center;
+  max-width: 90vw;
+  box-sizing: border-box;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hidden state for toggle */
+.profile-dropdown.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #05000e;
+}
+
+/* Dropdown Profile Container */
+.dropdown-profile-container {
+  margin: 0 auto 10px;
+}
+
+/* User Details */
+.user-details {
+  margin-bottom: 10px;
+}
+
+/* User Detail Item */
+.user-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+/* User Name and Email */
+.user-name,
+.user-email {
+  font-size: 0.9rem;
+  color: #181717;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* User Detail Icon */
+.user-detail-icon {
+  color: #200c01;
+  font-size: 16px;
+}
+
+/* Dropdown Links */
+.dropdown-links {
+  margin: 10px 0;
+}
+
+/* Dropdown Link */
+.dropdown-link {
+  display: block;
+  font-size: 0.8rem;
+  color: #1b1b1b;
+  text-decoration: none;
+  margin: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #6d0513;
+  text-decoration: underline;
+}
+
+/* Dropdown Footer */
+.dropdown-footer {
+  font-size: 0.8rem;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Media Query for Medium Screens (769px to 1199px) */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .profile-modal-container {
+    width: 400px;
+    max-width: 85vw;
+    padding: 20px;
+  }
+
+  .close-btn {
+    font-size: 1.3rem;
+  }
+
+  .input-icon {
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+
+  .custom-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+
+  .photo-preview {
+    width: 100px;
+  }
+
+  .image-preview {
+    max-height: 200px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.9rem;
+  }
+
+  .profile-dropdown {
+    min-width: 220px;
+    padding: 20px 15px 15px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.9rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.8rem;
+  }
+
+  .close-button {
+    font-size: 16px;
+  }
+
+  .user-detail-icon {
+    font-size: 16px;
+  }
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .profile-modal-container {
+    width: 450px;
+    max-width: 450px;
+    padding: 25px;
+  }
+
+  .close-btn {
+    font-size: 1.5rem;
+  }
+
+  .input-icon {
+    font-size: 18px;
+  }
+
+  input {
+    font-size: 1.1rem;
+  }
+
+  .custom-btn {
+    padding: 14px 35px;
+    font-size: 1.1rem;
+  }
+
+  .photo-preview {
+    width: 120px;
+  }
+
+  .image-preview {
+    max-height: 250px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 1rem;
+  }
+
+  .profile-dropdown {
+    min-width: 250px;
+    padding: 25px 20px 20px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 1rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.9rem;
+  }
+
+  .close-button {
+    font-size: 18px;
+  }
+
+  .user-detail-icon {
+    font-size: 18px;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
+@media (max-width: 768px) {
+  .profile-modal-container {
+    max-width: 90vw;
+    padding: 15px;
+  }
+
+  .close-btn {
+    font-size: 1.2rem;
+  }
+
+  .input-icon {
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 0.9rem;
+  }
+
+  .custom-btn {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
+
+  .photo-preview {
+    width: 80px;
+  }
+
+  .image-preview {
+    max-height: 150px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.8rem;
+  }
+
+  .profile-dropdown {
+    top: 50px;
+    right: 15px;
+    width: 200px;
+    min-width: 180px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 14px;
+  }
+
+  .user-detail-icon {
+    font-size: 14px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.85rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* Media Query for Small Screens (up to 480px) */
+@media (max-width: 480px) {
+  .profile-modal-container {
+    max-width: 90vw;
+    padding: 15px;
+  }
+
+  .close-btn {
+    font-size: 1.1rem;
+    top: 10px;
+    right: 10px;
+  }
+
+  .input-icon {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  input {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .custom-btn {
+    padding: 8px 20px;
+    font-size: 0.85rem;
+  }
+
+  .photo-preview {
+    width: 70px;
+  }
+
+  .image-preview {
+    max-height: 120px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.75rem;
+    padding: 8px;
+  }
+
+  .profile-dropdown {
+    top: 45px;
+    right: 10px;
+    width: 180px;
+    min-width: 160px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 12px;
+  }
+
+  .user-detail-icon {
+    font-size: 12px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.8rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.7rem;
+  }
+}
+
+/* Media Query for Very Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .profile-modal-container {
+    max-width: 95vw;
+    padding: 12px;
+  }
+
+  .close-btn {
+    font-size: 1rem;
+    top: 8px;
+    right: 8px;
+  }
+
+  .profile-form {
+    gap: 15px;
+  }
+
+  .input-icon {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  input {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .custom-btn {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
+
+  .photo-preview {
+    width: 60px;
+  }
+
+  .image-preview {
+    max-height: 100px;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.7rem;
+    padding: 6px;
+  }
+
+  .profile-dropdown {
+    top: 40px;
+    right: 8px;
+    width: 160px;
+    min-width: 140px;
+    padding: 10px 8px 8px;
+  }
+
+  .close-button {
+    font-size: 10px;
+  }
+
+  .user-detail-icon {
+    font-size: 10px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.75rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.65rem;
+  }
 }

@@ -1,4 +1,4 @@
-/* Login Modal CSS */
+/* Login Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -8,11 +8,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 11000 !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  z-index: 11000;
+  background-color: rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 }
 
+/* Login Modal Container */
 .login-modal-container {
   background: linear-gradient(135deg, #ffffff, #f1f5f9);
   border-radius: 12px;
@@ -26,20 +27,24 @@
   align-items: center;
   min-height: 400px;
   max-height: 90vh;
+  box-sizing: border-box;
 }
 
+/* Dark Mode for Login Modal */
 .dark-mode .login-modal-container {
   background: linear-gradient(135deg, #1e293b, #334155);
   color: #e5e7eb;
 }
 
+/* Modal Body Content */
 .modal-body-content {
   width: 100%;
   flex: 1;
   overflow-y: auto;
-  padding: 0 5px;
+  padding: 0;
 }
 
+/* Modal Form */
 .modal-form {
   display: flex;
   flex-direction: column;
@@ -48,6 +53,7 @@
   min-height: 100%;
 }
 
+/* Close Button */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -72,6 +78,7 @@
   color: #ffffff;
 }
 
+/* Theme Toggle Icon */
 .theme-toggle-icon {
   color: #64748b;
   font-size: 1.2rem;
@@ -93,6 +100,7 @@
   color: #ffffff;
 }
 
+/* Modal Top Bar */
 .modal-top-bar {
   display: flex;
   justify-content: space-between;
@@ -101,12 +109,14 @@
   width: 100%;
 }
 
+/* Top Actions */
 .top-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* Modal Title Text */
 .modal-title-text {
   font-size: 1.4rem;
   font-weight: 600;
@@ -118,10 +128,12 @@
   color: #c4b5fd;
 }
 
+/* Form Group */
 .form-group {
   width: 100%;
 }
 
+/* Input Group */
 .input-group {
   position: relative;
   display: flex;
@@ -138,6 +150,7 @@
   border-color: #64748b;
 }
 
+/* Input Icon */
 .input-icon {
   padding: 10px;
   color: #94a3b8;
@@ -148,6 +161,7 @@
   color: #cbd5e1;
 }
 
+/* Eye Icon */
 .eye-icon {
   position: absolute;
   right: 10px;
@@ -165,12 +179,14 @@
   color: #c4b5fd;
 }
 
+/* Icon Click */
 .icon-click {
   background-color: transparent;
   border-left: none;
   cursor: pointer;
 }
 
+/* Input Field */
 input {
   flex: 1;
   border: none;
@@ -184,6 +200,7 @@ input {
   text-align: left;
 }
 
+/* OTP Input */
 .otp-input {
   font-family: inherit;
   font-size: 0.95rem;
@@ -201,6 +218,7 @@ input::placeholder {
   letter-spacing: normal;
 }
 
+/* Message */
 .message {
   color: #dc2626;
   font-size: 0.85rem;
@@ -208,57 +226,64 @@ input::placeholder {
   margin: 5px 0;
 }
 
+/* Button Group */
 .button-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-top: 10px;
   width: 100%;
-  padding: 0 5px;
 }
 
+/* Custom Button */
 .custom-btn {
   border: none;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 0.85rem; /* Reduced font size */
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.2s ease;
+  transition: background 0.3s ease, box-shadow 0.2s ease, transform 0.2s ease;
   text-align: center;
-  padding: 4px 8px; /* Reduced padding */
-  max-width: 120px; /* Reduced max-width */
-  min-width: 80px; /* Reduced min-width */
+  padding: 8px 12px;
+  max-width: 120px;
+  min-width: 80px;
   flex: 1;
-  border: 1px solid transparent; /* Add subtle border for depth */
+  border: 1px solid transparent;
 }
 
+/* Primary Button */
 .custom-btn.primary-btn {
-  background: #f43f5e; /* Coral */
+  background: #f43f5e;
   color: #ffffff;
   box-shadow: 0 2px 6px rgba(244, 63, 94, 0.2);
-  border-color: #fb7185; /* Lighter coral border */
+  border-color: #fb7185;
 }
 
 .custom-btn.primary-btn:hover {
-  background: #e11d48; /* Darker coral */
+  background: #e11d48;
   box-shadow: 0 3px 8px rgba(244, 63, 94, 0.3);
   border-color: #f43f5e;
+  transform: translateY(-2px);
 }
 
- .custom-btn.secondary-btn {
-  background: #10b981; /* Emerald */
+/* Secondary Button */
+.custom-btn.secondary-btn {
+  background: #10b981;
   color: #ffffff;
   box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
-  border-color: #34d399; /* Lighter emerald border */
+  border-color: #34d399;
 }
 
 .custom-btn.secondary-btn:hover {
-  background: #059669; /* Darker emerald */
+  background: #059669;
   box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
   border-color: #10b981;
+  transform: translateY(-2px);
 }
 
+/* Disabled Button */
 .custom-btn:disabled {
   background: #e5e7eb;
   color: #9ca3af;
@@ -267,12 +292,12 @@ input::placeholder {
   border-color: transparent;
 }
 
+/* Switch Link */
 .switch-link {
   margin-top: 10px;
   font-size: 0.85rem;
   text-align: center;
   color: #1f2937;
-  padding: 0 5px;
   word-wrap: break-word;
 }
 
@@ -300,6 +325,7 @@ input::placeholder {
   color: #ffffff;
 }
 
+/* Timer */
 .timer {
   color: #dc2626;
   font-size: 0.85rem;
@@ -316,110 +342,431 @@ input::placeholder {
   border-color: #b91c1c;
 }
 
+/* Profile Dropdown (restored from original) */
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #f0cca8;
+  border: 2px solid orangered;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 15px 15px;
+  z-index: 1000;
+  min-width: 220px;
+  text-align: center;
+  max-width: 90vw;
+  box-sizing: border-box;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hidden state for toggle */
+.profile-dropdown.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Close Button for Dropdown */
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #05000e;
+}
+
+/* Dropdown Profile Container */
+.dropdown-profile-container {
+  margin: 0 auto 10px;
+}
+
+/* User Details */
+.user-details {
+  margin-bottom: 10px;
+}
+
+/* User Detail Item */
+.user-detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+
+/* User Name and Email */
+.user-name,
+.user-email {
+  font-size: 0.9rem;
+  color: #181717;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* User Detail Icon */
+.user-detail-icon {
+  color: #200c01;
+  font-size: 16px;
+}
+
+/* Dropdown Links */
+.dropdown-links {
+  margin: 10px 0;
+}
+
+/* Dropdown Link */
+.dropdown-link {
+  display: block;
+  font-size: 0.8rem;
+  color: #1b1b1b;
+  text-decoration: none;
+  margin: 5px 0;
+  transition: color 0.3s ease;
+}
+
+.dropdown-link:hover {
+  color: #6d0513;
+  text-decoration: underline;
+}
+
+/* Dropdown Footer */
+.dropdown-footer {
+  font-size: 0.8rem;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Media Query for Large Screens (above 1200px) */
+@media (min-width: 1200px) {
+  .login-modal-container {
+    max-width: 420px;
+    padding: 25px;
+    min-height: 440px;
+  }
+
+  .modal-title-text {
+    font-size: 1.5rem;
+  }
+
+  .close-btn,
+  .theme-toggle-icon {
+    font-size: 1.3rem;
+  }
+
+  .input-icon {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  input,
+  .otp-input {
+    font-size: 1rem;
+    height: 40px;
+    padding: 10px;
+  }
+
+  .modal-form {
+    gap: 18px;
+  }
+
+  .button-group {
+    gap: 10px;
+  }
+
+  .custom-btn {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    max-width: 140px;
+    min-width: 100px;
+  }
+
+  .message,
+  .timer,
+  .switch-link {
+    font-size: 0.9rem;
+  }
+
+  .profile-dropdown {
+    min-width: 250px;
+    padding: 25px 20px 20px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 1rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.9rem;
+  }
+
+  .close-button {
+    font-size: 18px;
+  }
+
+  .user-detail-icon {
+    font-size: 18px;
+  }
+}
+
+/* Media Query for Medium Screens (up to 768px) */
 @media (max-width: 768px) {
   .modal-overlay {
     padding-top: 40px;
   }
+
   .login-modal-container {
+    max-width: 90vw;
+    padding: 15px;
+    min-height: 360px;
     max-height: 80vh;
+  }
+
+  .modal-title-text {
+    font-size: 1.3rem;
+  }
+
+  .close-btn,
+  .theme-toggle-icon {
+    font-size: 1.1rem;
+  }
+
+  .input-icon {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  input,
+  .otp-input {
+    font-size: 0.9rem;
+    height: 34px;
+    padding: 8px;
+  }
+
+  .modal-form {
+    gap: 12px;
+  }
+
+  .button-group {
+    gap: 8px;
+    align-items: center;
+  }
+
+  .custom-btn {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    max-width: 110px;
+    min-width: 70px;
+  }
+
+  .message,
+  .timer,
+  .switch-link {
+    font-size: 0.8rem;
+  }
+
+  .profile-dropdown {
+    top: 50px;
+    right: 15px;
+    width: 200px;
+    min-width: 180px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 14px;
+  }
+
+  .user-detail-icon {
+    font-size: 14px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.85rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.75rem;
   }
 }
 
+/* Media Query for Small Screens (up to 480px) */
 @media (max-width: 480px) {
   .modal-overlay {
     padding-top: 30px;
   }
+
   .login-modal-container {
     max-width: 90vw;
     padding: 15px;
     min-height: 360px;
     max-height: 70vh;
   }
+
   .modal-title-text {
     font-size: 1.2rem;
   }
-  .modal-form {
-    gap: 12px;
+
+  .close-btn,
+  .theme-toggle-icon {
+    font-size: 1rem;
+    top: 8px;
+    right: 8px;
   }
+
+  .input-icon {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  input,
+  .otp-input {
+    font-size: 0.85rem;
+    height: 32px;
+    padding: 8px;
+  }
+
+  .modal-form {
+    gap: 10px;
+  }
+
   .button-group {
     flex-direction: column;
     gap: 6px;
+    align-items: center;
   }
+
   .custom-btn {
-    padding: 5px 8px; /* Further reduced for mobile */
-    font-size: 0.75rem; /* Smaller font for mobile */
-    max-width: 100%;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    max-width: 200px;
     min-width: auto;
+    min-height: 44px; /* Touch-friendly */
   }
+
+  .message,
+  .timer,
   .switch-link {
+    font-size: 0.75rem;
+  }
+
+  .profile-dropdown {
+    top: 45px;
+    right: 10px;
+    width: 180px;
+    min-width: 160px;
+    padding: 15px 10px 10px;
+  }
+
+  .close-button {
+    font-size: 12px;
+  }
+
+  .user-detail-icon {
+    font-size: 12px;
+  }
+
+  .user-name,
+  .user-email {
     font-size: 0.8rem;
   }
-}
-/* Smaller desktops and large tablets (1024px and below) */
-@media (max-width: 1024px) {
-  .button-group {
-    gap: 3px;
-    padding: 0 4px;
-  }
-  .custom-btn {
-    font-size: 0.75rem;
-    padding: 5px 10px;
-    width: 70px;
-    min-height: 34px;
-  }
-  .message {
-    font-size: 0.85rem;
-  }
-}
 
-/* Tablets (768px and below) */
-@media (max-width: 768px) {
-  .button-group {
-    gap: 3px;
-    padding: 0 3px;
-  }
-  .custom-btn {
+  .dropdown-link {
     font-size: 0.7rem;
-    padding: 5px 10px;
-    width: 65px;
-    min-height: 32px;
-  }
-  .message {
-    font-size: 0.8rem;
   }
 }
 
-/* Mobile devices (480px and below) */
-@media (max-width: 480px) {
-  .button-group {
-    flex-direction: column; /* Stack buttons vertically on small screens */
-    gap: 5px;
-    padding: 0 2px;
-  }
-  .custom-btn {
-    font-size: 0.75rem;
-    padding: 6px 8px;
-    width: 100%; /* Full width for better touch targets */
-    max-width: 200px; /* Limit max width */
-    min-height: 44px; /* Ensure touch target size for accessibility */
-  }
-  .message {
-    font-size: 0.75rem;
-  }
-}
-
-/* Very small mobile devices (360px and below) */
+/* Media Query for Very Small Screens (below 360px) */
 @media (max-width: 360px) {
+  .modal-overlay {
+    padding-top: 20px;
+  }
+
+  .login-modal-container {
+    max-width: 95vw;
+    padding: 12px;
+    min-height: 320px;
+    max-height: 65vh;
+  }
+
+  .modal-title-text {
+    font-size: 1.1rem;
+  }
+
+  .close-btn,
+  .theme-toggle-icon {
+    font-size: 0.9rem;
+    top: 6px;
+    right: 6px;
+  }
+
+  .input-icon {
+    font-size: 11px;
+    padding: 6px;
+  }
+
+  input,
+  .otp-input {
+    font-size: 0.8rem;
+    height: 30px;
+    padding: 6px;
+  }
+
+  .modal-form {
+    gap: 8px;
+  }
+
   .button-group {
     gap: 4px;
-    padding: 0 1px;
+    align-items: center;
   }
+
   .custom-btn {
     font-size: 0.7rem;
-    padding: 5px 6px;
+    padding: 6px 10px;
     min-height: 40px;
   }
-  .message {
+
+  .message,
+  .timer,
+  .switch-link {
     font-size: 0.7rem;
+  }
+
+  .profile-dropdown {
+    top: 40px;
+    right: 8px;
+    width: 160px;
+    min-width: 140px;
+    padding: 10px 8px 8px;
+  }
+
+  .close-button {
+    font-size: 10px;
+  }
+
+  .user-detail-icon {
+    font-size: 10px;
+  }
+
+  .user-name,
+  .user-email {
+    font-size: 0.75rem;
+  }
+
+  .dropdown-link {
+    font-size: 0.65rem;
   }
 }
