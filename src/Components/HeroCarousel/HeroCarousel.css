@@ -11,17 +11,20 @@
 /* Carousel Slides */
 .carousel-slides {
   display: flex;
-  width: 100%;
+  width: 400%; /* Four slides (100% total, 25% each) */
   height: 100%;
   transition: transform 0.5s ease-in-out;
 }
 
 /* Carousel Slide */
 .carousel-slide {
-  flex: 0 0 100%;
+  flex: 0 0 25%; /* Each slide is 25% of carousel-slides */
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Hero Section Slide Styling (First Slide) */
@@ -35,6 +38,9 @@
   text-align: center;
   overflow: hidden;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-section::before {
@@ -52,7 +58,7 @@
 /* Hero Content */
 .hero-content {
   max-width: 800px;
-  margin: 10px;
+  margin: 10px auto;
   padding: 0 20px;
   height: 100%;
   display: flex;
@@ -107,6 +113,9 @@
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Slide Image */
@@ -114,27 +123,44 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 /* Carousel Caption */
 .carousel-caption {
   position: absolute;
-  bottom: 50%;
-  left: 20%;
-  transform: translateX(0%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center both horizontally and vertically */
   background: rgba(0, 0, 0, 0.6);
   padding: 10px 20px;
   border-radius: 8px;
   color: #fff;
-  text-align: justify;
-  animation: slideInUp 1s ease-in-out;
-  margin-bottom: 40px;
+  text-align: center;
+  max-width: 80%;
+  min-width: 100px; /* Prevent collapse without text */
+  min-height: 40px; /* Prevent collapse without text */
+  z-index: 10;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease-in-out; /* Smooth fade-in and fade-out */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
-.carousel-caption h3 {
+/* Show caption on active slide, hide on inactive */
+.carousel-slide.active .carousel-caption {
+  opacity: 1;
+}
+
+.carousel-slide:not(.active) .carousel-caption {
+  opacity: 0;
+}
+
+/* Carousel Caption Heading */
+.carousel-caption h4 {
   font-size: 1.5rem;
   margin: 0;
   font-weight: 500;
+  word-wrap: break-word; /* Ensure long text wraps if added back */
 }
 
 /* Navigation Arrows */
@@ -149,7 +175,7 @@
   padding: 10px 15px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
-  z-index: 2;
+  z-index: 20;
   border-radius: 50%;
 }
 
@@ -174,7 +200,7 @@
   transform: none;
   display: flex;
   gap: 10px;
-  z-index: 2;
+  z-index: 20;
 }
 
 .indicator {
@@ -194,78 +220,6 @@
 
 .indicator:hover {
   background: rgba(255, 255, 255, 0.8);
-}
-
-
-
-
-.close-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  color: #333;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: color 0.3s ease;
-}
-
-.close-button:hover {
-  color: #05000e;
-}
-
-.dropdown-profile-container {
-  margin: 0 auto 10px;
-}
-
-.user-details {
-  margin-bottom: 10px;
-}
-
-.user-detail-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 5px 0;
-}
-
-.user-name,
-.user-email {
-  font-size: 0.9rem;
-  color: #181717;
-  margin: 0;
-  font-weight: 500;
-}
-
-.user-detail-icon {
-  color: #200c01;
-  font-size: 16px;
-}
-
-.dropdown-links {
-  margin: 10px 0;
-}
-
-.dropdown-link {
-  display: block;
-  font-size: 0.8rem;
-  color: #1b1b1b;
-  text-decoration: none;
-  margin: 5px 0;
-  transition: color 0.3s ease;
-}
-
-.dropdown-link:hover {
-  color: #6d0513;
-  text-decoration: underline;
-}
-
-.dropdown-footer {
-  font-size: 0.8rem;
-  color: #333;
-  margin-top: 10px;
 }
 
 /* Animations */
@@ -294,11 +248,11 @@
 @keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) translateX(-50%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateX(-50%);
   }
 }
 
@@ -318,10 +272,17 @@
 }
 
 /* Media Query for Large Screens (above 1200px) */
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .hero-carousel {
-    height: 550px;
-    max-height: 650px;
+    height: 500px;
+  }
+
+  .carousel-slides {
+    width: 400%; /* Maintain for four slides */
+  }
+
+  .carousel-slide {
+    flex: 0 0 25%;
   }
 
   .carousel-slide .hero-section {
@@ -347,9 +308,15 @@
 
   .carousel-caption {
     padding: 12px 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    min-width: 100px;
+    min-height: 40px;
   }
 
-  .carousel-caption h3 {
+  .carousel-caption h4 {
     font-size: 1.8rem;
   }
 
@@ -367,34 +334,20 @@
     right: 25px;
     bottom: 20px;
   }
-
-  .profile-dropdown {
-    min-width: 250px;
-    padding: 25px 20px 20px;
-  }
-
-  .user-name,
-  .user-email {
-    font-size: 1rem;
-  }
-
-  .dropdown-link {
-    font-size: 0.9rem;
-  }
-
-  .close-button {
-    font-size: 18px;
-  }
-
-  .user-detail-icon {
-    font-size: 18px;
-  }
 }
 
 /* Media Query for Medium Screens (up to 768px) */
 @media (max-width: 768px) {
   .hero-carousel {
     height: 400px;
+  }
+
+  .carousel-slides {
+    width: 400%; /* Maintain for four slides */
+  }
+
+  .carousel-slide {
+    flex: 0 0 25%;
   }
 
   .carousel-slide .hero-section {
@@ -422,11 +375,15 @@
 
   .carousel-caption {
     padding: 8px 15px;
-    bottom: 40%;
-    left: 10%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    min-width: 100px;
+    min-height: 40px;
   }
 
-  .carousel-caption h3 {
+  .carousel-caption h4 {
     font-size: 1.3rem;
   }
 
@@ -444,37 +401,20 @@
     right: 15px;
     bottom: 10px;
   }
-
-  .profile-dropdown {
-    top: 50px;
-    right: 15px;
-    width: 200px;
-    min-width: 180px;
-    padding: 15px 10px 10px;
-  }
-
-  .close-button {
-    font-size: 14px;
-  }
-
-  .user-detail-icon {
-    font-size: 14px;
-  }
-
-  .user-name,
-  .user-email {
-    font-size: 0.85rem;
-  }
-
-  .dropdown-link {
-    font-size: 0.75rem;
-  }
 }
 
 /* Media Query for Small Screens (up to 480px) */
 @media (max-width: 480px) {
   .hero-carousel {
     height: 350px;
+  }
+
+  .carousel-slides {
+    width: 400%; /* Maintain for four slides */
+  }
+
+  .carousel-slide {
+    flex: 0 0 25%;
   }
 
   .carousel-slide .hero-section {
@@ -502,11 +442,15 @@
 
   .carousel-caption {
     padding: 6px 12px;
-    bottom: 35%;
-    left: 5%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    min-width: 100px;
+    min-height: 40px;
   }
 
-  .carousel-caption h3 {
+  .carousel-caption h4 {
     font-size: 1.1rem;
   }
 
@@ -524,37 +468,20 @@
     right: 10px;
     bottom: 8px;
   }
-
-  .profile-dropdown {
-    top: 45px;
-    right: 10px;
-    width: 180px;
-    min-width: 160px;
-    padding: 15px 10px 10px;
-  }
-
-  .close-button {
-    font-size: 12px;
-  }
-
-  .user-detail-icon {
-    font-size: 12px;
-  }
-
-  .user-name,
-  .user-email {
-    font-size: 0.8rem;
-  }
-
-  .dropdown-link {
-    font-size: 0.7rem;
-  }
 }
 
 /* Media Query for Very Small Screens (below 360px) */
 @media (max-width: 360px) {
   .hero-carousel {
     height: 300px;
+  }
+
+  .carousel-slides {
+    width: 400%; /* Maintain for four slides */
+  }
+
+  .carousel-slide {
+    flex: 0 0 25%;
   }
 
   .carousel-slide .hero-section {
@@ -582,11 +509,15 @@
 
   .carousel-caption {
     padding: 5px 10px;
-    bottom: 30%;
-    left: 5%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    min-width: 100px;
+    min-height: 40px;
   }
 
-  .carousel-caption h3 {
+  .carousel-caption h4 {
     font-size: 0.9rem;
   }
 
@@ -603,30 +534,5 @@
   .carousel-indicators {
     right: 8px;
     bottom: 6px;
-  }
-
-  .profile-dropdown {
-    top: 40px;
-    right: 8px;
-    width: 160px;
-    min-width: 140px;
-    padding: 10px 8px 8px;
-  }
-
-  .close-button {
-    font-size: 10px;
-  }
-
-  .user-detail-icon {
-    font-size: 10px;
-  }
-
-  .user-name,
-  .user-email {
-    font-size: 0.75rem;
-  }
-
-  .dropdown-link {
-    font-size: 0.65rem;
   }
 }

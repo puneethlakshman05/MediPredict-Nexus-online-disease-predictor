@@ -8,7 +8,7 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 /* Footer Content */
@@ -134,7 +134,7 @@
 }
 
 /* Media Query for Large Screens (above 1200px) */
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
   .footer {
     padding: 50px 20px 20px;
   }

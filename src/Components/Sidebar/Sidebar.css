@@ -8,8 +8,9 @@
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: flex-end;
-  z-index: 1000;
+  z-index: 11000 !important;
   backdrop-filter: blur(2px);
+
 }
 
 /* Sidebar */
@@ -23,6 +24,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+    overflow-y: auto;
 }
 
 /* Sidebar Header */
@@ -70,8 +72,8 @@
   color: #4c2c69;
   cursor: pointer;
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: -20px;
+  right: -20px;
   padding: 8px;
   transition: color 0.2s ease, transform 0.2s ease;
 }
@@ -96,7 +98,7 @@
 }
 
 .sidebar-menu li {
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 /* Sidebar Menu Button */
@@ -453,8 +455,8 @@
 
   .sidebar-close-btn {
     font-size: 1.2rem;
-    top: 7px;
-    right: 7px;
+    top: -15px;
+    right: -10px;
     padding: 7px;
   }
 
@@ -548,8 +550,8 @@
 
   .sidebar-close-btn {
     font-size: 1.1rem;
-    top: 6px;
-    right: 6px;
+    top: -10px;
+    right: -6px;
     padding: 6px;
   }
 
@@ -643,8 +645,8 @@
 
   .sidebar-close-btn {
     font-size: 1rem;
-    top: 5px;
-    right: 5px;
+    top: -15px;
+    right: -7px;
     padding: 5px;
   }
 

@@ -20,15 +20,11 @@ const slides = [
     type: 'image',
     src: image2,
     alt: 'Second slide',
-    caption: 'A computer can become your online Health checker\
-              gives you Medi Suggests,Available Dctor Appointments Booking\
-               a Flexible Hand-on Hospital Facilities ',
   },
   {
     type: 'image',
     src: image3,
     alt: 'Third slide',
-
   },
 ];
 
@@ -58,7 +54,10 @@ const HeroCarousel = () => {
   return (
     <div className="hero-carousel">
       {/* Carousel Slides */}
-      <div className="carousel-slides" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+      <div
+        className="carousel-slides"
+        style={{ transform: `translateX(-${activeIndex * 25}%)` }} // Adjusted to 25% per slide
+      >
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -80,7 +79,7 @@ const HeroCarousel = () => {
               <div className="image-slide">
                 <img src={slide.src} alt={slide.alt} className="slide-image" />
                 {slide.caption && (
-                  <div className={`carousel-caption ${activeIndex === index ? 'visible' : 'hidden'}`}>
+                  <div className="carousel-caption">
                     <h4>{slide.caption}</h4>
                   </div>
                 )}

@@ -28,8 +28,12 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-# Update CORS to allow requests from the correct frontend origin
-CORS(app, resources={r"/*": {"origins": ["http://localhost:5173"], "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}})
+# Update CORS to allow dynamic frontend URL
+CORS(app, resources={r"/*": {
+    "origins": [os.getenv("FRONTEND_URL", "http://localhost:5173")],
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
@@ -42,22 +46,21 @@ GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 env_file = os.getenv('ENV_FILE', '.env')  
 load_dotenv(env_file)
 if not os.path.exists('.env'):
-    raise FileNotFoundError("'.env' file not found in Backend directory")
+    print("'.env' file not found in Backend directory. Ensure environment variables are set in Vercel.")
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Verify environment variables
-required_env_vars = ['GMAIL_SMTP_USER', 'GMAIL_APP_PASSWORD', 'SENDER_EMAIL', 'JWT_SECRET_KEY']
+# Verify environment variables with warning instead of raising exception
+required_env_vars = ['GMAIL_SMTP_USER', 'GMAIL_APP_PASSWORD', 'SENDER_EMAIL', 'JWT_SECRET_KEY', 'MONGODB_URI', 'FRONTEND_URL']
 missing_vars = [var for var in required_env_vars if not os.getenv(var)]
 if missing_vars:
-    logger.error(f"Missing environment variables: {', '.join(missing_vars)}")
-    raise ValueError(f"Missing environment variables: {', '.join(missing_vars)}")
+    logger.warning(f"Missing environment variables: {', '.join(missing_vars)}. Using defaults where applicable.")
 
-# MongoDB Connection
+# MongoDB Connection with environment variable
 try:
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient(os.getenv("MONGODB_URI", "mongodb://localhost:27017/"))
     db = client["hospital_db"]
     doctors_collection = db["doctors"]
     patients_collection = db["patients"]
@@ -67,7 +70,7 @@ try:
     reset_tokens_collection = db["reset_tokens"]
     notifications_collection.create_index("expires_at", expireAfterSeconds=0)
 except Exception as e:
-    print(f"MongoDB connection error: {e}")
+    logger.error(f"MongoDB connection error: {e}")
     raise
 
 # Ensure existing notifications have expires_at
@@ -78,7 +81,7 @@ try:
         {"$set": {"expires_at": current_time + timedelta(hours=24)}}
     )
 except Exception as e:
-    print(f"Error updating notifications: {e}")
+    logger.error(f"Error updating notifications: {e}")
 
 # Load and preprocess dataset
 try:
@@ -86,7 +89,7 @@ try:
     encoder = LabelEncoder()
     data["prognosis"] = encoder.fit_transform(data["prognosis"])
 except Exception as e:
-    print(f"Error loading dataset: {e}")
+    logger.error(f"Error loading dataset: {e}")
     raise
 try:
     disease_medications = pd.read_csv("disease_medications.csv")
@@ -98,7 +101,7 @@ try:
         for _, row in disease_medications.iterrows()
     }
 except Exception as e:
-    print(f"Error loading disease_medications dataset: {e}")
+    logger.error(f"Error loading disease_medications dataset: {e}")
     raise
 
 X = data.iloc[:, :-1]
@@ -167,12 +170,15 @@ def send_otp_email(email, otp):
         logger.error(f"Unexpected error sending email: {e}")
         raise Exception(f"Failed to send email: {str(e)}")
 
-# Serve uploaded images
+# Serve uploaded images from public directory
+UPLOAD_FOLDER = 'public/Uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 @app.route('/Uploads/<filename>')
 def serve_uploaded_file(filename):
     try:
-        logger.debug(f"Attempting to serve file: {filename} from Uploads directory")
-        return send_from_directory('Uploads', filename)
+        logger.debug(f"Attempting to serve file: {filename} from {app.config['UPLOAD_FOLDER']}")
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     except FileNotFoundError:
         logger.error(f"File not found: {filename}")
         return jsonify({"error": "File not found"}), 404
@@ -186,7 +192,7 @@ def serve_uploaded_file(filename):
 def remove_profile_photo():
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "DELETE, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -203,7 +209,7 @@ def remove_profile_photo():
             return jsonify({"error": "User not found"}), 404
         profile_photo = user.get('profilePhoto', '')
         if profile_photo:
-            file_path = os.path.join('Uploads', profile_photo.lstrip('/Uploads/'))
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], profile_photo.lstrip('/Uploads/'))
             if os.path.exists(file_path):
                 os.remove(file_path)
                 logger.info(f"File deleted: {file_path}")
@@ -229,7 +235,7 @@ def remove_profile_photo():
 @app.route('/<path:path>', methods=['OPTIONS'])
 def handle_options(path):
     response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "http://localhost: 5173")
+    response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
     response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
     return response, 200
@@ -372,7 +378,7 @@ def register_admin():
 def login(role):
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -528,7 +534,7 @@ def verify_otp():
 def handle_appointments():
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -707,7 +713,7 @@ def respond_to_appointment(appointment_id):
 def delete_appointment(appointment_id):
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "DELETE, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -796,7 +802,7 @@ def get_notifications(patient_email):
 def mark_notification_read(notification_id):
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "PUT, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -881,7 +887,7 @@ def delete_patient(patient_id):
 def update_profile():
     if request.method == 'OPTIONS':
         response = make_response()
-        response.headers.add("Access-Control-Allow-Origin", "http://localhost:5173")
+        response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
@@ -909,17 +915,10 @@ def update_profile():
             if file_size > 5 * 1024 * 1024:
                 return jsonify({"error": "File size must be less than 5MB."}), 400
             photo.seek(0)
-            upload_folder = 'Uploads'
-            try:
-                os.makedirs(upload_folder, exist_ok=True)
-                logger.debug(f"Created/verified Uploads directory: {upload_folder}")
-            except Exception as e:
-                logger.error(f"Failed to create Uploads directory: {str(e)}")
-                return jsonify({"error": "Failed to create upload directory"}), 500
-            filename = secure_filename(
-                f"{identity['id']}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{photo.filename}"
-            )
-            photo_path = os.path.join(upload_folder, filename)
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            logger.debug(f"Created/verified Uploads directory: {app.config['UPLOAD_FOLDER']}")
+            filename = secure_filename(f"{identity['id']}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{photo.filename}")
+            photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             try:
                 photo.save(photo_path)
                 logger.info(f"Photo saved successfully: {photo_path}")
@@ -969,4 +968,5 @@ def get_current_user():
         return jsonify({"error": "Unauthorized or invalid token"}), 401
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Removed local run for Vercel deployment
+    pass

@@ -26,3 +26,5 @@ venv/
 venv/
 Backend/.env
 Backend/Uploads/
+requirements.txt
+vercel.json
