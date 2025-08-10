@@ -63,7 +63,7 @@ if missing_vars:
 try:
     client = MongoClient(os.getenv("MONGODB_URI", "mongodb://localhost:27017/"),    
                          tlsCAFile=certifi.where())
-    db = client["hospital_db"]
+    db = client.get_database()
     doctors_collection = db["doctors"]
     patients_collection = db["patients"]
     appointments_collection = db["appointments"]
