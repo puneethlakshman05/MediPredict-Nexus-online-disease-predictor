@@ -1,15 +1,13 @@
 flask
 flask-jwt-extended
 flask-cors
-pymongo
+pymongo>=4.6.3
 pandas
 scikit-learn
 numpy
 bcrypt
 python-dotenv
 werkzeug
-pymongo>=4.6.3
 dnspython>=2.4.2
 certifi
-python-dotenv
 gunicorn
