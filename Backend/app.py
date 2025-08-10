@@ -96,7 +96,7 @@ except Exception as e:
     raise
 try:
     csv_path = os.path.join(os.path.dirname(__file__), "disease_medications.csv")
-    medications_df = pd.read_csv(csv_path)
+    disease_medications = pd.read_csv(csv_path)
     medication_dict = {
         row["Disease"].lower(): {
             "medicines": row["Medicines"].split(",") if pd.notna(row["Medicines"]) else [],
