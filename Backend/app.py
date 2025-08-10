@@ -95,7 +95,8 @@ except Exception as e:
     logger.error(f"Error loading dataset: {e}")
     raise
 try:
-    disease_medications = pd.read_csv("disease_medications.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "disease_medications.csv")
+    medications_df = pd.read_csv(csv_path)
     medication_dict = {
         row["Disease"].lower(): {
             "medicines": row["Medicines"].split(",") if pd.notna(row["Medicines"]) else [],
