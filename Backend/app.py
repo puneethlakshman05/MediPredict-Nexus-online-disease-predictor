@@ -44,7 +44,7 @@ jwt = JWTManager(app)
 GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
-env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
 loaded =False
 load_dotenv(env_file)
 if not os.path.exists('.env'):
