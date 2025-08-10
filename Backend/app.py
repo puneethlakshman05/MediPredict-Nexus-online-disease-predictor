@@ -20,6 +20,7 @@ from bson import ObjectId
 from datetime import datetime, timedelta 
 import re
 import os
+import certifi
 import smtplib
 from email.mime.text import MIMEText
 import random
@@ -60,7 +61,8 @@ if missing_vars:
 
 # MongoDB Connection with environment variable
 try:
-    client = MongoClient(os.getenv("MONGODB_URI", "mongodb://localhost:27017/"))
+    client = MongoClient(os.getenv("MONGODB_URI", "mongodb://localhost:27017/"),    
+                         tlsCAFile=certifi.where())
     db = client["hospital_db"]
     doctors_collection = db["doctors"]
     patients_collection = db["patients"]
