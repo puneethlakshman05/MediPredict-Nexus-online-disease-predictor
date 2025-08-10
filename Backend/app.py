@@ -87,7 +87,8 @@ except Exception as e:
 
 # Load and preprocess dataset
 try:
-    data = pd.read_csv("Training.csv").dropna(axis=1)
+    csv_path = os.path.join(os.path.dirname(__file__), "Training.csv")
+    data = pd.read_csv(csv_path).dropna(axis=1)
     encoder = LabelEncoder()
     data["prognosis"] = encoder.fit_transform(data["prognosis"])
 except Exception as e:
