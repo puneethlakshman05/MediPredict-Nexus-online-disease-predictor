@@ -44,11 +44,15 @@ jwt = JWTManager(app)
 GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
-env_file = os.path.join(os.path.dirname(__file__), '.env')
+env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+loaded =False
 load_dotenv(env_file)
 if not os.path.exists('.env'):
-    print("'.env' file not found in Backend directory. Ensure environment variables are set in Vercel.")
-
+   print(f"'.env' file not found at {env_file}. Ensure environment variables are set in Vercel.")
+elif not loaded:
+    print(f"'.env' file found at {env_file} but failed to load variables. Check file format or permissions.")
+else:
+    print(f"'.env' file loaded successfully from {env_file}")
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
