@@ -34,17 +34,17 @@ allowed_origins = [
     "http://localhost:5173",
     "https://medi-predict-nexus-online-disease-p-psi.vercel.app"
 ]
+CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
+@app.after_request
 def cors_config(response):
     origin = request.headers.get('Origin')
     if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
+        response.headers['Vary'] = 'Origin'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     return response
-
-CORS(app, resources={r"/patient": {"origins": allowed_origins, "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}}, supports_credentials=True)
-app.after_request(cors_config)
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
