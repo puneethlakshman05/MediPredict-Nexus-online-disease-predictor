@@ -32,7 +32,7 @@ app = Flask(__name__)
 # Update CORS to allow dynamic frontend URL
 allowed_origins = [
     "http://localhost:5173",
-    "https://medi-predict-nexus-online-disease-p.vercel.app"
+    "https://medi-predict-nexus-online-disease-p-psi.vercel.app/"
 ]
 
 def cors_config(response):
