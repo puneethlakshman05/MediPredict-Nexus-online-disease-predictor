@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Appointments.css';
+import API_BASE_URL from "../../../config";
 
 function Appointments({ token }) {
   const [appointments, setAppointments] = useState([]);
@@ -16,12 +17,12 @@ function Appointments({ token }) {
       return;
     }
 
-    axios.get('http://localhost:5000/api/me', {
+    axios.get(`${API_BASE_URL}/api/me`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {
         const doctorEmail = res.data.email;
-        axios.get(`http://localhost:5000/api/appointments/doctor/${doctorEmail}`, {
+        axios.get(`${API_BASE_URL}/api/appointments/doctor/${doctorEmail}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
           .then(response => {
@@ -46,7 +47,7 @@ function Appointments({ token }) {
   }, [token]);
 
   const handleAppointmentResponse = (appointmentId, status) => {
-    axios.post(`http://localhost:5000/api/appointments/${appointmentId}/respond`, { status }, {
+    axios.post(`${API_BASE_URL}/api/appointments/${appointmentId}/respond`, { status }, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(() => {
@@ -78,7 +79,7 @@ function Appointments({ token }) {
         return;
       }
 
-      await axios.delete(`http://localhost:5000/api/appointments/${appointmentToDelete._id}`, {
+      await axios.delete(`${API_BASE_URL}/api/appointments/${appointmentToDelete._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const updatedAppointments = appointments.filter((appt) => appt._id !== appointmentToDelete._id);

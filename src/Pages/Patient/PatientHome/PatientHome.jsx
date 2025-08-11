@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCapsules, faSyringe, faTimes } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import './PatientHome.css';
+import API_BASE_URL from "../../../config";
 
 function PatientHome({ token }) {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function PatientHome({ token }) {
 
   const fetchSymptoms = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/symptoms', {
+      const res = await axios.get(`${API_BASE_URL}/api/symptoms`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSymptomsOptions(res.data.map(s => ({ label: s.replace('_', ' '), value: s })));
@@ -41,15 +42,15 @@ function PatientHome({ token }) {
       setShowDoctors(false);
       setShowNoDoctorsModal(false);
       const symptoms = selectedSymptoms.map(s => s.value);
-      const diseaseRes = await axios.get('http://localhost:5000/api/disease', {
+      const diseaseRes = await axios.get(`${API_BASE_URL}/api/diseas`, {
         params: { symptoms: JSON.stringify(symptoms) },
         headers: { Authorization: `Bearer ${token}` }
       });
       const disease = diseaseRes.data.disease;
-      const medRes = await axios.get(`http://localhost:5000/api/medications?disease=${encodeURIComponent(disease)}`, {
+      const medRes = await axios.get(`${API_BASE_URL}/api/medications?disease=${encodeURIComponent(disease)}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const docRes = await axios.get(`http://localhost:5000/api/doctors?specialization=${encodeURIComponent(disease)}`, {
+      const docRes = await axios.get(`${API_BASE_URL}/api/doctors?specialization=${encodeURIComponent(disease)}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setResult({

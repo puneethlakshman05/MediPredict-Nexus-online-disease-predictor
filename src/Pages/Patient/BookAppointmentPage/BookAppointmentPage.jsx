@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'; // Added PropTypes import
 import axios from 'axios';
 import './BookAppointmentPage.css';
+import API_BASE_URL from "../../../config";
 
 const BookAppointmentPage = ({ token }) => {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const BookAppointmentPage = ({ token }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/appointments', newAppointment, {
+      const response = await axios.post(`${API_BASE_URL}/api/appointments`, newAppointment, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log('Appointment booked:', response.data);

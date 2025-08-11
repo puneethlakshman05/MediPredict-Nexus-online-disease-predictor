@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import './ProfileModal.css';
+import API_BASE_URL from "../../config";
 
 function ProfileModal({ show, onClose, user, token, updateUser }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -44,7 +45,7 @@ function ProfileModal({ show, onClose, user, token, updateUser }) {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/update-profile',
+        `${API_BASE_URL}/api/update-profile`,
         formData,
         {
           headers: {

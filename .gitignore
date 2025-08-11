@@ -26,5 +26,6 @@ venv/
 venv/
 Backend/.env
 Backend/Uploads/
-
+.env.development
+.env.production
 vercel.json

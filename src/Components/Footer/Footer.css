@@ -18,8 +18,8 @@
   gap: 25px;
   justify-content: center;
   align-items: flex-start;
-  max-width: 1000px; /* Matches appointments-container */
-  margin: 0 auto;
+  max-width: 100%; 
+  margin: 0 0;
   padding: 0 15px;
   box-sizing: border-box;
 }

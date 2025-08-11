@@ -10,6 +10,7 @@ import {
 import NotificationModal from '../../Pages/Patient/NotificationModal/NotificationModal.jsx';
 import './Navbar.css';
 import logo5 from '../../assets/images/logo5.png';
+import API_BASE_URL from "../../config";
 
 // Debug: Log imports
 console.log('Imported NotificationModal:', typeof NotificationModal);
@@ -27,13 +28,13 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
   // Debug: Log props and state updates
   useEffect(() => {
     console.log('Navbar props:', { user, token });
-    console.log('Profile photo URL:', user.profilePhoto ? `http://localhost:5000${user.profilePhoto}` : 'No photo');
+    console.log('Profile photo URL:', user?.profilePhoto ? `${API_BASE_URL}${user.profilePhoto}` : 'No photo');
   }, [user, token]);
 
   const fetchNotifications = useCallback(async () => {
     if (user.isLoggedIn && user.role === 'patient') {
       try {
-        const res = await axios.get(`http://localhost:5000/api/notifications/${user.email}`, {
+        const res = await axios.get(`${API_BASE_URL}/api/notifications/${user.email}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setNotifications(res.data);
@@ -75,7 +76,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
   const handleRemovePhoto = async (e) => {
     e.stopPropagation();
     try {
-      const res = await axios.delete('http://localhost:5000/api/remove-profile-photo', {
+      const res = await axios.delete(`${API_BASE_URL}/api/remove-profile-photo`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Profile photo removed:', res.data);
@@ -130,7 +131,7 @@ function Navbar({ user, handleLogout, setShowModal, setModalRole, setShowSidebar
   };
 
   const profilePhotoUrl = user.profilePhoto
-    ? `http://localhost:5000${user.profilePhoto}?t=${Date.now()}`
+    ? `${API_BASE_URL}${user.profilePhoto}?t=${Date.now()}`
     : null;
 
   return (

@@ -1,6 +1,7 @@
 // src/Pages/Doctor/Patients.jsx
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Container, Table, Alert } from 'react-bootstrap';
+
 
 function Patients() {
   const [patients, setPatients] = useState([]);

@@ -5,12 +5,13 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './NotificationModal.css';
+import API_BASE_URL from "../../../config";
 
 function NotificationModal({ show, onHide, notifications, setNotifications, token }) {
   const markAsRead = async (notificationId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/notifications/${notificationId}/read`,
+        `${API_BASE_URL}/api/notifications/${notificationId}/read`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -37,7 +37,7 @@ ErrorBoundary.propTypes = {
 };
 
 function App() {
-  const [user, setUser] = useState({
+  const defaultUser = {
     isLoggedIn: false,
     role: '',
     email: '',
@@ -45,7 +45,8 @@ function App() {
     token: '',
     name: '',
     profilePhoto: ''
-  });
+  };
+  const [user, setUser] = useState(defaultUser);
   const [showModal, setShowModal] = useState(false);
   const [modalRole, setModalRole] = useState('');
   const [showSidebar, setShowSidebar] = useState(false);
@@ -123,15 +124,7 @@ function App() {
   };
 
   const handleLogout = () => {
-    setUser({
-      isLoggedIn: false,
-      role: '',
-      email: '',
-      id: '',
-      token: '',
-      name: '',
-      profilePhoto: ''
-    });
+    setUser(defaultUser);
     localStorage.removeItem('user');
     setShowModal(false);
     setModalRole('');
@@ -153,6 +146,7 @@ function App() {
       <div className="app-container">
         <Navbar
           user={user}
+          setUser={setUser}
           handleLogout={handleLogout}
           setShowModal={setShowModal}
           setModalRole={setModalRole}

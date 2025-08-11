@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import './DoctorHome.css';
+import API_BASE_URL from "../../../config";
 
 function DoctorHome({ token, email }) {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function DoctorHome({ token, email }) {
     }
 
     // Fetch doctor info
-    axios.get('http://localhost:5000/api/doctors', {
+    axios.get(`${API_BASE_URL}/api/doctors`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {
@@ -37,7 +38,7 @@ function DoctorHome({ token, email }) {
       });
 
     // Fetch dashboard stats
-    axios.get(`http://localhost:5000/api/appointments/doctor/${email}`, {
+    axios.get(`${API_BASE_URL}/api/appointments/doctor/${email}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {

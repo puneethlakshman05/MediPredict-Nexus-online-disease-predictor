@@ -30,11 +30,21 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 # Update CORS to allow dynamic frontend URL
-CORS(app, resources={r"/*": {
-    "origins": [os.getenv("FRONTEND_URL", "http://localhost:5173")],
-    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    "allow_headers": ["Content-Type", "Authorization"]
-}})
+allowed_origins = [
+    "http://localhost:5173",
+    "https://medi-predict-nexus-online-disease-p.vercel.app"
+]
+
+def cors_config(response):
+    origin = request.headers.get('Origin')
+    if origin in allowed_origins:
+        response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+CORS(app, resources={r"/patient": {"origins": allowed_origins, "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}}, supports_credentials=True)
+app.after_request(cors_config)
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
@@ -45,8 +55,8 @@ GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
 env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
-loaded =False
-load_dotenv(env_file)
+loaded = load_dotenv(env_file)
+# load_dotenv(env_file)
 if not os.path.exists('.env'):
    print(f"'.env' file not found at {env_file}. Ensure environment variables are set in Vercel.")
 elif not loaded:
@@ -62,11 +72,17 @@ required_env_vars = ['GMAIL_SMTP_USER', 'GMAIL_APP_PASSWORD', 'SENDER_EMAIL', 'J
 missing_vars = [var for var in required_env_vars if not os.getenv(var)]
 if missing_vars:
     logger.warning(f"Missing environment variables: {', '.join(missing_vars)}. Using defaults where applicable.")
-
 # MongoDB Connection with environment variable
 try:
     client = MongoClient(os.getenv("MONGODB_URI", "mongodb://localhost:27017/"),    
-                         tlsCAFile=certifi.where())
+                         tlsCAFile=certifi.where(),
+                         serverSelectionTimeoutMS=5000,   
+                         heartbeatFrequencyMS=10000 )
+    try:
+        client.admin.command('ping')
+        print("Ping successful")
+    except Exception as e:
+        print("Error:", e)
     db = client.get_database(os.getenv("MONGODB_DATABASE", "hospital_db"))
     doctors_collection = db["doctors"]
     patients_collection = db["patients"]
@@ -976,5 +992,8 @@ def get_current_user():
         return jsonify({"error": "Unauthorized or invalid token"}), 401
 
 if __name__ == "__main__":
-    # Removed local run for Vercel deployment
-    pass
+    if os.getenv("FLASK_ENV") == "development":
+        app.run(debug=True, host="0.0.0.0", port=5000)
+    else:
+        # Production - Render will handle binding to 0.0.0.0 automatically
+        app.run(debug=False, host="0.0.0.0", port=int(os.getenv("PORT", 5000)))

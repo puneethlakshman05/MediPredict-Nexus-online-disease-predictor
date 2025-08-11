@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminHome.css';
+import API_BASE_URL from "../../../config";
 
 function AdminHome() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function AdminHome() {
       };
 
       // Fetch total doctors
-      const doctorsResponse = await axios.get('http://localhost:5000/api/doctors', config);
+      const doctorsResponse = await axios.get(`${API_BASE_URL}/api/doctors`, config);
       const doctorsData = doctorsResponse.data.doctors || doctorsResponse.data;
       if (!Array.isArray(doctorsData)) {
         throw new Error('Doctors data is not an array');
@@ -52,7 +53,7 @@ function AdminHome() {
       setDoctors(doctorsData);
 
       // Fetch total patients
-      const patientsResponse = await axios.get('http://localhost:5000/api/patients', config);
+      const patientsResponse = await axios.get(`${API_BASE_URL}/api/patients`, config);
       const patientsData = patientsResponse.data.patients || patientsResponse.data;
       if (!Array.isArray(patientsData)) {
         throw new Error('Patients data is not an array');
@@ -60,7 +61,7 @@ function AdminHome() {
       setStats(prev => ({ ...prev, totalPatients: patientsData.length }));
 
       // Fetch total appointments
-      const appointmentsResponse = await axios.get('http://localhost:5000/api/appointments', config);
+      const appointmentsResponse = await axios.get(`${API_BASE_URL}/api/appointments`, config);
       const appointmentsData = appointmentsResponse.data;
       if (!Array.isArray(appointmentsData)) {
         throw new Error('Appointments data is not an array');
@@ -81,7 +82,7 @@ function AdminHome() {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const appointmentsResponse = await axios.get('http://localhost:5000/api/appointments', config);
+      const appointmentsResponse = await axios.get(`${API_BASE_URL}/api/appointments`, config);
       const appointmentsData = appointmentsResponse.data;
       const filteredAppointments = appointmentsData.filter(
         appt => appt.doctorName === doctorName

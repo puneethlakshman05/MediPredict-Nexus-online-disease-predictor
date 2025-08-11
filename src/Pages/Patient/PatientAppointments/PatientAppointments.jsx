@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './PatientAppointments.css';
+import API_BASE_URL from "../../../config";
 
 function PatientAppointments({ token }) {
   const [appointments, setAppointments] = useState([]);
@@ -13,7 +14,7 @@ function PatientAppointments({ token }) {
     if (storedUser && storedUser.role === 'patient') {
       const patientEmail= storedUser.email;
       axios
-        .get(`http://localhost:5000/api/appointments/patient/${patientEmail}`, {
+        .get(`${API_BASE_URL}/api/appointments/patient/${patientEmail}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

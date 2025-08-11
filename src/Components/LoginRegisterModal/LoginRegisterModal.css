@@ -7,7 +7,8 @@
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 20px;
   z-index: 11000 !important;
   background-color: rgba(0, 0, 0, 0.5);
   overflow-y: auto;
@@ -25,8 +26,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 400px;
-  max-height: 90vh;
+  height: auto;
+  max-height: none;
+  margin:20px 0px;
   box-sizing: border-box;
 }
 
@@ -42,6 +44,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 0;
+  max-height: 70vh;
 }
 
 /* Modal Form */
@@ -612,7 +615,7 @@ input::placeholder {
     max-width: 90vw;
     padding: 15px;
     min-height: 360px;
-    max-height: 70vh;
+    max-height: min(100%, 600px);
   }
 
   .modal-title-text {
@@ -698,7 +701,7 @@ input::placeholder {
     max-width: 95vw;
     padding: 12px;
     min-height: 320px;
-    max-height: 65vh;
+    max-height: min(100%, 600px);
   }
 
   .modal-title-text {

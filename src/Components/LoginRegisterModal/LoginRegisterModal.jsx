@@ -8,6 +8,7 @@ import {
   faEnvelope, faLock, faUser, faUserMd,
   faMoon, faSun, faKey
 } from '@fortawesome/free-solid-svg-icons';
+import API_BASE_URL from "../../config";
 
 function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
   const [darkMode, setDarkMode] = useState(false);
@@ -58,7 +59,8 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
       return;
     }
     try {
-      const res = await axios.post(`http://localhost:5000/login/${role}`, {
+      console.log("API_BASE_URL in runtime:", API_BASE_URL);
+      const res = await axios.post(`${API_BASE_URL}/login/${role}`, {
         email: loginEmail,
         password: loginPassword,
       });
@@ -95,7 +97,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
         }
         payload.specialization = registerSpecialization;
       }
-      const registerRes = await axios.post(`http://localhost:5000/register/${role}`, payload);
+      const registerRes = await axios.post(`${API_BASE_URL}/register/${role}`, payload);
       const userData = {
         id: registerRes.data.id,
         name: registerName,
@@ -106,7 +108,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
       const eventName = role === 'doctor' ? 'doctorUpdated' : 'patientUpdated';
       window.dispatchEvent(new CustomEvent(eventName, { detail: userData }));
       alert(`${capitalize(role)} registered successfully`);
-      const loginRes = await axios.post(`http://localhost:5000/login/${role}`, {
+      const loginRes = await axios.post(`${API_BASE_URL}/login/${role}`, {
         email: registerEmail,
         password: registerPassword,
       });
@@ -136,7 +138,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/forgot-password', {
+      const response = await axios.post(`${API_BASE_URL}/api/forgot-password`, {
         email: resetEmail
       });
       setMode('reset-otp'); // Updated to new sub-mode
@@ -167,7 +169,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
     if (isSubmitting || otpExpired) return;
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/verify-otp', {
+      await axios.post(`${API_BASE_URL}/api/verify-otp`, {
         email: resetEmail,
         otp,
       });
@@ -189,7 +191,7 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/reset-password', {
+      await axios.post(`${API_BASE_URL}/api/reset-password`, {
         email: resetEmail,
         otp,
         newPassword

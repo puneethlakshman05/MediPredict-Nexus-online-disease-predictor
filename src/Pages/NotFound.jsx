@@ -1,5 +1,4 @@
 // src/Pages/NotFound.jsx
-import React from 'react';
 import { Container } from 'react-bootstrap';
 
 const NotFound = () => {

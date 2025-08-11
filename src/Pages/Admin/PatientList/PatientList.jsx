@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import './PatientList.css';
+import API_BASE_URL from "../../../config";
 
 function PatientsList({ token }) {
   const [patients, setPatients] = useState([]);
@@ -13,7 +14,7 @@ function PatientsList({ token }) {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/patients', {
+        const response = await axios.get(`${API_BASE_URL}/api/patients`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPatients(response.data.patients);
@@ -51,7 +52,7 @@ function PatientsList({ token }) {
         return;
       }
 
-      await axios.delete(`http://localhost:5000/api/patients/${patientToDelete._id}`, {
+      await axios.delete(`${API_BASE_URL}/api/patients/${patientToDelete._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const updatedPatients = patients.filter((patient) => patient._id !== patientToDelete._id);
