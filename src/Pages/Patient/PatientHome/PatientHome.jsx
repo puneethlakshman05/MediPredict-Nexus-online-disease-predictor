@@ -42,7 +42,7 @@ function PatientHome({ token }) {
       setShowDoctors(false);
       setShowNoDoctorsModal(false);
       const symptoms = selectedSymptoms.map(s => s.value);
-      const diseaseRes = await axios.get(`${API_BASE_URL}/api/diseas`, {
+      const diseaseRes = await axios.get(`${API_BASE_URL}/api/disease`, {
         params: { symptoms: JSON.stringify(symptoms) },
         headers: { Authorization: `Bearer ${token}` }
       });

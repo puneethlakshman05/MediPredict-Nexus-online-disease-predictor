@@ -122,7 +122,12 @@ body {
   margin: 10px 0;
   font-size: 1rem;
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 .result-section {

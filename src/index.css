@@ -17,17 +17,17 @@ body {
   flex: 1;
   padding-bottom: 10px;
   height:550px;
-  /* min-height: 100px; */
+   /* min-height: 160vh;  */
 }
 
 /* Responsive Design */
 @media (min-width: 1024px) {
   body {
     font-size: 0.95rem;
-    min-height: 100vh;
+    min-height: 140vh;
   }
   .app-container {
-    min-height: 100vh;
+    min-height: 140vh;
   }
   .content {
     padding-bottom: 8px;
@@ -37,10 +37,10 @@ body {
 @media (max-width: 1024px) {
   body {
     font-size: 0.95rem;
-    min-height: 100vh;
+    min-height: 180vh;
   }
   .app-container {
-    min-height: 100vh;
+    min-height: 160vh;
   }
   .content {
     padding-bottom: 8px;
@@ -51,10 +51,10 @@ body {
 @media (max-width: 768px) {
   body {
     font-size: 0.9rem;
-    min-height: 100vh;
+    min-height: 160vh;
   }
   .app-container {
-    min-height: 100vh;
+    min-height: 160vh;
   }
   .content {
     padding-bottom: 6px;
@@ -64,10 +64,10 @@ body {
 @media (max-width: 480px) {
   body {
     font-size: 0.85rem;
-    min-height: 80vh;
+    min-height: 180vh;
   }
   .app-container {
-    min-height: 80vh;
+    min-height: 180vh;
   }
   .content {
     padding-bottom: 4px;
@@ -77,10 +77,10 @@ body {
 @media (max-width: 360px) {
   body {
     font-size: 0.8rem;
-    min-height: 100vh;
+    min-height: 160vh;
   }
   .app-container {
-    min-height: 100vh;
+    min-height: 160vh;
   }
   .content {
     padding-bottom: 2px;
