@@ -36,8 +36,7 @@ allowed_origins = [
 ]
 CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
-@app.after_request
-def cors_config(response):
+def after_request(response):
     origin = request.headers.get('Origin')
     if origin in allowed_origins:
         response.headers['Access-Control-Allow-Origin'] = origin
@@ -45,6 +44,19 @@ def cors_config(response):
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     return response
+
+app.after_request(after_request)
+
+@app.route('/<path:path>', methods=['OPTIONS'])
+def handle_options(path):
+    response = make_response()
+    origin = request.headers.get('Origin')
+    if origin in allowed_origins:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers['Vary'] = 'Origin'
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response, 200
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
@@ -217,7 +229,7 @@ def remove_profile_photo():
     if request.method == 'OPTIONS':
         response = make_response()
         response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
-        response.headers.add("Access-Control-Allow-Methods", "DELETE, OPTIONS")
+        response.headers.add("Access-Control-Allow-Methods", "DELETE, OPTIONS, POST, PUT, GET")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
     try:
