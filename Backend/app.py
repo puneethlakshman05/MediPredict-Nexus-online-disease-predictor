@@ -32,10 +32,11 @@ app = Flask(__name__)
 # Update CORS to allow dynamic frontend URL
 allowed_origins = [
     "http://localhost:5173",
-    "https://medi-predict-nexus-online-disease-p-psi.vercel.app"
+    os.getenv("FRONTEND_URL", "http://localhost:5173")
 ]
 CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
+@app.after_request
 def after_request(response):
     origin = request.headers.get('Origin')
     if origin in allowed_origins:
