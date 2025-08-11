@@ -268,13 +268,13 @@ def remove_profile_photo():
         return jsonify({"error": "Internal server error"}), 500
 
 # Global OPTIONS handler
-@app.route('/<path:path>', methods=['OPTIONS'])
-def handle_options(path):
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
-    response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-    response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
-    return response, 200
+# @app.route('/<path:path>', methods=['OPTIONS'])
+# def handle_options(path):
+#     response = make_response()
+#     response.headers.add("Access-Control-Allow-Origin", os.getenv("FRONTEND_URL", "http://localhost:5173"))
+#     response.headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+#     response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+#     return response, 200
 
 # Routes
 @app.route("/")
