@@ -1,6 +1,6 @@
 // config.js
 
-const isProduction = import.meta.env.PROD; // Vite sets this automatically
+const isProduction = window.location.hostname!=="localhost"; // Vite sets this automatically
 
 // Read from environment variables
 const VITE_API_BASE_PROD_URL = import.meta.env.VITE_API_BASE_URL_PROD;
