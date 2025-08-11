@@ -18,6 +18,8 @@ import Appointments from './Pages/Doctor/Appointments/Appointments';
 import DoctorsList from './Pages/Admin/DoctorsList/DoctorsList';
 import PatientsList from './Pages/Admin/PatientList/PatientList';
 import PropTypes from 'prop-types';
+import './config';
+import API_BASE_URL from './config';
 
 class ErrorBoundary extends React.Component {
   state = { hasError: false };
@@ -54,7 +56,7 @@ function App() {
 
   const fetchUserWithToken = useCallback(async (token) => {
     try {
-      const res = await axios.get('http://localhost:5000/api/me', {
+      const res = await axios.get(`${API_BASE_URL}/api/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.headers['content-type']?.includes('application/json')) {
