@@ -1002,7 +1002,7 @@ def get_current_user():
     except Exception as e:
         logger.error(f"Error in get_current_user: {str(e)}")
         return jsonify({"error": "Unauthorized or invalid token"}), 401
-load_dotenv() 
+
 if __name__ == "__main__":
     if os.getenv("FLASK_ENV") == "development":
         app.run(debug=True, host="0.0.0.0", port=5000)
