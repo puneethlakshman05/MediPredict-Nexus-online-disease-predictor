@@ -59,12 +59,13 @@ function App() {
       const res = await axios.get(`${API_BASE_URL}/api/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      console.log(res);
       if (!res.headers['content-type']?.includes('application/json')) {
         throw new Error('Non-JSON response');
       }
       return res.data;
     } catch (err) {
-      console.error('Fetch user error:', err.message);
+      console.error('Fetch user error:', err);
       localStorage.removeItem('user');
       return null;
     }

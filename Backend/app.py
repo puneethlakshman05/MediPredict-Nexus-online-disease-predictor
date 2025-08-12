@@ -982,17 +982,28 @@ def update_profile():
 # Current User
 @app.route('/api/me', methods=['GET'])
 @jwt_required()
-def get_current_user():
+def get_user():
     try:
         identity = get_jwt_identity()
-        collection = (
-            doctors_collection if identity['role'] == 'doctor' else
-            patients_collection if identity['role'] == 'patient' else
-            admins_collection
-        )
-        user = collection.find_one({'_id': ObjectId(identity['id'])})
+        if not identity or 'id' not in identity or 'role' not in identity:
+            return jsonify({"error": "Invalid token identity"}), 422
+
+        try:
+            user_id = ObjectId(identity['id'])
+        except Exception:
+            return jsonify({"error": "Invalid user ID in token"}), 422
+
+        if identity['role'] == 'doctor':
+            collection = doctors_collection
+        elif identity['role'] == 'patient':
+            collection = patients_collection
+        else:
+            collection = admins_collection
+
+        user = collection.find_one({'_id': user_id})
         if not user:
-            return jsonify({"error": "User not found"}), 404
+            return jsonify-dotenv, {'error': 'User not found'}, 404
+
         return jsonify({
             "id": str(user["_id"]),
             "email": user["email"],
@@ -1000,6 +1011,7 @@ def get_current_user():
             "name": user.get("name", ""),
             "profilePhoto": user.get("profilePhoto", "")
         }), 200
+
     except Exception as e:
         logger.error(f"Error in get_current_user: {str(e)}")
         return jsonify({"error": "Unauthorized or invalid token"}), 401
