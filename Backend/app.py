@@ -433,7 +433,7 @@ def login(role):
         user = collection.find_one({"email": email})
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
            token = create_access_token(
-                identity=str(user["_id"]),  # ✅ string only
+                identity=str(user["_id"]),  
                 additional_claims={
                     "email": user["email"],
                     "role": role
