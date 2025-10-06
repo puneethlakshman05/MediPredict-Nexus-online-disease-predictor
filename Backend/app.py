@@ -419,21 +419,27 @@ def login(role):
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
+
     try:
         data = request.json
         if not data or not isinstance(data, dict):
             return jsonify({"error": "Invalid request body"}), 400
+
         email = data.get("email")
         password = data.get("password")
+
         if not email or not password:
             return jsonify({"error": "Email and password are required"}), 400
+
         if role not in ['doctor', 'patient', 'admin']:
             return jsonify({"error": "Invalid role"}), 400
+
         collection = db[f"{role}s"] if role != 'admin' else admins_collection
         user = collection.find_one({"email": email})
+
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
-           token = create_access_token(
-                identity=str(user["_id"]),  
+            token = create_access_token(
+                identity=str(user["_id"]),
                 additional_claims={
                     "email": user["email"],
                     "role": role
@@ -449,13 +455,18 @@ def login(role):
                 "token": token,
                 "profilePhoto": user.get("profilePhoto", "")
             }
+
             if role == "doctor":
                 response["specialization"] = user.get("specialization", "")
+
             return jsonify(response), 200
+
         return jsonify({"error": "Invalid credentials"}), 401
+
     except Exception as e:
         logger.error(f"Error in login for role {role}, email {email}: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
+
 
 # Forgot Password
 @app.route('/api/forgot-password', methods=['POST'])
