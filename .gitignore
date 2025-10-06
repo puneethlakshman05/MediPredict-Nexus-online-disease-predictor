@@ -26,6 +26,9 @@ venv/
 venv/
 Backend/.env
 Backend/Uploads/
-.env.development
-.env.production
+.env
 vercel.json
+Backend/Trainig.csv
+Backend/Testing.csv
+Backend/disease_medications.csv
+Backend/requirements.txt
