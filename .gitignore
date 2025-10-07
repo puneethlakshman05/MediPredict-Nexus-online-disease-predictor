@@ -28,7 +28,3 @@ Backend/.env
 Backend/Uploads/
 .env
 vercel.json
-Backend/Trainig.csv
-Backend/Testing.csv
-Backend/disease_medications.csv
-Backend/requirements.txt

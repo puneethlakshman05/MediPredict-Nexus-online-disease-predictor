@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import (
-    JWTManager, create_access_token, jwt_required, get_jwt_identity
+    JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 )
 import json
 import numpy as np
@@ -112,28 +112,20 @@ except Exception as e:
     logger.error(f"MongoDB connection error: {e}")
     raise
 
-# Ensure existing notifications have expires_at
+# ✅ Load & preprocess datasets (now from /datasets folder)
 try:
-    current_time = datetime.utcnow()
-    notifications_collection.update_many(
-        {"expires_at": {"$exists": False}},
-        {"$set": {"expires_at": current_time + timedelta(hours=24)}}
-    )
-except Exception as e:
-    logger.error(f"Error updating notifications: {e}")
-
-# Load and preprocess dataset
-try:
-    csv_path = os.path.join(os.path.dirname(__file__), "Training.csv")
-    data = pd.read_csv(csv_path).dropna(axis=1)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    training_path = os.path.join(base_dir, "datasets", "Training.csv")
+    data = pd.read_csv(training_path).dropna(axis=1)
     encoder = LabelEncoder()
     data["prognosis"] = encoder.fit_transform(data["prognosis"])
 except Exception as e:
-    logger.error(f"Error loading dataset: {e}")
+    logger.error(f"Error loading Training.csv: {e}")
     raise
+
 try:
-    csv_path = os.path.join(os.path.dirname(__file__), "disease_medications.csv")
-    disease_medications = pd.read_csv(csv_path)
+    medications_path = os.path.join(base_dir, "datasets", "disease_medications.csv")
+    disease_medications = pd.read_csv(medications_path)
     medication_dict = {
         row["Disease"].lower(): {
             "medicines": row["Medicines"].split(",") if pd.notna(row["Medicines"]) else [],
@@ -142,7 +134,7 @@ try:
         for _, row in disease_medications.iterrows()
     }
 except Exception as e:
-    logger.error(f"Error loading disease_medications dataset: {e}")
+    logger.error(f"Error loading disease_medications.csv: {e}")
     raise
 
 X = data.iloc[:, :-1]
@@ -1003,17 +995,22 @@ def update_profile():
 @app.route('/api/me', methods=['GET'])
 @jwt_required()
 def get_user():
+    from flask import request
+    print("Authorization Header:", request.headers.get("Authorization"))
+
     try:
-        user_id = get_jwt_identity()  # returns just the ID string
-        claims = get_jwt()  # contains email, role
+        user_id = get_jwt_identity()
+        claims = get_jwt()
+        print("Decoded JWT claims:", claims)
+        print("User ID from JWT:", user_id)
 
         role = claims.get('role')
         email = claims.get('email')
 
         if not user_id or not role:
+            print("⚠️ Invalid token data")
             return jsonify({"error": "Invalid token"}), 422
 
-        # Choose the correct collection
         if role == 'doctor':
             collection = doctors_collection
         elif role == 'patient':
@@ -1023,6 +1020,7 @@ def get_user():
 
         user = collection.find_one({'_id': ObjectId(user_id)})
         if not user:
+            print("⚠️ User not found in DB")
             return jsonify({'error': 'User not found'}), 404
 
         return jsonify({
@@ -1034,8 +1032,9 @@ def get_user():
         }), 200
 
     except Exception as e:
-        logger.error(f"Error in get_user: {str(e)}")
+        print("🔥 Error in /api/me route:", str(e))
         return jsonify({"error": "Unauthorized or invalid token"}), 401
+
 
 if __name__ == "__main__":
     if os.getenv("FLASK_ENV") == "development":

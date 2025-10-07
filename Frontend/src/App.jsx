@@ -53,79 +53,79 @@ function App() {
   const [modalRole, setModalRole] = useState('');
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
-const fetchUserWithToken = useCallback(async (activeToken) => {
-  try {
-    const token = activeToken || localStorage.getItem("authToken");
 
-    if (!token) return null;
-
-    const res = await axios.get(`${API_BASE_URL}/api/me`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    if (!res.headers['content-type']?.includes('application/json')) {
-      throw new Error('Non-JSON response');
+  const fetchUserWithToken = useCallback(async (token) => {
+    try {
+      console.log("Using token:", token);
+      const res = await axios.get(`${API_BASE_URL}/api/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(res);
+      if (!res.headers['content-type']?.includes('application/json')) {
+        throw new Error('Non-JSON response');
+      }
+      return res.data;
+    } catch (err) {
+      console.error('Fetch user error:', err);
+      localStorage.removeItem('user');
+      return null;
     }
-
-    return res.data;
-  } catch (err) {
-    console.error('Fetch user error:', err);
-    localStorage.removeItem('user');
-    return null;
-  }
-}, []);
-
+  }, []);
 
   useEffect(() => {
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-  const storedToken = localStorage.getItem('authToken');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser?.token) {
+      fetchUserWithToken(storedUser.token).then(data => {
+        if (data) {
+          const updatedUser = {
+            isLoggedIn: true,
+            role: data.role || '',
+            email: data.email || '',
+            id: data.id || '',
+            token: storedUser.token,
+            name: data.name || '',
+            profilePhoto: data.profilePhoto || ''
+          };
+          setUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+        } else {
+          setUser({
+            isLoggedIn: false,
+            role: '',
+            email: '',
+            id: '',
+            token: '',
+            name: '',
+            profilePhoto: ''
+          });
+        }
+      });
+    }
+  }, [fetchUserWithToken]);
 
-  if (storedToken) {
-    fetchUserWithToken(storedToken).then(data => {
-      if (data) {
+  const handleLoginSuccess = async (authData) => {
+    if (authData?.token) {
+      const userData = await fetchUserWithToken(authData.token);
+      if (userData) {
         const updatedUser = {
           isLoggedIn: true,
-          role: data.role || '',
-          email: data.email || '',
-          id: data.id || '',
-          token: storedToken,
-          name: data.name || '',
-          profilePhoto: data.profilePhoto || ''
+          role: authData.role || '',
+          email: userData.email || '',
+          id: userData.id || '',
+          token: authData.token,
+          name: userData.name || '',
+          profilePhoto: userData.profilePhoto || ''
         };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
-      } else {
-        setUser(defaultUser);
+        localStorage.setItem('token', authData.token);
       }
-    });
-  }
-}, [fetchUserWithToken]);
-
-
-const handleLoginSuccess = async (authData) => {
-  if (authData?.token) {
-    const userData = await fetchUserWithToken(authData.token);
-    if (userData) {
-      const updatedUser = {
-        isLoggedIn: true,
-        role: authData.role || '',
-        email: userData.email || '',
-        id: userData.id || '',
-        token: authData.token,
-        name: userData.name || '',
-        profilePhoto: userData.profilePhoto || ''
-      };
-      setUser(updatedUser);
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      localStorage.setItem('authToken', authData.token); // ✅ consistent key
+      setShowModal(false);
+      setModalRole('');
+      const routes = { admin: '/admin', doctor: '/doctor', patient: '/patient' };
+      navigate(routes[authData.role] || '/', { replace: true });
     }
-    setShowModal(false);
-    setModalRole('');
-    const routes = { admin: '/admin', doctor: '/doctor', patient: '/patient' };
-    navigate(routes[authData.role] || '/', { replace: true });
-  }
-};
-
+  };
 
   const handleLogout = () => {
     setUser(defaultUser);

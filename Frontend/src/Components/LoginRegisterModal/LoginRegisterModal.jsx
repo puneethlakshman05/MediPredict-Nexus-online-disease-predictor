@@ -64,9 +64,6 @@ function LoginRegisterModal({ role, onLoginSuccess, onClose }) {
         email: loginEmail,
         password: loginPassword,
       });
-
-  localStorage.setItem("authToken", res.data.token);
-
       setLoginEmail('');
       setLoginPassword('');
       setLoginMessage('');
