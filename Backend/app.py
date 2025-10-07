@@ -1004,36 +1004,37 @@ def update_profile():
 @jwt_required()
 def get_user():
     try:
-        identity = get_jwt_identity()
-        if not identity or 'id' not in identity or 'role' not in identity:
-            return jsonify({"error": "Invalid token identity"}), 422
+        user_id = get_jwt_identity()  # returns just the ID string
+        claims = get_jwt()  # contains email, role
 
-        try:
-            user_id = ObjectId(identity['id'])
-        except Exception:
-            return jsonify({"error": "Invalid user ID in token"}), 422
+        role = claims.get('role')
+        email = claims.get('email')
 
-        if identity['role'] == 'doctor':
+        if not user_id or not role:
+            return jsonify({"error": "Invalid token"}), 422
+
+        # Choose the correct collection
+        if role == 'doctor':
             collection = doctors_collection
-        elif identity['role'] == 'patient':
+        elif role == 'patient':
             collection = patients_collection
         else:
             collection = admins_collection
 
-        user = collection.find_one({'_id': user_id})
+        user = collection.find_one({'_id': ObjectId(user_id)})
         if not user:
-            return jsonify-dotenv, {'error': 'User not found'}, 404
+            return jsonify({'error': 'User not found'}), 404
 
         return jsonify({
             "id": str(user["_id"]),
             "email": user["email"],
-            "role": identity["role"],
+            "role": role,
             "name": user.get("name", ""),
             "profilePhoto": user.get("profilePhoto", "")
         }), 200
 
     except Exception as e:
-        logger.error(f"Error in get_current_user: {str(e)}")
+        logger.error(f"Error in get_user: {str(e)}")
         return jsonify({"error": "Unauthorized or invalid token"}), 401
 
 if __name__ == "__main__":
