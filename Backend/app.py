@@ -28,11 +28,23 @@ import logging
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
+env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+loaded = load_dotenv(env_file)
+# load_dotenv(env_file)
+if not os.path.exists('.env'):
+   print(f"'.env' file not found at {env_file}. Ensure environment variables are set in Vercel.")
+elif not loaded:
+    print(f"'.env' file found at {env_file} but failed to load variables. Check file format or permissions.")
+else:
+    print(f"'.env' file loaded successfully from {env_file}")
+
 app = Flask(__name__)
 # Update CORS to allow dynamic frontend URL
 allowed_origins = [
-    "http://localhost:5173",
-    os.getenv("FRONTEND_URL", "http://localhost:5173")
+    os.getenv("FRONTEND_URL", "http://localhost:5173"),
+    "https://medi-predict-nexus-online-disease-p.vercel.app",
+    "https://medi-predict-nexus-online-disease-p-gray.vercel.app",  # Vercel preview
+    "http://localhost:5173"
 ]
 CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
@@ -67,15 +79,7 @@ jwt = JWTManager(app)
 GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
 
-env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
-loaded = load_dotenv(env_file)
-# load_dotenv(env_file)
-if not os.path.exists('.env'):
-   print(f"'.env' file not found at {env_file}. Ensure environment variables are set in Vercel.")
-elif not loaded:
-    print(f"'.env' file found at {env_file} but failed to load variables. Check file format or permissions.")
-else:
-    print(f"'.env' file loaded successfully from {env_file}")
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
