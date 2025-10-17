@@ -20,6 +20,7 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  height:50vh;
 }
 
 .notification-container {
@@ -352,6 +353,7 @@ h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .patient-home {
     padding: 10px 0;
+     height:30vh;
   }
 
   .notification-container {
@@ -411,6 +413,7 @@ h3, h4, h5, h6 {
 @media (max-width: 480px) {
   .patient-home {
     padding: 8px 0;
+    
   }
 
   .notification-container {

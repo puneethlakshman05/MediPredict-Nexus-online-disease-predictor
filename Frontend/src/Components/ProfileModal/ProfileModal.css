@@ -1,11 +1,11 @@
 /* Profile Modal Overlay */
 .profile-modal-overlay {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   z-index: 15000; /* Increased to ensure it appears above other elements */
   display: flex;
   justify-content: center;
@@ -14,9 +14,9 @@
 
 /* Profile Modal Container */
 .profile-modal-container {
-  background: #ffffff;
+
   border-radius: 20px;
-  padding: 20px;
+  padding: 30px;
   width: 400px;
   max-width: 90vw; /* Use viewport units for responsiveness */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -254,7 +254,7 @@ input::placeholder {
 /* Media Query for Medium Screens (769px to 1199px) */
 @media (min-width: 769px) and (max-width: 1199px) {
   .profile-modal-container {
-    width: 400px;
+    width: 600px;
     max-width: 85vw;
     padding: 20px;
   }
@@ -376,7 +376,9 @@ input::placeholder {
 /* Media Query for Medium Screens (up to 768px) */
 @media (max-width: 768px) {
   .profile-modal-container {
-    max-width: 90vw;
+    top:20px;
+  width:100px; 
+     max-width: 90vw; 
     padding: 15px;
   }
 
@@ -411,10 +413,10 @@ input::placeholder {
   }
 
   .profile-dropdown {
-    top: 50px;
+    top: 10px;
     right: 15px;
-    width: 200px;
-    min-width: 180px;
+    min-width: 300px;
+    width: 280px;
     padding: 15px 10px 10px;
   }
 
@@ -439,7 +441,7 @@ input::placeholder {
 /* Media Query for Small Screens (up to 480px) */
 @media (max-width: 480px) {
   .profile-modal-container {
-    max-width: 90vw;
+    width: 30vh;
     padding: 15px;
   }
 
@@ -479,9 +481,9 @@ input::placeholder {
   }
 
   .profile-dropdown {
-    top: 45px;
+    top: 15px;
     right: 10px;
-    width: 180px;
+    width: 280px;
     min-width: 160px;
     padding: 15px 10px 10px;
   }
@@ -551,10 +553,10 @@ input::placeholder {
   }
 
   .profile-dropdown {
-    top: 40px;
+    top: 10px;
     right: 8px;
-    width: 160px;
-    min-width: 140px;
+    width: 260px;
+    min-width: 240px;
     padding: 10px 8px 8px;
   }
 

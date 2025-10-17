@@ -264,14 +264,16 @@ def remove_profile_photo():
         return response, 200
     try:
         claims = get_jwt()
+        identity = get_jwt_identity()
+        print("This is identity token",identity)
         collection = (
             doctors_collection if claims['role'] == 'doctor' else
             patients_collection if claims['role'] == 'patient' else
             admins_collection
         )
-        user = collection.find_one({'_id': ObjectId(claims['id'])})
+        user = collection.find_one({'_id': ObjectId(identity)})
         if not user:
-            logger.error(f"User not found: {claims['id']}")
+            logger.error(f"User not found: {identity}")
             return jsonify({"error": "User not found"}), 404
         profile_photo = user.get('profilePhoto', '')
         if profile_photo:
@@ -282,7 +284,7 @@ def remove_profile_photo():
             else:
                 logger.warning(f"File not found for deletion: {file_path}")
         collection.update_one(
-            {'_id': ObjectId(claims['id'])},
+            {'_id': ObjectId(identity)},
             {'$set': {'profilePhoto': ''}}
         )
         logger.info(f"Profile photo removed for user: {claims['email']}")
@@ -468,9 +470,14 @@ def login(role):
 
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
             token = create_access_token(
-              identity={"id": str(user["_id"]), "email": user["email"], "role": role},
-              expires_delta=timedelta(hours=24)
-)
+                identity=str(user["_id"]),
+                additional_claims={
+                    "email": user["email"],
+                    "role": role
+                    },
+                expires_delta=timedelta(hours=24)
+            )
+
 
 
             response = {
@@ -619,10 +626,11 @@ def handle_appointments():
         return response, 200
     try:
         identity = get_jwt_identity()
+        claims = get_jwt()
         logger.debug(f"Received JWT Identity: {identity}")
         print(f"🔑 Received JWT Identity: {identity}")
-        # print("🔑 JWT Claims:", claims)
-        role = identity['role']
+        print("🔑 JWT Claims:", claims)
+        role = claims['role']
 
         # Authorization for GET: Only admins can fetch all appointments
         if request.method == 'GET':
@@ -670,7 +678,7 @@ def handle_appointments():
                 return jsonify({"error": "Invalid age"}), 400
 
             # For patients, ensure they can only book appointments for themselves
-            if role == 'patient' and data['patientEmail'] != identity['email']:
+            if role == 'patient' and data['patientEmail'] != claims['email']:
                 return jsonify({"error": "Unauthorized: Patients can only book appointments for themselves"}), 403
 
             # Verify doctor exists
@@ -693,7 +701,7 @@ def handle_appointments():
                 "doctorName": data['doctorName'],
                 "doctorEmail": data['doctorEmail'],
                 "symptoms": data['symptoms'],
-                "created_by": identity['email'],
+                "created_by": claims['email'],
                 "status": "pending",
                 "created_at": datetime.utcnow()
             }
@@ -929,7 +937,8 @@ def delete_doctor(doctor_id):
 def get_patients():
     try:
         identity = get_jwt_identity()
-        if identity['role'] != 'admin':
+        claims = get_jwt()
+        if claims['role'] != 'admin':
             return jsonify({"error": "Unauthorized: Admin access required"}), 403
         patients_cursor = patients_collection.find()
         patients = []
@@ -947,7 +956,8 @@ def get_patients():
 def delete_patient(patient_id):
     try:
         identity = get_jwt_identity()
-        if identity['role'] != 'admin':
+        claims = get_jwt()
+        if claims['role'] != 'admin':
             return jsonify({"error": "Unauthorized: Admin access required"}), 403
         if not patient_id or patient_id.lower() == 'undefined':
             return jsonify({"error": "Invalid patient ID"}), 400
@@ -976,10 +986,10 @@ def update_profile():
 
     try:
         claims = get_jwt()
-        identity = get_jwt_identity()  # e.g. "68f086d24e95082815783762"
-        user_id =  identity.get('id')
+        user_id =get_jwt_identity()  # e.g. "68f086d24e95082815783762"
+         
 
-        role = identity.get('role')
+        role = claims.get('role')
         if not role:
             return jsonify({"error": "Missing role in token"}), 400
 
@@ -1039,10 +1049,10 @@ def update_profile():
 @jwt_required()
 def get_user():
     try:
-        identity = get_jwt_identity()  # identity is the dict you set
-        user_id = identity['id']
-        email = identity['email']
-        role = identity['role']
+        user_id = get_jwt_identity()
+        claims = get_jwt()  # identity is the dict you set
+        email = claims['email']
+        role = claims['role']
 
         if role == 'doctor':
             collection = doctors_collection
