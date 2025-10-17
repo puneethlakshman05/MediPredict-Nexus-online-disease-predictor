@@ -363,7 +363,7 @@ tr:hover {
   th, td {
     padding: 8px 10px;
     max-width: 120px;
-    min-width: 60px;
+    min-width: 80px;
   }
 
   .notification-item {

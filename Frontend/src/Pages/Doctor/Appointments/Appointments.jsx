@@ -8,41 +8,48 @@ function Appointments({ token }) {
   const [appointments, setAppointments] = useState([]);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [appointmentToDelete, setAppointmentToDelete] = useState(null);
 
   useEffect(() => {
     if (!token) {
       setError('No authentication token provided');
+      setLoading(false);
       return;
     }
 
+    setLoading(true);
     axios.get(`${API_BASE_URL}/api/me`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => {
         const doctorEmail = res.data.email;
+        console.log('Doctor email:', doctorEmail);
+
         axios.get(`${API_BASE_URL}/api/appointments/doctor/${doctorEmail}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
           .then(response => {
+            console.log('Appointments fetched:', response.data);
             if (!Array.isArray(response.data)) {
               setError('Unexpected response format from server');
-              return;
-            }
-            setAppointments(response.data);
-            if (response.data.length === 0) {
-              setError('No appointments found for this doctor.');
+              setAppointments([]);
+            } else {
+              setAppointments(response.data);
+              setError(''); // clear previous errors
             }
           })
           .catch(err => {
             console.error('Failed to load appointments:', err);
             setError('Failed to load appointments: ' + (err.response?.data?.error || err.message));
-          });
+          })
+          .finally(() => setLoading(false));
       })
       .catch(err => {
         console.error('Failed to get user:', err);
         setError('Not logged in or invalid token: ' + (err.response?.data?.error || err.message));
+        setLoading(false);
       });
   }, [token]);
 
@@ -57,9 +64,11 @@ function Appointments({ token }) {
           )
         );
         setMessage(`Appointment ${status} successfully.`);
+        setTimeout(() => setMessage(''), 3000);
       })
       .catch(err => {
         setError('Failed to update appointment status: ' + (err.response?.data?.error || err.message));
+        setTimeout(() => setError(''), 3000);
         console.error(err);
       });
   };
@@ -82,18 +91,16 @@ function Appointments({ token }) {
       await axios.delete(`${API_BASE_URL}/api/appointments/${appointmentToDelete._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const updatedAppointments = appointments.filter((appt) => appt._id !== appointmentToDelete._id);
-      setAppointments(updatedAppointments);
+
+      setAppointments(prev => prev.filter(appt => appt._id !== appointmentToDelete._id));
       setMessage('Appointment removed successfully.');
+      setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to remove appointment.');
+      setTimeout(() => setError(''), 3000);
     } finally {
       setShowConfirmModal(false);
       setAppointmentToDelete(null);
-      setTimeout(() => {
-        setMessage('');
-        setError('');
-      }, 3000);
     }
   };
 
@@ -102,15 +109,17 @@ function Appointments({ token }) {
     setAppointmentToDelete(null);
   };
 
-    return (
+  return (
     <div className="appointments-container">
       <h1>Your Appointments</h1>
       {message && <div className="message">{message}</div>}
       {error && <div className="error-message">{error}</div>}
-      {appointments.length === 0 && !error ? (
+      {loading ? (
+        <p>Loading appointments...</p>
+      ) : appointments.length === 0 ? (
         <p>No appointments booked yet.</p>
       ) : (
-        <div className="table-wrapper"> {/* Updated from table-container */}
+        <div className="table-wrapper">
           <table>
             <thead>
               <tr>
@@ -130,12 +139,12 @@ function Appointments({ token }) {
               {appointments.map((appt, index) => (
                 <tr key={appt._id}>
                   <td>{index + 1}</td>
-                  <td>{appt.patientName}</td>
-                  <td>{appt.disease.charAt(0).toUpperCase() + appt.disease.slice(1)}</td>
-                  <td>{appt.patientEmail}</td>
-                  <td>{appt.patientPhone}</td>
-                  <td>{appt.date}</td>
-                  <td>{appt.time}</td>
+                  <td>{appt.patientName || 'N/A'}</td>
+                  <td>{appt.disease ? appt.disease.charAt(0).toUpperCase() + appt.disease.slice(1) : 'N/A'}</td>
+                  <td>{appt.patientEmail || 'N/A'}</td>
+                  <td>{appt.patientPhone || 'N/A'}</td>
+                  <td>{appt.date || 'N/A'}</td>
+                  <td>{appt.time || 'N/A'}</td>
                   <td style={{ textTransform: 'capitalize' }}>{appt.status || 'Pending'}</td>
                   <td>
                     <div className="action-buttons">

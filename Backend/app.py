@@ -39,6 +39,10 @@ else:
     print(f"'.env' file loaded successfully from {env_file}")
 
 app = Flask(__name__)
+
+
+
+
 # Update CORS to allow dynamic frontend URL
 allowed_origins = [
     os.getenv("FRONTEND_URL", "http://localhost:5173"),
@@ -78,6 +82,9 @@ jwt = JWTManager(app)
 # Gmail SMTP Config
 GMAIL_SMTP_USER = os.getenv('GMAIL_SMTP_USER')
 GMAIL_APP_PASSWORD = os.getenv('GMAIL_APP_PASSWORD')
+print("SMTP USER:", os.getenv('GMAIL_SMTP_USER'))
+print("SMTP PASS:", os.getenv('GMAIL_APP_PASSWORD'))
+
 
 
 # Configure logging
@@ -182,26 +189,52 @@ def predictDisease(symptoms_list):
 
 # Send OTP via Gmail SMTP
 def send_otp_email(email, otp):
-    msg = MIMEText(f"<p>Your OTP for MediPredict Nexus password reset is: <strong>{otp}</strong>. It expires in 5 minutes.</p>", "html")
-    msg['Subject'] = 'MediPredict Nexus Password Reset OTP'
-    msg['From'] = os.getenv('SENDER_EMAIL')
-    msg['To'] = email
+    """Send OTP email via Gmail SMTP with proper error handling."""
+    msg = MIMEText(
+        f"""
+        <p>Dear User,</p>
+        <p>Your OTP for <strong>MediPredict Nexus</strong> password reset is:</p>
+        <h2 style="color:#2c3e50;">{otp}</h2>
+        <p>This OTP is valid for <strong>5 minutes</strong>.</p>
+        <p>If you didn’t request this, please ignore this email.</p>
+        <br>
+        <p>— MediPredict Nexus Support Team</p>
+        """, 
+        "html"
+    )
+    msg["Subject"] = "🔒 MediPredict Nexus Password Reset OTP"
+    msg["From"] = os.getenv("SENDER_EMAIL")
+    msg["To"] = email
+
     try:
         logger.debug(f"Attempting to send OTP to {email} via Gmail SMTP")
-        with smtplib.SMTP('smtp.gmail.com', 587) as server:
-            server.starttls()
-            server.login(os.getenv('GMAIL_SMTP_USER'), os.getenv('GMAIL_APP_PASSWORD'))
+        
+        # ✅ Use SSL (Port 465) for better reliability with Gmail
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(
+                os.getenv("GMAIL_SMTP_USER"),
+                os.getenv("GMAIL_APP_PASSWORD")
+            )
             server.send_message(msg)
-            logger.info(f"OTP email sent successfully to {email}")
-    except smtplib.SMTPAuthenticationError as e:
-        logger.error(f"SMTP Authentication Error: {e}")
+
+        logger.info(f"OTP email sent successfully to {email}")
+
+    except smtplib.SMTPAuthenticationError:
+        logger.error("SMTP Authentication Error – invalid credentials or security blocked by Gmail.")
         raise Exception("Invalid Gmail SMTP credentials")
-    except smtplib.SMTPException as e:
-        logger.error(f"SMTP Error: {e}")
-        raise Exception("Failed to send email due to SMTP error")
+
+    except smtplib.SMTPConnectError:
+        logger.error("Failed to connect to Gmail SMTP server.")
+        raise Exception("Unable to connect to Gmail SMTP server")
+
+    except smtplib.SMTPRecipientsRefused:
+        logger.error(f"Recipient refused: {email}")
+        raise Exception("Invalid recipient email address")
+
     except Exception as e:
-        logger.error(f"Unexpected error sending email: {e}")
-        raise Exception(f"Failed to send email: {str(e)}")
+        logger.error(f"Unexpected SMTP error: {e}")
+        raise Exception(f"Failed to send OTP: {str(e)}")
+
 
 # Serve uploaded images from public directory
 UPLOAD_FOLDER = 'public/Uploads'
@@ -230,15 +263,15 @@ def remove_profile_photo():
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
     try:
-        identity = get_jwt_identity()
+        claims = get_jwt()
         collection = (
-            doctors_collection if identity['role'] == 'doctor' else
-            patients_collection if identity['role'] == 'patient' else
+            doctors_collection if claims['role'] == 'doctor' else
+            patients_collection if claims['role'] == 'patient' else
             admins_collection
         )
-        user = collection.find_one({'_id': ObjectId(identity['id'])})
+        user = collection.find_one({'_id': ObjectId(claims['id'])})
         if not user:
-            logger.error(f"User not found: {identity['id']}")
+            logger.error(f"User not found: {claims['id']}")
             return jsonify({"error": "User not found"}), 404
         profile_photo = user.get('profilePhoto', '')
         if profile_photo:
@@ -249,15 +282,15 @@ def remove_profile_photo():
             else:
                 logger.warning(f"File not found for deletion: {file_path}")
         collection.update_one(
-            {'_id': ObjectId(identity['id'])},
+            {'_id': ObjectId(claims['id'])},
             {'$set': {'profilePhoto': ''}}
         )
-        logger.info(f"Profile photo removed for user: {identity['email']}")
+        logger.info(f"Profile photo removed for user: {claims['email']}")
         return jsonify({
             'id': str(user['_id']),
             'name': user.get('name', ''),
             'email': user['email'],
-            'role': identity['role'],
+            'role': claims['role'],
             'profilePhoto': ''
         }), 200
     except Exception as e:
@@ -435,13 +468,10 @@ def login(role):
 
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
             token = create_access_token(
-                identity=str(user["_id"]),
-                additional_claims={
-                    "email": user["email"],
-                    "role": role
-                },
-                expires_delta=timedelta(hours=24)
-            )
+              identity={"id": str(user["_id"]), "email": user["email"], "role": role},
+              expires_delta=timedelta(hours=24)
+)
+
 
             response = {
                 "id": str(user["_id"]),
@@ -589,6 +619,9 @@ def handle_appointments():
         return response, 200
     try:
         identity = get_jwt_identity()
+        logger.debug(f"Received JWT Identity: {identity}")
+        print(f"🔑 Received JWT Identity: {identity}")
+        # print("🔑 JWT Claims:", claims)
         role = identity['role']
 
         # Authorization for GET: Only admins can fetch all appointments
@@ -683,7 +716,7 @@ def handle_appointments():
 
     except Exception as e:
         logger.error(f"Error in handle_appointments: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": "Internal server error","exp":str(e)}), 500        
 
 @app.route('/api/appointments/doctor/<doctor_email>', methods=['GET'])
 @jwt_required()
@@ -873,8 +906,8 @@ def mark_notification_read(notification_id):
 @jwt_required()
 def delete_doctor(doctor_id):
     try:
-        identity = get_jwt_identity()
-        if identity['role'] != 'admin':
+        claims = get_jwt()
+        if claims['role'] != 'admin':
             return jsonify({"error": "Unauthorized: Admin access required"}), 403
         if not doctor_id or doctor_id.lower() == 'undefined':
             return jsonify({"error": "Invalid doctor ID"}), 400
@@ -940,76 +973,76 @@ def update_profile():
         response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
         response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
         return response, 200
+
     try:
-        identity = get_jwt_identity()
-        collection = (
-            doctors_collection if identity['role'] == 'doctor' else
-            patients_collection if identity['role'] == 'patient' else
-            admins_collection
-        )
-        user = collection.find_one({'_id': ObjectId(identity['id'])})
+        claims = get_jwt()
+        identity = get_jwt_identity()  # e.g. "68f086d24e95082815783762"
+        user_id =  identity.get('id')
+
+        role = identity.get('role')
+        if not role:
+            return jsonify({"error": "Missing role in token"}), 400
+
+        # Pick correct collection based on role
+        if role == 'doctor':
+            collection = doctors_collection
+        elif role == 'patient':
+            collection = patients_collection
+        else:
+            collection = admins_collection
+
+        # Verify user exists
+        user = collection.find_one({'_id': ObjectId(user_id)})
         if not user:
-            logger.error(f"User not found: {identity['id']}")
             return jsonify({"error": "User not found"}), 404
+
+        # Handle fields
         name = request.form.get('name', user.get('name', ''))
         photo = request.files.get('photo')
-        if not name and not photo:
-            return jsonify({"error": "At least one field (name or photo) is required"}), 400
         profile_photo = user.get('profilePhoto', '')
+
+        # Handle photo upload
         if photo:
-            if not photo.filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                return jsonify({"error": "Invalid file type. Only JPEG, PNG, GIF allowed."}), 400
-            photo.seek(0, os.SEEK_END)
-            file_size = photo.tell()
-            if file_size > 5 * 1024 * 1024:
-                return jsonify({"error": "File size must be less than 5MB."}), 400
-            photo.seek(0)
+            allowed_ext = ('.jpg', '.jpeg', '.png', '.gif')
+            if not photo.filename.lower().endswith(allowed_ext):
+                return jsonify({"error": "Invalid file type. Only JPG, PNG, GIF allowed."}), 400
+
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-            logger.debug(f"Created/verified Uploads directory: {app.config['UPLOAD_FOLDER']}")
-            filename = secure_filename(f"{identity['id']}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{photo.filename}")
+            filename = secure_filename(f"{user_id}_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}_{photo.filename}")
             photo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            try:
-                photo.save(photo_path)
-                logger.info(f"Photo saved successfully: {photo_path}")
-            except Exception as e:
-                logger.error(f"Failed to save photo: {str(e)}")
-                return jsonify({"error": "Failed to save photo"}), 500
+            photo.save(photo_path)
             profile_photo = f"/Uploads/{filename}"
+
+        # Update DB
         collection.update_one(
-            {'_id': ObjectId(identity['id'])},
+            {'_id': ObjectId(user_id)},
             {'$set': {'name': name, 'profilePhoto': profile_photo}}
         )
-        logger.info(f"Profile updated for user: {identity['email']}, new photo: {profile_photo}")
+
         return jsonify({
-            'id': str(user['_id']),
+            "id": str(user["_id"]),
             "name": name,
             "email": user["email"],
-            "role": identity["role"],
+            "role": role,
             "profilePhoto": profile_photo
         }), 200
+
     except Exception as e:
-        logger.error(f"Error in update_profile: {str(e)}")
+        import traceback
+        print("ERROR in update_profile:", e)
+        traceback.print_exc()
         return jsonify({"error": "Internal server error"}), 500
+
 
 # Current User
 @app.route('/api/me', methods=['GET'])
 @jwt_required()
 def get_user():
-    from flask import request
-    print("Authorization Header:", request.headers.get("Authorization"))
-
     try:
-        user_id = get_jwt_identity()
-        claims = get_jwt()
-        print("Decoded JWT claims:", claims)
-        print("User ID from JWT:", user_id)
-
-        role = claims.get('role')
-        email = claims.get('email')
-
-        if not user_id or not role:
-            print("⚠️ Invalid token data")
-            return jsonify({"error": "Invalid token"}), 422
+        identity = get_jwt_identity()  # identity is the dict you set
+        user_id = identity['id']
+        email = identity['email']
+        role = identity['role']
 
         if role == 'doctor':
             collection = doctors_collection
@@ -1020,12 +1053,11 @@ def get_user():
 
         user = collection.find_one({'_id': ObjectId(user_id)})
         if not user:
-            print("⚠️ User not found in DB")
             return jsonify({'error': 'User not found'}), 404
 
         return jsonify({
             "id": str(user["_id"]),
-            "email": user["email"],
+            "email": email,
             "role": role,
             "name": user.get("name", ""),
             "profilePhoto": user.get("profilePhoto", "")
@@ -1034,6 +1066,7 @@ def get_user():
     except Exception as e:
         print("🔥 Error in /api/me route:", str(e))
         return jsonify({"error": "Unauthorized or invalid token"}), 401
+
 
 
 if __name__ == "__main__":

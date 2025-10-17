@@ -9,8 +9,8 @@ if not uri:
 try:
     client = MongoClient(uri, tlsCAFile=certifi.where())
     db = client.get_database("hospital_db")
-    print("Connected to database:", db.name)
+    # print("Connected to database:", db.name)
     # Try a simple command
-    print("Collections:", db.list_collection_names())
+    # print("Collections:", db.list_collection_names())
 except Exception as e:
     print("Error connecting to MongoDB:", e)

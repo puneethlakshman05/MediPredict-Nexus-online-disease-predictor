@@ -8,7 +8,8 @@ function DoctorsList({ token }) {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [doctorToDelete, setDoctorToDelete] = useState(null);
+  const [doctorToDelete, 
+    setDoctorToDelete] = useState(null);
 
   useEffect(() => {
     const fetchDoctors = async () => {
