@@ -44,36 +44,57 @@ app = Flask(__name__)
 
 
 # Update CORS to allow dynamic frontend URL
+#  Allowed origins
 allowed_origins = [
     os.getenv("FRONTEND_URL", "http://localhost:5173"),
     "https://medi-predict-nexus-online-disease-p.vercel.app",
     "https://medi-predict-nexus-online-disease-p-gray.vercel.app",  # Vercel preview
     "http://localhost:5173"
 ]
-CORS(app, resources={r"/*": {"origins": allowed_origins}}, supports_credentials=True)
 
+#  Setup CORS globally
+CORS(app,
+     resources={r"/*": {"origins": allowed_origins}},
+     supports_credentials=True,
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+
+#  Handle preflight requests globally before any route
+@app.before_request
+def handle_options():
+    if request.method == "OPTIONS":
+        response = app.make_default_options_response()
+        origin = request.headers.get("Origin")
+        if origin in allowed_origins:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+        return response
+
+#  Add CORS headers after every request
 @app.after_request
 def after_request(response):
-    origin = request.headers.get('Origin')
-    if origin in allowed_origins:
-        response.headers['Access-Control-Allow-Origin'] = origin
-        response.headers['Vary'] = 'Origin'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    return response
-
-app.after_request(after_request)
-
-@app.route('/<path:path>', methods=['OPTIONS'])
-def handle_options(path):
-    response = make_response()
-    origin = request.headers.get('Origin')
+    origin = request.headers.get("Origin")
     if origin in allowed_origins:
         response.headers["Access-Control-Allow-Origin"] = origin
-        response.headers['Vary'] = 'Origin'
+        response.headers["Vary"] = "Origin"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    return response, 200
+    return response
+
+# @app.route('/<path:path>', methods=['OPTIONS']) 
+# def handle_options(path): 
+#     response = make_response() 
+#     origin = request.headers.get('Origin') 
+#     if origin in allowed_origins: 
+#         response.headers["Access-Control-Allow-Origin"] = origin 
+#         response.headers['Vary'] = 'Origin' 
+#         response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS" 
+#         response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization" 
+#         return response, 200
+
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your_secret_key")
