@@ -523,7 +523,7 @@ def login(role):
 
 
 # Forgot Password
-@app.route('/api/forgot-password', methods=['POST'])
+@app.route('/api/forgot-password', methods=['POST','OPTIONS'])
 def forgot_password():
     try:
         logger.debug("Received forgot-password request")
@@ -567,7 +567,7 @@ def forgot_password():
         return jsonify({"error": f"Failed to send OTP: {str(e)}"}), 500
 
 # Reset Password
-@app.route('/api/reset-password', methods=['POST'])
+@app.route('/api/reset-password', methods=['POST','OPTIONS'])
 def reset_password():
     try:
         data = request.json
@@ -603,7 +603,7 @@ def reset_password():
         return jsonify({"error": "Internal server error"}), 500
 
 # Verify OTP
-@app.route('/api/verify-otp', methods=['POST'])
+@app.route('/api/verify-otp', methods=['POST', 'OPTIONS'])
 def verify_otp():
     try:
         logger.debug("Received verify-otp request")
