@@ -49,7 +49,9 @@ allowed_origins = [
     os.getenv("FRONTEND_URL", "http://localhost:5173"),
     "https://medi-predict-nexus-online-disease-p.vercel.app",
     "https://medi-predict-nexus-online-disease-p-gray.vercel.app",  # Vercel preview
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://medipredict-nexus-online-disease-af9r.onrender.com"
+
 ]
 
 #  Setup CORS globally
