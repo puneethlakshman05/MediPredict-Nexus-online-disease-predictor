@@ -50,7 +50,7 @@ allowed_origins = [
     "https://medi-predict-nexus-online-disease-p.vercel.app",
     "https://medi-predict-nexus-online-disease-p-gray.vercel.app",  # Vercel preview
     "http://localhost:5173",
-    "https://medipredict-nexus-online-disease-af9r.onrender.com"
+    "https://medipredict-nexus-online-disease-pq9i.onrender.com"
 
 ]
 

@@ -5,7 +5,7 @@ body {
 
 /* Navbar styles */
 .navbar {
-  background: linear-gradient(135deg, #eee0ca 30%, #bfa9ec 100%);
+  background: rgb(224, 224, 221);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: #e6e6e6;
