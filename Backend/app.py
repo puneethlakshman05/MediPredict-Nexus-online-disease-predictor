@@ -53,7 +53,6 @@ allowed_origins = [
     "https://medipredict-nexus-online-disease-7juh.onrender.com"
 
 
-
 ]
 
 #  Setup CORS globally
@@ -707,25 +706,7 @@ def handle_appointments():
 
             # Verify doctor exists
             doctor = doctors_collection.find_one({'email': data['doctorEmail']})
-            if not doctor:Access to XMLHttpRequest at 'https://medipredict-nexus-online-disease-7juh.onrender.com/api/forgot-password' from origin 'https://medi-predict-nexus-online-disease-p-gray.vercel.app' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-index-CtH9XxMp.js:640 Forgot Password Error: q {message: 'Network Error', name: 'AxiosError', code: 'ERR_NETWORK', config: {…}, request: XMLHttpRequest, …}
-wt @ index-CtH9XxMp.js:640
-await in wt (async)
-_x @ index-CtH9XxMp.js:37
-Fx @ index-CtH9XxMp.js:37
-$x @ index-CtH9XxMp.js:37
-fp @ index-CtH9XxMp.js:37
-$g @ index-CtH9XxMp.js:37
-(anonymous) @ index-CtH9XxMp.js:37
-Md @ index-CtH9XxMp.js:40
-ug @ index-CtH9XxMp.js:37
-Ml @ index-CtH9XxMp.js:37
-ud @ index-CtH9XxMp.js:37
-t2 @ index-CtH9XxMp.js:37
-index-CtH9XxMp.js:69 
-        
-        
-       POST https://medipredict-nexus-online-disease-7juh.onrender.com/api/forgot-password net::ERR_FAILED 500 (Internal Server Error)
+            if not doctor:
                 return jsonify({"error": "Doctor not found"}), 404
 
             # Create appointment
