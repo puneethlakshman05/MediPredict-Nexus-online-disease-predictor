@@ -4,7 +4,7 @@ body {
   color: #2d2d2d; /* Dark gray for text */
   background: linear-gradient(135deg, #ffebcc, #ccffeb); /* Light peach to soft mint gradient */
   margin: 0;
-  min-height: 100vh;
+  min-height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,7 @@ body {
 
 .appointment-container {
   width: 100%;
-  max-width: 390px; /* Unchanged from previous update */
+  max-width: 500px; /* Unchanged from previous update */
   margin: 15px auto;
   padding: 20px;
   background: linear-gradient(135deg, #fff7e6, #f0fff4); /* Soft cream gradient */
@@ -48,7 +48,7 @@ h2 {
 
 .input-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   color: #3a3a3a;
   margin-bottom: 4px;
   font-weight: 500;
@@ -57,7 +57,7 @@ h2 {
 .input-field {
   width: 100%;
   padding: 6px 0;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   border: none;
   border-bottom: 1.5px solid #ff8787; /* Soft coral baseline */
   background: transparent;
@@ -107,7 +107,7 @@ h2 {
 
 .appointment-button {
   padding: 6px 16px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
   border: none;
   border-radius: 6px;
