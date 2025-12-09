@@ -74,7 +74,7 @@ CORS(app,
 #             response.headers["Access-Control-Allow-Credentials"] = "true"
 #         return response
 
- Add CORS headers after every request
+#  Add CORS headers after every request
 @app.after_request
 def after_request(response):
     origin = request.headers.get("Origin")
