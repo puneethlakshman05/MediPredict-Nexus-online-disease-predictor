@@ -52,39 +52,39 @@ allowed_origins = [
     "http://localhost:5173",
     "https://medipredict-nexus-online-disease-pq9i.onrender.com"
 
+
 ]
 
 #  Setup CORS globally
 CORS(app,
-     resources={r"/*": {"origins": allowed_origins}},
+     resources={r"/api/*": {"origins": allowed_origins}},
      supports_credentials=True,
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+     allow_headers=["Content-Type", "Authorization"])
 
 #  Handle preflight requests globally before any route
-@app.before_request
-def handle_options():
-    if request.method == "OPTIONS":
-        response = app.make_default_options_response()
-        origin = request.headers.get("Origin")
-        if origin in allowed_origins:
-            response.headers["Access-Control-Allow-Origin"] = origin
-            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-            response.headers["Access-Control-Allow-Credentials"] = "true"
-        return response
+# @app.before_request
+# def handle_options():
+#     if request.method == "OPTIONS":
+#         response = app.make_default_options_response()
+#         origin = request.headers.get("Origin")
+#         if origin in allowed_origins:
+#             response.headers["Access-Control-Allow-Origin"] = origin
+#             response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+#             response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+#             response.headers["Access-Control-Allow-Credentials"] = "true"
+#         return response
 
 #  Add CORS headers after every request
-@app.after_request
-def after_request(response):
-    origin = request.headers.get("Origin")
-    if origin in allowed_origins:
-        response.headers["Access-Control-Allow-Origin"] = origin
-        response.headers["Vary"] = "Origin"
-        response.headers["Access-Control-Allow-Credentials"] = "true"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    return response
+# @app.after_request
+# def after_request(response):
+#     origin = request.headers.get("Origin")
+#     if origin in allowed_origins:
+#         response.headers["Access-Control-Allow-Origin"] = origin
+#         response.headers["Vary"] = "Origin"
+#         response.headers["Access-Control-Allow-Credentials"] = "true"
+#     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+#     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+#     return response
 
 # @app.route('/<path:path>', methods=['OPTIONS']) 
 # def handle_options(path): 
@@ -276,7 +276,7 @@ def serve_uploaded_file(filename):
         return jsonify({"error": "Internal server error"}), 500
 
 # Remove profile photo
-@app.route('/api/remove-profile-photo', methods=['DELETE', 'OPTIONS'])
+@app.route('/api/remove-profile-photo', methods=['DELETE'])
 @jwt_required()
 def remove_profile_photo():
     if request.method == 'OPTIONS':
@@ -525,7 +525,7 @@ def login(role):
 
 
 # Forgot Password
-@app.route('/api/forgot-password', methods=['POST','OPTIONS'])
+@app.route('/api/forgot-password', methods=['POST'])
 def forgot_password():
     try:
         logger.debug("Received forgot-password request")
@@ -569,7 +569,7 @@ def forgot_password():
         return jsonify({"error": f"Failed to send OTP: {str(e)}"}), 500
 
 # Reset Password
-@app.route('/api/reset-password', methods=['POST','OPTIONS'])
+@app.route('/api/reset-password', methods=['POST'])
 def reset_password():
     try:
         data = request.json
@@ -605,7 +605,7 @@ def reset_password():
         return jsonify({"error": "Internal server error"}), 500
 
 # Verify OTP
-@app.route('/api/verify-otp', methods=['POST', 'OPTIONS'])
+@app.route('/api/verify-otp', methods=['POST' ])
 def verify_otp():
     try:
         logger.debug("Received verify-otp request")
@@ -638,7 +638,7 @@ def verify_otp():
         return jsonify({'error': 'Internal server error'}), 500
 
 # Appointments
-@app.route('/api/appointments', methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/api/appointments', methods=['GET', 'POST' ])
 @jwt_required()
 def handle_appointments():
     if request.method == 'OPTIONS':
@@ -821,7 +821,7 @@ def respond_to_appointment(appointment_id):
         logger.error(f"Error in respond_to_appointment: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
-@app.route('/api/appointments/<appointment_id>', methods=['DELETE', 'OPTIONS'])
+@app.route('/api/appointments/<appointment_id>', methods=['DELETE'])
 @jwt_required()
 def delete_appointment(appointment_id):
     if request.method == 'OPTIONS':
@@ -910,7 +910,7 @@ def get_notifications(patient_email):
         logger.error(f"Error in get_notifications: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
-@app.route('/api/notifications/<notification_id>/read', methods=['PUT', 'OPTIONS'])
+@app.route('/api/notifications/<notification_id>/read', methods=['PUT'])
 @jwt_required()
 def mark_notification_read(notification_id):
     if request.method == 'OPTIONS':
@@ -997,7 +997,7 @@ def delete_patient(patient_id):
         return jsonify({"error": "Internal server error"}), 500
 
 # Profile Update
-@app.route('/api/update-profile', methods=['POST', 'OPTIONS'])
+@app.route('/api/update-profile', methods=['POST'])
 @jwt_required()
 def update_profile():
     if request.method == 'OPTIONS':
