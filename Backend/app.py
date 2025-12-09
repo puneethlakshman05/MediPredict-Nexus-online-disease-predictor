@@ -74,17 +74,17 @@ CORS(app,
 #             response.headers["Access-Control-Allow-Credentials"] = "true"
 #         return response
 
-#  Add CORS headers after every request
-# @app.after_request
-# def after_request(response):
-#     origin = request.headers.get("Origin")
-#     if origin in allowed_origins:
-#         response.headers["Access-Control-Allow-Origin"] = origin
-#         response.headers["Vary"] = "Origin"
-#         response.headers["Access-Control-Allow-Credentials"] = "true"
-#     response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-#     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-#     return response
+ Add CORS headers after every request
+@app.after_request
+def after_request(response):
+    origin = request.headers.get("Origin")
+    if origin in allowed_origins:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Vary"] = "Origin"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
 
 # @app.route('/<path:path>', methods=['OPTIONS']) 
 # def handle_options(path): 
