@@ -52,7 +52,7 @@ const Footer = () => {
             <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
             <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
             <a
-              href="https://www.linkedin.com/in/puneeth-lakshman-veligonda-64899534a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              href="www.linkedin.com/in/puneethlakshmanveligonda"
               className="social-icon"
               rel="noopener noreferrer"
             >
